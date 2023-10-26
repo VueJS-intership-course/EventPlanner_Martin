@@ -1,17 +1,19 @@
 <template>
   <div>
+    <label for="location" class="form-label">Location</label>
     <input v-model="selectedValue" title="dropdown" @input="filterZones" @click.stop="toggleDropdown"
       placeholder="Enter location..." class="form-control" />
-    <div class="custom-dropdown" v-show="showDropdown">
-      <div v-for="zone in filteredZones" :key="zone" @click="selectZone(zone)" class="dropdown-item">
+    <ul class="custom-dropdown" v-show="showDropdown">
+      <li v-for="zone in filteredZones" :key="zone" @click="selectZone(zone)" class="dropdown-item">
         {{ zone }}
-      </div>
-    </div>
+      </li>
+    </ul>
+    <span v-show="showError" class="text-danger">Please choose location!</span>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import moment from "moment-timezone";
 
 const props = defineProps({
@@ -25,6 +27,7 @@ const zones = moment.tz.names();
 const selectedValue = ref('');
 const filteredZones = ref(zones);
 const showDropdown = ref(false);
+const showError = ref(false);
 
 const filterZones = computed(() => {
   if (!selectedValue.value) {
@@ -41,15 +44,21 @@ const emit = defineEmits()
 const selectZone = (zone) => {
   selectedValue.value = zone;
   showDropdown.value = false;
+  showError.value = false; 
   emit('update:modelValue', zone);
 }
 
 const toggleDropdown = () => {
-  showDropdown.value = false;
+  showDropdown.value = !showDropdown.value;
+  showError.value = !selectedValue.value; 
 }
+
+watch(selectedValue, () => {
+  showError.value = !selectedValue.value;
+});
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .custom-dropdown {
   position: absolute;
   border: 1px solid #ccc;
@@ -58,15 +67,16 @@ const toggleDropdown = () => {
   z-index: 1000;
   background-color: white;
   width: 95%;
+  
+  .dropdown-item {
+    padding: 8px;
+    cursor: pointer;
+    :hover {
+      background-color: #f0f0f0;
+    }
+  }
 }
 
-.dropdown-item {
-  padding: 8px;
-  cursor: pointer;
-}
 
-.dropdown-item:hover {
-  background-color: #f0f0f0;
-}
 </style>
 
