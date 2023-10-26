@@ -1,20 +1,9 @@
 <template>
   <div>
-    <input
-      v-model="selectedValue"
-      title="dropdown"
-      @input="filterZones"
-      @click.stop="toggleDropdown"
-      placeholder="Enter location..."
-      class="form-control"
-    />
+    <input v-model="selectedValue" title="dropdown" @input="filterZones" @click.stop="toggleDropdown"
+      placeholder="Enter location..." class="form-control" />
     <div class="custom-dropdown" v-show="showDropdown">
-      <div
-        v-for="zone in filteredZones"
-        :key="zone"
-        @click="selectZone(zone)"
-        class="dropdown-item"
-      >
+      <div v-for="zone in filteredZones" :key="zone" @click="selectZone(zone)" class="dropdown-item">
         {{ zone }}
       </div>
     </div>
@@ -33,7 +22,7 @@ const props = defineProps({
 })
 
 const zones = moment.tz.names();
-const selectedValue = ref(''); 
+const selectedValue = ref('');
 const filteredZones = ref(zones);
 const showDropdown = ref(false);
 
