@@ -30,6 +30,10 @@ const routes = [
         path: '/profile',
         name: 'profile',
         component: ProfilePage
+    },
+    {
+        path: '/',
+        redirect: '/events'
     }
 ];
 

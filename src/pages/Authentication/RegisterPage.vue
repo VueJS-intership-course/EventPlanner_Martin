@@ -10,35 +10,65 @@
             <form @submit.prevent="onSubmit">
               <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
-                <Field v-model="formData.username" name="username" class="form-control" id="username"
-                  placeholder="Username" />
+                <Field
+                  v-model="formData.username"
+                  name="username"
+                  class="form-control"
+                  id="username"
+                  placeholder="Enter username..."
+                />
                 <ErrorMessage name="Username" class="text-danger" />
               </div>
               <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <Field v-model="formData.email" name="email" type="email" class="form-control" id="email"
-                  placeholder="Email" />
+                <Field
+                  v-model="formData.email"
+                  name="email"
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  placeholder="Enter email..."
+                />
                 <ErrorMessage name="Email" class="text-danger" />
               </div>
               <div class="mb-3">
                 <label for="location" class="form-label">Location</label>
-                <Dropdown v-model="formData.location" id="location">
-                </Dropdown>
+                <Dropdown v-model="formData.location" id="location"></Dropdown>
                 <ErrorMessage name="Location" class="text-danger" />
               </div>
               <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
-                <Field v-model="formData.password" name="password" type="password" class="form-control" id="password"
-                  autocomplete="on" placeholder="Password" />
+                <Field
+                  v-model="formData.password"
+                  name="password"
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  autocomplete="on"
+                  placeholder="Enter password..."
+                />
                 <ErrorMessage name="Password" class="text-danger" />
               </div>
               <div class="mb-3">
-                <label for="repeatPassword" class="form-label">Repeat password</label>
-                <Field v-model="formData.repeatPassword" name="repeatPassword" type="password" class="form-control"
-                  id="repeatPassword" autocomplete="on" placeholder="Repeat password" />
+                <label for="repeatPassword" class="form-label"
+                  >Repeat password</label
+                >
+                <Field
+                  v-model="formData.repeatPassword"
+                  name="repeatPassword"
+                  type="password"
+                  class="form-control"
+                  id="repeatPassword"
+                  autocomplete="on"
+                  placeholder="Repeat the password..."
+                />
               </div>
               <div class="mb-3">
-                <button class="btn btn-primary" btn-style="default-button-small">
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  btn-style="default-button-small"
+                >
                   Register
                 </button>
               </div>
@@ -56,7 +86,7 @@ import { Field, Form, ErrorMessage } from 'vee-validate';
 import Dropdown from '../../common-templates/Dropdown.vue';
 // import * as yup from "yup";
 
-const formData = {
+let formData = {
   username: '',
   email: '',
   location: '',
@@ -66,6 +96,9 @@ const formData = {
 
 const onSubmit = async () => {
   try {
+    if (password.value !== repeatPassword.value) {
+      throw new Error('Passwords do not match!');
+    }
     // console.log(formData);
     await userServices.signUp(
       {
@@ -76,6 +109,14 @@ const onSubmit = async () => {
       formData.password
     );
     console.log('User registered successfully');
+
+    formData = {
+      username: '',
+      email: '',
+      location: '',
+      password: '',
+      repeatPassword: '',
+    };
   } catch (error) {
     alert(error);
   }
