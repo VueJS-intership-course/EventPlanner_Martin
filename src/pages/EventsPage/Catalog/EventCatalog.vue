@@ -5,6 +5,6 @@
 </template>
 
 <script setup>
-
+import { computed } from 'vue';
 //TODO: CreateEvent accessible, if user is admin
 </script>

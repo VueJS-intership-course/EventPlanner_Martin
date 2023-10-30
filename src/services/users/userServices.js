@@ -1,6 +1,4 @@
-import firebaseData from '../firebaseConfig';
-// import {userStore} from '../../store/userStore.js'
-import { userStore } from '../../store/userStore';
+import firebaseData from '@/services/firebaseConfig.js';
 
 export default {
   async signUp(user, password) {

@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import eventServices from "../services/events/eventServices.js";
+import eventServices from "@/services/events/eventServices.js";
 
 export const eventStore = defineStore('events', {
     state: () => ({

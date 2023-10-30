@@ -68,7 +68,7 @@
 
 <script setup>
 
-import { eventStore } from '../../store/eventStore.js';
+import { eventStore } from '@/store/eventStore.js';
 import { Form, Field, ErrorMessage } from 'vee-validate';
 import * as yup from 'yup';
 import { ref } from 'vue';

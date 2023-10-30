@@ -38,7 +38,7 @@
 <script setup>
 import { Form, Field, ErrorMessage } from 'vee-validate';
 import * as yup from 'yup';
-import userServices from '../../services/users/userServices';
+import userServices from '@/services/users/userServices';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();

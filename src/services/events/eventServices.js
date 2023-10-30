@@ -1,4 +1,4 @@
-import firebaseData from '../firebaseConfig.js';
+import firebaseData from '@/services/firebaseConfig.js';
 
 export default {
   async getAll() {

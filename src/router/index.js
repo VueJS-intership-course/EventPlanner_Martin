@@ -1,17 +1,17 @@
 import { createRouter, createWebHistory } from "vue-router";
-import EventCatalog from '../pages/EventsPage/EventCatalog.vue';
-import EventPage from '../pages/EventsPage/EventPage.vue';
-import LoginPage from '../pages/Authentication/LoginPage.vue';
-import RegisterPage from '../pages/Authentication/RegisterPage.vue';
-import ProfilePage from '../pages/Authentication/ProfilePage.vue';
-import CreateEvent from '../pages/EventsPage/CreateEvent.vue'
-import NotFound from '../common-templates/NotFound.vue'
+import EventCatalog from '@/pages/EventsPage/Catalog/EventCatalog.vue';
+import EventPage from '@/pages/EventsPage/EventPage.vue';
+import LoginPage from '@/pages/Authentication/LoginPage.vue';
+import RegisterPage from '@/pages/Authentication/RegisterPage.vue';
+import ProfilePage from '@/pages/Authentication/ProfilePage.vue';
+import CreateEvent from '@/pages/EventsPage/CreateEvent.vue'
+import NotFound from '@/common-templates/NotFound.vue'
 
 const routes = [
     {
         path: '/events',
         name: 'events',
-        component: EventCatalog,
+        component: EventCatalog
     },
     {
         path: '/events/:id',
