@@ -1,7 +1,7 @@
 <template>
         <div class="container py-4 d-flex flex-column">
             <div class="card shadow align-self-center rounded-3 col-lg-8">
-                <div class="card-header p-3 h4 bg-primary">
+                <div class="card-header p-3 h4 bg-primary text-white">
                     Create Event
                 </div>
                 <div class="card-body d-flex justify-content-center align-self-center w-100">
@@ -42,19 +42,8 @@
                                 <ErrorMessage name="time" class="text-danger" />
                             </div>
                         </div>
-                        <div class="d-flex">
-                            <div class="form-group w-100 mb-2 me-5">
-                                <label class="form-control-label" for="longitude">Longitude</label>
-                                <Field type="number" placeholder="Type longitude coordinates..." class="form-control" id="form-group-input"
-                                    name="longtitude" />
-                                <ErrorMessage name="longtitude" class="text-danger" />
-                            </div>
-                            <div class="form-group w-100 mb-2 ms-5">
-                                <label class="form-control-label" for="latitude">Latitude</label>
-                                <Field type="number" placeholder="Type latitude coordinates..." class="form-control" id="form-group-input"
-                                    name="latitude" />
-                                <ErrorMessage name="latitude" class="text-danger" />
-                            </div>
+                        <div class="d-flex align-self-center w-100">
+                            <MapComponent class="mt-2" @selectedLocation="handleCoordinates"></MapComponent>
                         </div>
                         <div class="form-group align-self-center mt-2">
                             <button type="submit" class="btn btn-primary float-end mt-2" for="form-group-input">Create Event</button>
@@ -73,6 +62,7 @@ import { Form, Field, ErrorMessage } from 'vee-validate';
 import * as yup from 'yup';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import MapComponent from '../../common-templates/MapComponent.vue';
 
 const router = useRouter();
 
@@ -91,18 +81,18 @@ const schema = yup.object({
     time: yup
         .string()
         .required('This field is required'),
-    longtitude: yup
-        .number()
-        .required('This field is required'),
-    latitude: yup
-        .number()
-        .required('This field is required'),
-
 });
 
 const store = eventStore();
 
-const errorMsg = ref('')
+const errorMsg = ref('');
+
+const selectedCoordinates = ref(null)
+
+const handleCoordinates = (coordinates) => {
+    selectedCoordinates.value = coordinates;
+    console.log(selectedCoordinates.value);
+} 
 
 const handleCreateEvent = (values) => {
     try {
@@ -113,10 +103,10 @@ const handleCreateEvent = (values) => {
             price: values.price,
             date: values.date,
             time: values.time,
-            location: [values.longtitude, values.latitude],
+            location: selectedCoordinates.value,
         }
 
-        store.createEvent(newEvent)
+        store.createEvent(newEvent);
         router.push({name: 'events'})
     } catch (error) {
         errorMsg.value = error.message
