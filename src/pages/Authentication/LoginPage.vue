@@ -17,7 +17,7 @@
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
                                 <Field type="password" v-model="loginData.password" name="password" class="form-control"
-                                    placeholder="Enter your password" required />
+                                    placeholder="Enter your password" required autocomplete="on"/>
                                 <ErrorMessage name="password" class="text-danger" />
                             </div>
                             <div class="mb-3 d-flex row col-6">

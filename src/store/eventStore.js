@@ -1,7 +1,15 @@
 import { defineStore } from "pinia";
+import eventServices from "../services/events/eventServices.js";
 
-const eventStore = defineStore('eventStore', {
+export const eventStore = defineStore('events', {
     state: () => ({
-        events: []
+        events: null,
+        currentEvent: null
     }),
+
+    actions: {
+        async createEvent(eventData) {
+            await eventServices.addEvent(eventData)
+        },
+    }
 })

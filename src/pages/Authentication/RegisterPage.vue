@@ -89,8 +89,6 @@ const formData = {
 const onSubmit = async () => {
   console.log('here');
   try {
-    // await validation.validate(formData, { abortEarly: false });
-
     if (formData.password !== formData.repeatPassword) {
       throw new Error('Passwords do not match!');
     }

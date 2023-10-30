@@ -3,7 +3,9 @@ import EventCatalog from '../pages/EventsPage/EventCatalog.vue';
 import EventPage from '../pages/EventsPage/EventPage.vue';
 import LoginPage from '../pages/Authentication/LoginPage.vue';
 import RegisterPage from '../pages/Authentication/RegisterPage.vue';
-import ProfilePage from '../pages/Authentication/ProfilePage.vue'
+import ProfilePage from '../pages/Authentication/ProfilePage.vue';
+import CreateEvent from '../pages/EventsPage/CreateEvent.vue'
+import NotFound from '../common-templates/NotFound.vue'
 
 const routes = [
     {
@@ -15,6 +17,11 @@ const routes = [
         path: '/events/:id',
         name: 'event',
         component: EventPage
+    },
+    {
+        path: '/events/createEvent',
+        name: 'createEvent',
+        component: CreateEvent
     },
     {
         path: '/login',
@@ -34,6 +41,10 @@ const routes = [
     {
         path: '/',
         redirect: '/events'
+    },
+    {
+        path: '/:catchAll(.*)',
+        component: NotFound
     }
 ];
 
