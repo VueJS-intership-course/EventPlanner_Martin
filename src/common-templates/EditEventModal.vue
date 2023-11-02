@@ -79,8 +79,8 @@
               />
             </div>
           </div>
-          <span>hi there</span>
-          <MapComponent></MapComponent>
+            
+          <MapComponent class="map-container"></MapComponent>
         </div>
         <div class="modal-footer">
           <button class="btn btn-primary" @click="saveEditedEvent">
@@ -129,3 +129,9 @@ const cancelButton = () => {
   eStore.isEditing = false;
 };
 </script>
+
+<style scoped>
+.map-container {
+  height: 300px;
+}
+</style>

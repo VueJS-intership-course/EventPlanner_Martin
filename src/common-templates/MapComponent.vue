@@ -1,5 +1,5 @@
 <template>
-  <div id="map" class="rounded"></div>
+  <div id="map" ref="mapContainer" class="rounded"></div>
 </template>
 
 <script setup>
@@ -20,14 +20,16 @@ const emit = defineEmits();
 const map = ref(null);
 const vectorSource = ref(null);
 
-const initializeMap = () => {
+const mapContainer = ref(null)
+
+const initializeMap = (element) => {
+  
   const vectorInstance = new VectorSource();
   const vectorLayer = new VectorLayer({
     source: vectorInstance,
   });
-
   const mapInstance = new Map({
-    target: this.$el,
+    target: element,
     view: new View({
       center: fromLonLat([0, 0]),
       zoom: 2,
@@ -87,7 +89,7 @@ const showLocationOnMap = () => {
 };
 
 onMounted(() => {
-  initializeMap();
+  initializeMap(mapContainer.value);
   showLocationOnMap();
 });
 </script>
