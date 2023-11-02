@@ -1,48 +1,105 @@
 <template>
   <div v-if="!event" class="text-center mt-5">
-    <span>Loading...</span>
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
   </div>
-  <div v-if="event" class="container d-flex mt-4 w-50">
-    <div class="container mt-4">
-      <div class="d-flex justify-content-center">
-        <div class="card" style="width: 18rem">
+  <div v-if="event" class="container mt-5">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card mb-4 shadow-sm event-card">
           <img
             src="https://picsum.photos/600/400"
             alt="Event Image"
-            class="img-fluid rounded"
+            class="card-img-top"
           />
           <div class="card-body">
             <h5 class="card-title">Event: {{ event.name }}</h5>
-            <p class="card-text">Decription: {{ event.description }}</p>
+            <p class="card-text">{{ event.description }}</p>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                Date and time:
+                <span class="text-info">{{ event.date }} {{ event.time }}</span>
+              </li>
+              <li class="list-group-item">
+                Price:
+                <span class="font-weight-bold text-success"
+                  >${{ event.price }}</span
+                >
+              </li>
+              <li class="list-group-item">
+                Available tickets:
+                <span class="font-weight-bold text-danger">{{
+                  event.ticket
+                }}</span>
+              </li>
+            </ul>
           </div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-              Date and time: {{ event.date }} {{ event.time }}
-            </li>
-            <li class="list-group-item">Price: ${{ event.price }}</li>
-            <li class="list-group-item">
-              Available tickets: {{ event.ticket }}
-            </li>
-          </ul>
+          <div class="card-footer bg-white d-flex justify-content-end">
+            <button
+              class="btn btn-outline-primary btn-sm me-2"
+              @click="editEvent"
+            >
+              Edit
+            </button>
+            <button
+              class="btn btn-outline-danger btn-sm ms-2"
+              @click="removeEvent"
+            >
+              Remove
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-    <div>
-      <MapComponent :location="event.location" style="height: 300px; width: 500px"></MapComponent>
+      <div class="col-md-6">
+        <MapComponent
+          :location="event.location"
+          class="border rounded map-container"
+        ></MapComponent>
+      </div>
     </div>
   </div>
+  <EditEventModal v-if="isEditing">
+    <MapComponent> </MapComponent>
+  </EditEventModal>
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { eventStore } from '@/store/eventStore.js';
 import { useRoute } from 'vue-router';
 import MapComponent from '../../common-templates/MapComponent.vue';
+import EditEventModal from '../../common-templates/EditEventModal.vue';
 
 const route = useRoute();
 const eStore = eventStore();
 const eventId = computed(() => route.params.id);
+const isEditing = computed(() => eStore.isEditing);
 
 eStore.getEventDetails(eventId.value);
 const event = computed(() => eStore.choosedEvent);
+
+const removeEvent = () => {
+  console.log('remove');
+};
+
+const editEvent = () => {
+  eStore.isEditing = true;
+  eStore.editedEvent = { ...event.value };
+};
 </script>
+
+<style scoped>
+.event-card {
+  transition: transform 0.2s;
+}
+
+.event-card:hover {
+  transform: scale(1.05);
+}
+
+.map-container {
+  height: 400px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+</style>

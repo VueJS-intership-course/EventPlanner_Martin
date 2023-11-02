@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-primary">
-    <a class="navbar-brand px-3" href="/">Resevent</a>
+    <a class="navbar-brand px-3">Resevent</a>
     <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
       <ul class="navbar-nav ml-auto">
         <li v-if="isAdmin">

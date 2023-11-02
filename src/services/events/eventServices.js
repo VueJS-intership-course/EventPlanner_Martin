@@ -58,5 +58,28 @@ export default {
     } catch (error) {
       console.log(error);
     }
-  }
+  },
+
+  async editEvent(event) {
+    const querySnapshot = await firebaseData.fireStore
+      .collection("events")
+      .where("id", "==", event.id)
+      .get();
+
+    const doc = querySnapshot.docs[0];
+    try {
+      await doc.ref.update({
+        id: event.id,
+        name: event.name,
+        description: event.description,
+        date: event.date,
+        time: event.time,
+        location: event.location,
+        ticket: event.ticket,
+        price: event.price,
+      });
+    } catch (error) {
+      console.error("Error editing event: ", error);
+    }
+  },
 };

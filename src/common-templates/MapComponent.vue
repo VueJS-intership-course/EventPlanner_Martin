@@ -27,7 +27,7 @@ const initializeMap = () => {
   });
 
   const mapInstance = new Map({
-    target: 'map',
+    target: this.$el,
     view: new View({
       center: fromLonLat([0, 0]),
       zoom: 2,
