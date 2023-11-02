@@ -12,10 +12,10 @@
         <li class="nav-item px-2">
           <RouterLink :to="'/events'" class="nav-link nav-link-hover fw-bold fs-5">Events</RouterLink>
         </li>
-        <li class="nav-item px-2">
+        <li v-if="isLoggedIn" class="nav-item px-2">
           <RouterLink :to="'/profile'" class="nav-link nav-link-hover fw-bold fs-5">Profile</RouterLink>
         </li>
-        <li class="nav-item px-2 mt-2">
+        <li v-if="isLoggedIn" class="nav-item px-2 mt-2">
           <button @click="handleLogout" class="fw-bold fs-5">Logout</button>
         </li>
       </ul>
@@ -25,9 +25,9 @@
 
 <script setup>
 import { useRouter } from 'vue-router';
-import userServices from '../services/users/userServices';
-import {userStore} from '../store/userStore.js'
+import userServices from '@/services/users/userServices';
 import { computed } from 'vue';
+import {userStore} from '@/store/userStore.js'
 
 const uStore = userStore();
 

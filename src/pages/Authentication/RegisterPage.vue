@@ -9,13 +9,13 @@
           <div class="card-body">
             <form @submit.prevent="onSubmit" :validationSchema="validation">
               <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
+                <label for="username" class="form-label">Username<span style="color: red;">*</span></label>
                 <Field v-model="formData.username" name="username" class="form-control" id="username"
                   placeholder="Enter username..." />
                 <ErrorMessage name="username" class="text-danger" />
               </div>
               <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
+                <label for="email" class="form-label">Email<span style="color: red;">*</span></label>
                 <Field v-model="formData.email" name="email" type="email" class="form-control" id="email"
                   placeholder="Enter email..." />
                 <ErrorMessage name="email" class="text-danger" />
@@ -25,13 +25,13 @@
                 <ErrorMessage name="location" />
               </div>
               <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
+                <label for="password" class="form-label">Password<span style="color: red;">*</span></label>
                 <Field v-model="formData.password" name="password" type="password" class="form-control" id="password"
                   autocomplete="on" placeholder="Enter password..." />
                 <ErrorMessage name="password" class="text-danger" />
               </div>
               <div class="mb-3">
-                <label for="repeatPassword" class="form-label">Repeat password</label>
+                <label for="repeatPassword" class="form-label">Repeat password<span style="color: red;">*</span></label>
                 <Field v-model="formData.repeatPassword" name="repeatPassword" type="password" class="form-control"
                   id="repeatPassword" autocomplete="on" placeholder="Repeat the password..." />
                 <ErrorMessage name="repeatPassword" class="text-danger" />

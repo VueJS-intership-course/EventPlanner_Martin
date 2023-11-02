@@ -8,42 +8,42 @@
                     <Form @submit="handleCreateEvent" :validationSchema="schema"  role="form"  class="d-flex flex-column column w-100">
                         <div class="d-flex">
                             <div class="form-group w-100 mb-2 me-5">
-                                <label class="form-control-label" for="name">Name</label>
+                                <label class="form-control-label" for="name">Name<span style="color: red;">*</span></label>
                                 <Field type="text" class="form-control" id="form-group-input" name="name" placeholder="Type name..." />
                                 <ErrorMessage name="name" class="text-danger" />
                             </div>
                             <div class="form-group w-100 mb-2 ms-5">
-                                <label class="form-control-label" for="description">Description</label>
+                                <label class="form-control-label" for="description">Description<span style="color: red;">*</span></label>
                                 <Field type="text" class="form-control" id="form-group-input" name="description" placeholder="Type description..." />
                                 <ErrorMessage name="description" class="text-danger" />
                             </div>
                         </div>
                         <div class="d-flex">
                             <div class="form-group w-100 mb-2 me-5">
-                            <label class="form-control-label" for="tickets">Tickets</label>
+                            <label class="form-control-label" for="tickets">Tickets<span style="color: red;">*</span></label>
                             <Field type="number" class="form-control" id="form-group-input" name="tickets" placeholder="Type count of tickets..." />
                                 <ErrorMessage name="tickets" class="text-danger" />
                             </div>
                             <div class="form-group w-100 mb-2 ms-5">
-                                <label class="form-control-label" for="price">Price</label>
+                                <label class="form-control-label" for="price">Price<span style="color: red;">*</span></label>
                                 <Field type="number" class="form-control" id="form-group-input" name="price" placeholder="Type price..." />
                                 <ErrorMessage name="price" class="text-danger" />
                             </div>
                         </div>
                         <div class="d-flex">
                             <div class="form-group w-100 mb-2 me-5">
-                                <label class="form-control-label" for="date">Date</label>
+                                <label class="form-control-label" for="date">Date<span style="color: red;">*</span></label>
                                 <Field type="date" class="form-control" id="form-group-input" name="date" />
                                 <ErrorMessage name="date" class="text-danger" />
                             </div>
                             <div class="form-group w-100 mb-2 ms-5">
-                                <label class="form-control-label" for="time">Time</label>
+                                <label class="form-control-label" for="time">Time<span style="color: red;">*</span></label>
                                 <Field type="time" class="form-control" id="form-group-input" name="time" />
                                 <ErrorMessage name="time" class="text-danger" />
                             </div>
                         </div>
                         <div class="d-flex align-self-center w-100">
-                            <MapComponent class="mt-2" @selectedLocation="handleCoordinates"></MapComponent>
+                            <MapComponent class="mt-2" style="height: 450px; width: 900px;" @selectedLocation="handleCoordinates"></MapComponent>
                         </div>
                         <div class="form-group align-self-center mt-2">
                             <button type="submit" class="btn btn-primary float-end mt-2" for="form-group-input">Create Event</button>

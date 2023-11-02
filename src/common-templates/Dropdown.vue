@@ -1,6 +1,6 @@
 <template>
   <div>
-    <label for="location" class="form-label">Location</label>
+    <label for="location" class="form-label">Location<span style="color: red;">*</span></label>
     <input v-model="selectedValue" title="dropdown" @input="filterZones" @click.stop="toggleDropdown"
       placeholder="Enter location..." class="form-control" />
     <ul class="custom-dropdown" v-show="showDropdown">

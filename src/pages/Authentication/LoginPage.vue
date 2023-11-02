@@ -9,13 +9,13 @@
                     <div class="card-body">
                         <form @submit.prevent="onSumbit" :validationSchema="schema">
                             <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
+                                <label for="email" class="form-label">Email<span style="color: red;">*</span></label>
                                 <Field type="email" v-model="loginData.email" name="email" id="email" class="form-control" placeholder="Enter your email"
                                     required />
                                 <ErrorMessage name="email" class="text-danger"/>
                             </div>
                             <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
+                                <label for="password" class="form-label">Password<span style="color: red;">*</span></label>
                                 <Field type="password" v-model="loginData.password" name="password" class="form-control"
                                     placeholder="Enter your password" required autocomplete="on"/>
                                 <ErrorMessage name="password" class="text-danger" />

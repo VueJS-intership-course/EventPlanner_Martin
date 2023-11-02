@@ -1,7 +1,7 @@
 import firebaseData from '@/services/firebaseConfig.js';
 
 export default {
-  async getAll() {
+  async getAllEvents() {
     try {
       const data = [];
       const querySnapshot = await firebaseData.fireStore
@@ -9,9 +9,9 @@ export default {
         .get();
 
       querySnapshot.forEach((doc) => {
-        const { name, description, id, location, date, time, price, tickets } = doc.data();
+        const { name, description, id, location, date, time, price, ticket } = doc.data();
 
-        const newEvent = {
+        const event = {
           name,
           description,
           id,
@@ -19,11 +19,11 @@ export default {
           date,
           time,
           price,
-          tickets,
+          ticket,
         };
-        data.push(newEvent);
+        data.push(event);
       });
-
+      console.log(data);
       return data;
     } catch (error) {
       throw error;
@@ -47,4 +47,16 @@ export default {
       throw error;
     }
   },
+
+  async getSingleEvent(eventId) {
+    try {
+      const querySnapshot = await firebaseData.fireStore.collection('events').where('id', '==', eventId).get();
+
+      if (querySnapshot.docs.length > 0) {
+        return querySnapshot.docs[0].data();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 };

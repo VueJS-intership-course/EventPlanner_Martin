@@ -1,5 +1,5 @@
 <template>
-  <div id="map" class="rounded" style="height: 450px; width: 900px;"></div>
+  <div id="map" class="rounded"></div>
 </template>
 
 <script setup>
@@ -70,10 +70,24 @@ const handleMapClick = (lonLat, vectorInstance) => {
   const coordinates = lonLat;
 
   emit('selectedLocation', coordinates);
-  // console.log(coordinates);
+};
+
+const { location } = defineProps(['location']);
+const showLocationOnMap = () => {
+  if (location && map.value) {
+    const lonLat = fromLonLat(location);
+    const longitudeAndLatitude = toLonLat(lonLat);
+
+    map.value.getView().setCenter(fromLonLat(location));
+    map.value.getView().setZoom(5); 
+
+    console.log(longitudeAndLatitude);
+    handleMapClick(longitudeAndLatitude, vectorSource.value);
+  }
 };
 
 onMounted(() => {
   initializeMap();
+  showLocationOnMap();
 });
 </script>
