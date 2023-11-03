@@ -55,6 +55,7 @@
         <MapComponent
           :location="event.location"
           class="border rounded map-container"
+          :readonly="true"
         ></MapComponent>
       </div>
     </div>

@@ -42,10 +42,12 @@ const initializeMap = (element) => {
     ],
   });
 
-  mapInstance.on('click', (event) => {
-    const lonLat = toLonLat(event.coordinate);
-    handleMapClick(lonLat, vectorInstance);
-  });
+  if (!readonly) {
+    mapInstance.on('click', (event) => {
+      const lonLat = toLonLat(event.coordinate);
+      handleMapClick(lonLat, vectorInstance);
+    });
+  }
 
   map.value = mapInstance;
   vectorSource.value = vectorInstance;
@@ -74,7 +76,7 @@ const handleMapClick = (lonLat, vectorInstance) => {
   emit('selectedLocation', coordinates);
 };
 
-const { location } = defineProps(['location']);
+const { location, readonly } = defineProps(['location', 'readonly']);
 const showLocationOnMap = () => {
   if (location && map.value) {
     const lonLat = fromLonLat(location);
