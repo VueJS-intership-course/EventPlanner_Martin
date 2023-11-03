@@ -40,12 +40,14 @@
               class="btn btn-outline-primary btn-sm me-2"
               @click="editEvent"
             >
+            <i class="bi bi-pencil"></i>
               Edit
             </button>
             <button
               class="btn btn-outline-danger btn-sm ms-2"
               @click="removeEvent"
-            >
+              >
+              <i class="bi bi-trash3"></i>
               Remove
             </button>
           </div>

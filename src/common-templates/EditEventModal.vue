@@ -80,7 +80,7 @@
             </div>
           </div>
             
-          <MapComponent class="map-container"></MapComponent>
+          <MapComponent class="map-container" @selectedLocation="handleCoordinates"></MapComponent>
         </div>
         <div class="modal-footer">
           <button class="btn btn-primary" @click="saveEditedEvent">
@@ -109,13 +109,11 @@ import { useRouter } from 'vue-router';
 import MapComponent from './MapComponent.vue';
 
 const router = useRouter();
-const showMap = ref(false);
 
 const eStore = eventStore();
 const editedEvent = computed(() => eStore.editedEvent);
 
 const handleCoordinates = (coordinates) => {
-  // Assuming your editedEvent object has fields to store the coordinates, like latitude and longitude
   editedEvent.value.location = coordinates;
 };
 

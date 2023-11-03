@@ -72,10 +72,10 @@ export default {
         id: event.id,
         name: event.name,
         description: event.description,
-        date: event.date,
-        time: event.time,
-        location: event.location,
         ticket: event.ticket,
+        time: event.time,
+        date: event.date,
+        location: event.location,
         price: event.price,
       });
     } catch (error) {
