@@ -18,15 +18,6 @@
             <div class="card-body">
               <p class="card-text">{{ event.description }}</p>
             </div>
-            <!-- <ul class="list-group list-group-flush">
-              <li class="list-group-item">Date: {{ event.date }}</li>
-              <li class="list-group-item">Time: {{ event.time }}</li>
-              <li class="list-group-item">Location: {{ event.location }}</li>
-              <li class="list-group-item">Price: {{ event.price }}</li>
-              <li class="list-group-item">
-                Tickets Available: {{ event.ticket }}
-              </li>
-            </ul> -->
             <ul class="list-group list-group-flush">
               <li class="list-group-item list-group-item-secondary px-4 py-2">
                 <i class="bi bi-calendar2 text-primary"></i>
@@ -42,8 +33,6 @@
                 <i class="bi bi-coin text-success"></i>
                 <strong class="ms-1">Price:</strong> {{ event.price }}
               </li>
-
-              <!-- Conditionally style the ticket availability -->
               <li class="list-group-item px-4 py-2" :class="{
                 'list-group-item-danger': event.ticket < 10,
                 'list-group-item-warning':
