@@ -9,7 +9,8 @@ export default {
         .get();
 
       querySnapshot.forEach((doc) => {
-        const { name, description, id, location, date, time, price, ticket } = doc.data();
+        const { name, description, id, location, date, time, price, ticket } =
+          doc.data();
 
         const event = {
           name,
@@ -50,7 +51,10 @@ export default {
 
   async getSingleEvent(eventId) {
     try {
-      const querySnapshot = await firebaseData.fireStore.collection('events').where('id', '==', eventId).get();
+      const querySnapshot = await firebaseData.fireStore
+        .collection('events')
+        .where('id', '==', eventId)
+        .get();
 
       if (querySnapshot.docs.length > 0) {
         return querySnapshot.docs[0].data();
@@ -62,8 +66,8 @@ export default {
 
   async editEvent(event) {
     const querySnapshot = await firebaseData.fireStore
-      .collection("events")
-      .where("id", "==", event.id)
+      .collection('events')
+      .where('id', '==', event.id)
       .get();
 
     const doc = querySnapshot.docs[0];
@@ -79,7 +83,24 @@ export default {
         price: event.price,
       });
     } catch (error) {
-      console.error("Error editing event: ", error);
+      console.error('Error editing event: ', error);
+    }
+  },
+
+  async removeEvent(eventId) {
+    try {
+      const querySnapshot = await firebaseData.fireStore.collection('events').where('id', '==', eventId).get();
+
+      const batch = firebaseData.fireStore.batch();
+
+      querySnapshot.forEach((doc) => {
+        batch.delete(doc.ref);
+      })
+
+      await batch.commit();
+
+    } catch (error) {
+      console.log(error);
     }
   },
 };

@@ -1,80 +1,75 @@
 <template>
   <div v-if="!event" class="text-center mt-5">
     <div class="spinner-border text-primary" role="status">
-      <span class="sr-only">Loading...</span>
+      <span class="visually-hidden">Loading...</span>
     </div>
   </div>
   <div v-if="event" class="container mt-5">
     <div class="row">
       <div class="col-md-6">
-        <div class="card mb-4 shadow-sm event-card">
+        <div class="card mb-3 event-card">
           <img
             src="https://picsum.photos/600/400"
             alt="Event Image"
             class="card-img-top"
           />
           <div class="card-body">
-            <h5 class="card-title">Event: {{ event.name }}</h5>
+            <h5 class="card-title">{{ event.name }}</h5>
             <p class="card-text">{{ event.description }}</p>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item">
+              <li class="list-group-item d-flex justify-content-between align-items-center">
                 Date and time:
-                <span class="text-info">{{ event.date }} {{ event.time }}</span>
+                <span class="badge bg-info text-dark">{{ event.date }} {{ event.time }}</span>
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item d-flex justify-content-between align-items-center">
                 Price:
-                <span class="font-weight-bold text-success"
-                  >${{ event.price }}</span
-                >
+                <span class="badge bg-success">${{ event.price }}</span>
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item d-flex justify-content-between align-items-center">
                 Available tickets:
-                <span class="font-weight-bold text-danger">{{
-                  event.ticket
-                }}</span>
+                <span class="badge bg-danger">{{ event.ticket }}</span>
               </li>
             </ul>
           </div>
           <div class="card-footer bg-white d-flex justify-content-end">
             <button
-              class="btn btn-outline-primary btn-sm me-2"
+              class="btn btn-primary btn-sm me-2"
               @click="editEvent"
             >
-            <i class="bi bi-pencil"></i>
-              Edit
+              <i class="bi bi-pencil"></i> Edit
             </button>
             <button
-              class="btn btn-outline-danger btn-sm ms-2"
+              class="btn btn-danger btn-sm"
               @click="removeEvent"
-              >
-              <i class="bi bi-trash3"></i>
-              Remove
+            >
+              <i class="bi bi-trash"></i> Remove
             </button>
           </div>
         </div>
       </div>
       <div class="col-md-6">
-        <MapComponent
-          :location="event.location"
-          class="border rounded map-container"
-          :readonly="true"
-        ></MapComponent>
+          <MapComponent
+            :location="event.location"
+            class="border rounded map-container"
+            :readonly="true"
+          ></MapComponent>
       </div>
     </div>
   </div>
-  <EditEventModal v-if="isEditing">
-    <MapComponent> </MapComponent>
+  <EditEventModal v-if="isEditing" :event="event.value">
+    <MapComponent></MapComponent>
   </EditEventModal>
 </template>
 
 <script setup>
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import { eventStore } from '@/store/eventStore.js';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import MapComponent from '../../common-templates/MapComponent.vue';
-import EditEventModal from '../../common-templates/EditEventModal.vue';
+import EditEventModal from '@/common-templates/EditEventModal.vue';
 
 const route = useRoute();
+const router = useRouter();
 const eStore = eventStore();
 const eventId = computed(() => route.params.id);
 const isEditing = computed(() => eStore.isEditing);
@@ -82,8 +77,9 @@ const isEditing = computed(() => eStore.isEditing);
 eStore.getEventDetails(eventId.value);
 const event = computed(() => eStore.choosedEvent);
 
-const removeEvent = () => {
-  console.log('remove');
+const removeEvent = async () => {
+  await eStore.removeEvent(event.value.id);
+  router.push({name: 'events'})
 };
 
 const editEvent = () => {

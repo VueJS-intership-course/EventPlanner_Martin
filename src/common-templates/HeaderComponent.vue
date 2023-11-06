@@ -3,8 +3,8 @@
     <a class="navbar-brand px-3">Resevent</a>
     <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
       <ul class="navbar-nav ml-auto">
-        <li v-if="isAdmin">
-          <span>Admin</span>
+        <li v-if="isAdmin" class="nav-item px-2">
+          <span class="nav-link fw-bold fs-5"><i class="bi bi-shield-lock"></i>Admin</span>
         </li>
         <li v-if="!isLoggedIn" class="nav-item px-2">
           <RouterLink :to="'/login'" class="nav-link nav-link-hover fw-bold fs-5">Login</RouterLink>

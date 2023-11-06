@@ -1,25 +1,68 @@
 <template>
   <div>
-    <RouterLink v-if="isAdmin" :to="'/events/createEvent'">
-      <button class="btn btn-primary">Create Event</button>
-    </RouterLink>
-    <div class="container mt-5">
-      <div class="d-flex event-list justify-content-center">
-        <div class="col-3" v-for="(event, index) in events" :key="index">
-          <div class="card mb-2">
-            <div class="card-body">
-              <h5 class="card-title">{{ event.name }}</h5>
-              <p class="card-text">Description: {{ event.description }}</p>
+    <div v-if="isAdmin" class="text-center my-3">
+      <RouterLink :to="'/events/createEvent'">
+        <button class="btn btn-primary btn-lg">Create Event</button>
+      </RouterLink>
+    </div>
+    <div class="container mt-3">
+      <div class="row row-cols-1 row-cols-md-3 g-4 w-100 d-flex justify-content-center">
+        <div class="col d-flex justify-content-center align-items-stretch mb-4" v-for="(event, index) in events"
+          :key="index">
+          <div class="card h-100 shadow-sm">
+            <div class="card-header bg-primary text-white">
+              <h5 class="card-title mb-0">{{ event.name }}</h5>
             </div>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item"><strong>Date and time:</strong> {{ event.date }} {{ event.time }}</li>
-              <li class="list-group-item"><strong>Location:</strong> {{ event.location }}</li>
-              <li class="list-group-item"><strong>Price:</strong> {{ event.price }}</li>
-              <li class="list-group-item"><strong>Tickets Available:</strong> {{ event.ticket }}</li>
-            </ul>
+            <img src="https://picsum.photos/600/400" alt="Event Image" class="card-img-top"
+              style="object-fit: cover; height: 200px" />
             <div class="card-body">
-              <button class="btn btn-primary">Buy Tickets</button>
-              <button @click="eventDetails(event.id)">Details</button>
+              <p class="card-text">{{ event.description }}</p>
+            </div>
+            <!-- <ul class="list-group list-group-flush">
+              <li class="list-group-item">Date: {{ event.date }}</li>
+              <li class="list-group-item">Time: {{ event.time }}</li>
+              <li class="list-group-item">Location: {{ event.location }}</li>
+              <li class="list-group-item">Price: {{ event.price }}</li>
+              <li class="list-group-item">
+                Tickets Available: {{ event.ticket }}
+              </li>
+            </ul> -->
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item list-group-item-secondary px-4 py-2">
+                <i class="bi bi-calendar2 text-primary"></i>
+                <strong class="ms-1">Date and time:</strong> {{ event.date }}
+                {{ event.time }}
+              </li>
+              <li class="list-group-item px-4 py-2">
+                <i class="bi bi-geo-alt text-primary"></i>
+                <strong class="ms-1">Location:</strong>
+                {{ event.location }}
+              </li>
+              <li class="list-group-item list-group-item-success px-4 py-2">
+                <i class="bi bi-coin text-success"></i>
+                <strong class="ms-1">Price:</strong> {{ event.price }}
+              </li>
+
+              <!-- Conditionally style the ticket availability -->
+              <li class="list-group-item px-4 py-2" :class="{
+                'list-group-item-danger': event.ticket < 10,
+                'list-group-item-warning':
+                  event.ticket >= 10 && event.ticket < 20,
+              }">
+              <i class="bi bi-ticket-detailed text-primary" :class="{
+                'text-danger': event.ticket < 10,
+                'text-warning':
+                  event.ticket >= 10 && event.ticket < 20,
+              }"></i>
+                <strong class="ms-1">Tickets Available:</strong> {{ event.ticket }}
+              </li>
+            </ul>
+
+            <div class="card-footer bg-white d-flex justify-content-between">
+              <button class="btn btn-success">Buy Tickets</button>
+              <button class="btn btn-outline-primary ms-2" @click="eventDetails(event.id)">
+                Details
+              </button>
             </div>
           </div>
         </div>
@@ -30,8 +73,8 @@
 
 <script setup>
 import { eventStore } from '@/store/eventStore';
-import {computed} from 'vue';
-import {userStore} from '@/store/userStore.js'
+import { computed } from 'vue';
+import { userStore } from '@/store/userStore.js';
 import { useRouter } from 'vue-router';
 
 const eStore = eventStore();
@@ -45,8 +88,8 @@ const events = computed(() => eStore.events);
 console.log(events);
 
 const eventDetails = (eventId) => {
-  router.push({name: 'event', params: {id: eventId}})
-}
+  router.push({ name: 'event', params: { id: eventId } });
+};
 </script>
 
 <style scoped>

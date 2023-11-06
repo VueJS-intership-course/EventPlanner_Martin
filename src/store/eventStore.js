@@ -45,5 +45,9 @@ export const eventStore = defineStore('events', {
           console.error("Error editing an event:", error);
         }
       },
+    async removeEvent(eventId) {
+      await eventServices.removeEvent(eventId);
+      this.getEvents();
+    }
   },
 });

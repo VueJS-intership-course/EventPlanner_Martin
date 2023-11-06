@@ -14,6 +14,7 @@ export const userStore = defineStore('userStore', {
         async setCurrentUser(user) {
             if (user) {
                 this.currentUser = await userServices.getUser(user.uid);
+                console.log(this.currentUser);
             }
         }
     }
