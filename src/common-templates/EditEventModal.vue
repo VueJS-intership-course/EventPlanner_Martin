@@ -79,8 +79,12 @@
               />
             </div>
           </div>
-            
-          <MapComponent class="map-container" @selectedLocation="handleCoordinates"></MapComponent>
+
+          <MapComponent
+            class="map-container"
+            @selectedLocation="handleCoordinates"
+            :location="editedEvent.location"
+          ></MapComponent>
         </div>
         <div class="modal-footer">
           <button class="btn btn-primary" @click="saveEditedEvent">
@@ -103,10 +107,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, watch } from 'vue';
 import { eventStore } from '../store/eventStore';
 import { useRouter } from 'vue-router';
 import MapComponent from './MapComponent.vue';
+
+const emit = defineEmits();
 
 const router = useRouter();
 
@@ -126,6 +132,18 @@ const saveEditedEvent = () => {
 const cancelButton = () => {
   eStore.isEditing = false;
 };
+
+watch(
+  () => editedEvent.value.location,
+  (newLocation, oldLocation) => {
+    if (newLocation !== oldLocation) {
+      // emit('update-location', newLocation);
+      console.warn(newLocation)
+      handleCoordinates(newLocation)
+    }
+  },
+  { deep: true }
+);
 </script>
 
 <style scoped>

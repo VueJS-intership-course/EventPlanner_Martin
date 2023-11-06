@@ -12,7 +12,7 @@ import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
 import { Style, Circle, Fill } from 'ol/style';
 import { fromLonLat, toLonLat } from 'ol/proj';
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted, watch, nextTick } from 'vue';
 import 'ol/ol.css';
 
 const emit = defineEmits();
@@ -100,9 +100,10 @@ watch(
   (newLocation) => {
     if (newLocation) {
       showLocationOnMap();
+      nextTick()
     }
   },
-  { immediate: true }
+  { immediate: true, deep: true}
 );
 
 onMounted(() => {

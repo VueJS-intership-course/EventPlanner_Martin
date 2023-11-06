@@ -49,16 +49,15 @@
       </div>
       <div class="col-md-6">
           <MapComponent
-            :location="event.location"
+          :key="currentLocation"
+            :location="currentLocation"
             class="border rounded map-container"
             :readonly="true"
           ></MapComponent>
       </div>
     </div>
   </div>
-  <EditEventModal v-if="isEditing" :event="event.value">
-    <MapComponent></MapComponent>
-  </EditEventModal>
+  <EditEventModal v-if="isEditing" :event="event.value" />
 </template>
 
 <script setup>
@@ -76,6 +75,7 @@ const isEditing = computed(() => eStore.isEditing);
 
 eStore.getEventDetails(eventId.value);
 const event = computed(() => eStore.choosedEvent);
+const currentLocation = computed(() => eStore.getCoordinates);
 
 const removeEvent = async () => {
   await eStore.removeEvent(event.value.id);
@@ -86,6 +86,7 @@ const editEvent = () => {
   eStore.isEditing = true;
   eStore.editedEvent = { ...event.value };
 };
+
 </script>
 
 <style scoped>
