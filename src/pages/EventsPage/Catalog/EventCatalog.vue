@@ -64,7 +64,7 @@
 
             <div class="card-footer bg-white d-flex justify-content-between">
               <button
-              v-if="!isAdmin"
+              v-if="!isAdmin && !event.clients.includes(userEmail)"
                 class="btn btn-success"
                 @click="handleBuyTicket(event)"
               >
@@ -94,9 +94,9 @@ import { useRouter } from 'vue-router';
 const eStore = eventStore();
 const uStore = userStore();
 const router = useRouter();
-// console.log(uStore.currentUser);
 
 const isAdmin = computed(() => uStore.isAdmin);
+const userEmail = computed(() => uStore.currentUser ? uStore.currentUser.email : null);
 
 eStore.getEvents();
 const events = computed(() => eStore.events);
