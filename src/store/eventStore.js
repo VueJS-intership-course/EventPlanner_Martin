@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import eventServices from '@/services/events/eventServices.js';
+import { userStore } from './userStore';
 
 export const eventStore = defineStore('events', {
   state: () => ({
@@ -49,6 +50,9 @@ export const eventStore = defineStore('events', {
     async removeEvent(eventId) {
       await eventServices.removeEvent(eventId);
       this.getEvents();
+    },
+    async buyTicket(event) {
+      await eventServices.buyTicket(event);
     }
   },
 });

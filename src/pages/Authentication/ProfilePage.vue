@@ -1,7 +1,7 @@
 <template>
   <div class="row py-5 px-4">
     <div class="col-xl-4 col-md-6 col-sm-10 mx-auto">
-      <div class="bg-white shadow rounded overflow-hidden">
+      <div v-if="user" class="bg-white shadow rounded overflow-hidden">
         <div class="px-4 pt-4 pb-4 bg-dark">
           <div class="media align-items-end profile-header">
             <div class="profile mr-3">

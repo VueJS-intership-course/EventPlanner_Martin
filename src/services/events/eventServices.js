@@ -1,4 +1,5 @@
 import firebaseData from '@/services/firebaseConfig.js';
+import {userStore} from '@/store/userStore';
 
 export default {
   async getAllEvents() {
@@ -9,7 +10,7 @@ export default {
         .get();
 
       querySnapshot.forEach((doc) => {
-        const { name, description, id, location, date, time, price, ticket } =
+        const { name, description, id, location, budget, date, time, price, ticket, clients } =
           doc.data();
 
         const event = {
@@ -17,10 +18,12 @@ export default {
           description,
           id,
           location,
+          budget,
           date,
           time,
           price,
           ticket,
+          clients
         };
         data.push(event);
       });
@@ -39,11 +42,14 @@ export default {
         name: eventData.name,
         description: eventData.description,
         ticket: eventData.ticket,
+        budget: eventData.budget,
         time: eventData.time,
         price: eventData.price,
         date: eventData.date,
         location: eventData.location,
+        clients: eventData.clients
       });
+      console.log(eventData.budget);
     } catch (error) {
       throw error;
     }
@@ -77,6 +83,7 @@ export default {
         name: event.name,
         description: event.description,
         ticket: event.ticket,
+        budget: event.budget,
         time: event.time,
         date: event.date,
         location: event.location,
@@ -103,4 +110,33 @@ export default {
       console.log(error);
     }
   },
+  async buyTicket(event) {
+    const user = userStore().currentUser;
+    const querySnapshot = await firebaseData.fireStore
+      .collection("events")
+      .where("id", "==", event.id)
+      .get();
+
+    const eventDoc = querySnapshot.docs[0];
+    if (!eventDoc) {
+      throw new Error('Event not found');
+    }
+
+    const eventData = eventDoc.data();
+
+    if (eventData.clients && eventData.clients.includes(userStore().currentUser.email)) {
+      throw new Error('User has already purchased a ticket for this event');
+    }
+
+    try {
+      const updatedClients = [...(eventData.clients || []), user.email];
+      await eventDoc.ref.update({
+        clients: updatedClients,
+        ticket: event.ticket - 1
+      });
+    } catch (error) {
+      console.error('Error buying ticket: ', error);
+      throw error;
+    }
+  }
 };

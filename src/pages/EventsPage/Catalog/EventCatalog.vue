@@ -6,15 +6,24 @@
       </RouterLink>
     </div>
     <div class="container mt-3">
-      <div class="row row-cols-1 row-cols-md-3 g-4 w-100 d-flex justify-content-center">
-        <div class="col d-flex justify-content-center align-items-stretch mb-4" v-for="(event, index) in events"
-          :key="index">
+      <div
+        class="row row-cols-1 row-cols-md-3 g-4 w-100 d-flex justify-content-center"
+      >
+        <div
+          class="col d-flex justify-content-center align-items-stretch mb-4"
+          v-for="(event, index) in events"
+          :key="index"
+        >
           <div class="card h-100 shadow-sm">
             <div class="card-header bg-primary text-white">
               <h5 class="card-title mb-0">{{ event.name }}</h5>
             </div>
-            <img src="https://picsum.photos/600/400" alt="Event Image" class="card-img-top"
-              style="object-fit: cover; height: 200px" />
+            <img
+              src="https://picsum.photos/600/400"
+              alt="Event Image"
+              class="card-img-top"
+              style="object-fit: cover; height: 200px"
+            />
             <div class="card-body">
               <p class="card-text">{{ event.description }}</p>
             </div>
@@ -33,23 +42,39 @@
                 <i class="bi bi-coin text-success"></i>
                 <strong class="ms-1">Price:</strong> {{ event.price }}
               </li>
-              <li class="list-group-item px-4 py-2" :class="{
-                'list-group-item-danger': event.ticket < 10,
-                'list-group-item-warning':
-                  event.ticket >= 10 && event.ticket < 20,
-              }">
-              <i class="bi bi-ticket-detailed text-primary" :class="{
-                'text-danger': event.ticket < 10,
-                'text-warning':
-                  event.ticket >= 10 && event.ticket < 20,
-              }"></i>
-                <strong class="ms-1">Tickets Available:</strong> {{ event.ticket }}
+              <li
+                class="list-group-item px-4 py-2"
+                :class="{
+                  'list-group-item-danger': event.ticket < 10,
+                  'list-group-item-warning':
+                    event.ticket >= 10 && event.ticket < 20,
+                }"
+              >
+                <i
+                  class="bi bi-ticket-detailed text-primary"
+                  :class="{
+                    'text-danger': event.ticket < 10,
+                    'text-warning': event.ticket >= 10 && event.ticket < 20,
+                  }"
+                ></i>
+                <strong class="ms-1">Tickets Available:</strong>
+                {{ event.ticket }}
               </li>
             </ul>
 
             <div class="card-footer bg-white d-flex justify-content-between">
-              <button class="btn btn-success">Buy Tickets</button>
-              <button class="btn btn-outline-primary ms-2" @click="eventDetails(event.id)">
+              <button
+              v-if="!isAdmin"
+                class="btn btn-success"
+                @click="handleBuyTicket(event)"
+              >
+                <i class="bi bi-bookmark-dash"></i> Buy Tickets
+              </button>
+              <button
+                class="btn btn-outline-primary ms-2"
+                @click="eventDetails(event.id)"
+              >
+                <i class="bi bi-info-circle-fill"></i>
                 Details
               </button>
             </div>
@@ -69,6 +94,7 @@ import { useRouter } from 'vue-router';
 const eStore = eventStore();
 const uStore = userStore();
 const router = useRouter();
+// console.log(uStore.currentUser);
 
 const isAdmin = computed(() => uStore.isAdmin);
 
@@ -79,6 +105,11 @@ console.log(events);
 const eventDetails = (eventId) => {
   router.push({ name: 'event', params: { id: eventId } });
 };
+
+const handleBuyTicket = (event) => {
+  eStore.buyTicket(event);
+};
+
 </script>
 
 <style scoped>

@@ -64,7 +64,7 @@
 import { computed } from 'vue';
 import { eventStore } from '@/store/eventStore.js';
 import { useRoute, useRouter } from 'vue-router';
-import MapComponent from '../../common-templates/MapComponent.vue';
+import MapComponent from '@/common-templates/MapComponent.vue';
 import EditEventModal from '@/common-templates/EditEventModal.vue';
 
 const route = useRoute();
