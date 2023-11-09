@@ -3,7 +3,8 @@ import userServices from '@/services/users/userServices.js'
 
 export const userStore = defineStore('userStore', {
     state: () => ({
-        currentUser: null
+        currentUser: null,
+        isChangingUserPassword: false
     }),
     getters: {
         isAdmin(state) {
@@ -21,8 +22,11 @@ export const userStore = defineStore('userStore', {
         async setCurrentUser(user) {
             if (user) {
                 this.currentUser = await userServices.getUser(user.uid);
-                console.log(this.currentUser);
             }
+        },
+        async changePassword(email, currentPassword, newPassword) {
+            await userServices.changePassword(email, currentPassword, newPassword);
+            this.currentUser = null;
         }
     }
 });

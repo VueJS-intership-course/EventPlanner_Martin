@@ -1,4 +1,5 @@
 import firebaseData from '@/services/firebaseConfig.js';
+import { reauthenticateWithCredential, EmailAuthProvider, updatePassword } from "firebase/auth";
 
 export default {
   async signUp(user, password) {
@@ -15,7 +16,7 @@ export default {
           .set({
             email: user.email,
             username: user.username,
-            location: user.location
+            location: user.location,
           });
       }
     } catch (error) {
@@ -37,26 +38,45 @@ export default {
   async logout() {
     try {
       await firebaseData.fireAuth.signOut();
-      console.log('logout');
     } catch (error) {
-      console.log(error);;
+      console.log(error);
     }
   },
 
   async getUser(userId) {
     try {
-        const userDoc = await firebaseData.fireStore.collection('users').doc(userId).get();
+      const userDoc = await firebaseData.fireStore
+        .collection('users')
+        .doc(userId)
+        .get();
 
-        if (userDoc) {
-            const userData = userDoc.data();
-            console.log(userData)
-            return userData;
-        } else {
-            console.log('User document does not exist.');
-        }
-
+      if (userDoc) {
+        const userData = userDoc.data();
+        console.log(userData);
+        return userData;
+      } else {
+        console.log('User document does not exist.');
+      }
     } catch (error) {
-        console.log(error);
+      console.log(error);
+    }
+  },
+
+  async changePassword(email, currentPassword, newPassword) {
+    try {
+        const user = firebaseData.fireAuth.currentUser;
+
+        if (user) {
+            const credential = EmailAuthProvider.credential(email, currentPassword);
+            await reauthenticateWithCredential(user, credential);
+
+            await updatePassword(user, newPassword);
+            await this.logout();
+        } else {
+            throw new Error("User is not authenticated or found.");
+        }
+    } catch (error) {
+       throw new Error('Error while changing password, please try again!')
     }
 },
 };

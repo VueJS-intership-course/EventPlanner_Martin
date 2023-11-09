@@ -31,9 +31,9 @@
 
         <div class="py-4 px-4">
           <div class="py-4">
-            <div class="p-4 bg-light rounded shadow-sm">
+            <div class="p-4 bg-light rounded shadow-sm d-flex justify-content-between">
               <p class="font-italic mb-0 d-flex justify-content-center">
-                <button class="btn" style="background-color: #212529; color: beige;">Change password</button>
+                <button @click="changingPassword" class="btn" style="background-color: #212529; color: beige;">Edit</button>
               </p>
             </div>
           </div>
@@ -41,13 +41,19 @@
       </div>
     </div>
   </div>
+  <ChangeUserPassword v-if="uStore.isChangingUserPassword"/>
 </template>
 
 <script setup>
 import { userStore } from '@/store/userStore';
 import { computed } from 'vue';
+import ChangeUserPassword from '../../common-templates/ChangeUserPassword.vue';
 
 const uStore = userStore();
 
 const user = computed(() => uStore.currentUser);
+
+const changingPassword = () => {
+  uStore.isChangingUserPassword = true;
+}
 </script>
