@@ -8,8 +8,6 @@ export default {
           user.email,
           password
         );
-          console.log('create user');
-          console.log(user);
       if (userCredentials && userCredentials.user) {
         await firebaseData.fireStore
           .collection('users')

@@ -8,20 +8,20 @@
                     </div>
                     <div class="card-body">
                         <form @submit.prevent="onSumbit" :validationSchema="schema">
-                            <div class="mb-3">
+                            <div class="mb-3 ms-1">
                                 <label for="email" class="form-label">Email<span style="color: red;">*</span></label>
-                                <Field type="email" v-model="loginData.email" name="email" id="email" class="form-control" placeholder="Enter your email"
-                                    required />
-                                <ErrorMessage name="email" class="text-danger"/>
+                                <Field type="email" v-model="loginData.email" name="email" id="email" class="form-control"
+                                    placeholder="Enter your email" required />
+                                <ErrorMessage name="email" class="text-danger" />
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-3 ms-1">
                                 <label for="password" class="form-label">Password<span style="color: red;">*</span></label>
                                 <Field type="password" v-model="loginData.password" name="password" class="form-control"
-                                    placeholder="Enter your password" required autocomplete="on"/>
+                                    placeholder="Enter your password" required autocomplete="on" />
                                 <ErrorMessage name="password" class="text-danger" />
                             </div>
-                            <div class="mb-3 d-flex row col-6">
-                                <span class="mb-3">
+                            <div class="mb-3 ms-1 d-flex row col-6">
+                                <span class="mb-2">
                                     Don't have an account?
                                     <RouterLink :to="'/register'">Sign Up</RouterLink>
                                 </span>
@@ -62,7 +62,7 @@ const loginData = {
 const onSumbit = async () => {
     try {
         await userServices.signIn(loginData.email, loginData.password);
-        router.push({name: 'events'})
+        router.push({ name: 'events' })
     } catch (error) {
         console.log(error);
     }

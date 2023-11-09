@@ -64,7 +64,7 @@
 
             <div class="card-footer bg-white d-flex justify-content-between">
               <button
-              v-if="!isAdmin && !event.clients.includes(userEmail)"
+                v-if="!isAdmin && !event.clients.includes(userEmail) && isLoggedIn"
                 class="btn btn-success"
                 @click="handleBuyTicket(event)"
               >
@@ -95,8 +95,11 @@ const eStore = eventStore();
 const uStore = userStore();
 const router = useRouter();
 
+const isLoggedIn = computed(() => uStore.isLogged)
 const isAdmin = computed(() => uStore.isAdmin);
-const userEmail = computed(() => uStore.currentUser ? uStore.currentUser.email : null);
+const userEmail = computed(() =>
+  uStore.currentUser ? uStore.currentUser.email : null
+);
 
 eStore.getEvents();
 const events = computed(() => eStore.events);
@@ -109,7 +112,6 @@ const eventDetails = (eventId) => {
 const handleBuyTicket = (event) => {
   eStore.buyTicket(event);
 };
-
 </script>
 
 <style scoped>

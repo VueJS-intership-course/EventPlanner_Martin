@@ -4,18 +4,21 @@
       <span class="visually-hidden">Loading...</span>
     </div>
   </div>
-  <div v-if="event" class="container mt-5">
+  <div v-if="event" class="text-center text-white mt-2">
+    <h3>{{ event.name }}</h3>
+  </div>
+  <div v-if="event" class="container mt-4">
     <div class="row">
       <div class="col-md-6">
         <div class="card mb-3 event-card">
           <img
-            src="https://picsum.photos/600/400"
+            src="https://picsum.photos/820/400"
             alt="Event Image"
             class="card-img-top"
           />
           <div class="card-body">
-            <h5 class="card-title">{{ event.name }}</h5>
-            <p class="card-text">{{ event.description }}</p>
+            <!-- <h5 class="card-title">{{ event.name }}</h5> -->
+            <p class="card-text ms-3">Description: {{ event.description }}</p>
             <ul class="list-group list-group-flush">
               <li class="list-group-item d-flex justify-content-between align-items-center">
                 Date and time:

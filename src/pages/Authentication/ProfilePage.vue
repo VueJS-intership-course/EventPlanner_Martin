@@ -1,5 +1,5 @@
 <template>
-  <div class="row py-5 px-4">
+  <div class="row py-5 px-4 w-100">
     <div class="col-xl-4 col-md-6 col-sm-10 mx-auto">
       <div v-if="user" class="bg-white shadow rounded overflow-hidden">
         <div class="px-4 pt-4 pb-4 bg-dark">

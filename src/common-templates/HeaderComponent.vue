@@ -3,7 +3,7 @@
     <div>
       <RouterLink :to="'/events'">
         <img
-          src="../utils/Event_Planner LOGO.png"
+          src="../utils/logo/Event_Planner LOGO.png"
           style="width: 100px; height: 75px"
         />
       </RouterLink>

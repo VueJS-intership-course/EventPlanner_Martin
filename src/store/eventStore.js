@@ -33,26 +33,32 @@ export const eventStore = defineStore('events', {
     async getEventDetails(eventId) {
       try {
         this.choosedEvent = await eventServices.getSingleEvent(eventId);
-        console.warn(this.choosedEvent)
+        console.warn(this.choosedEvent);
       } catch (error) {
         console.log(error);
       }
     },
     async editEvent(event) {
-        console.log(event);
-        try {
-          await eventServices.editEvent(event);
-          await this.getEvents();
-        } catch (error) {
-          console.error("Error editing an event:", error);
-        }
-      },
+      console.log(event);
+      try {
+        await eventServices.editEvent(event);
+        await this.getEvents();
+      } catch (error) {
+        console.error('Error editing an event:', error);
+      }
+    },
     async removeEvent(eventId) {
       await eventServices.removeEvent(eventId);
       this.getEvents();
     },
     async buyTicket(event) {
       await eventServices.buyTicket(event);
-    }
+      
+      const eventIndex = this.events.findIndex((e) => e.id === event.id);
+      if (eventIndex !== -1) {
+        this.events[eventIndex].clients.push(userStore().currentUser.email)
+      }
+      await this.getEvents();
+    },
   },
 });
