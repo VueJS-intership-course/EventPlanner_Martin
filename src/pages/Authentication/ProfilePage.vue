@@ -32,8 +32,9 @@
         <div class="py-4 px-4">
           <div class="py-4">
             <div class="p-4 bg-light rounded shadow-sm d-flex justify-content-between">
-              <p class="font-italic mb-0 d-flex justify-content-center">
-                <button @click="changingPassword" class="btn" style="background-color: #212529; color: beige;">Edit</button>
+              <p class="font-italic d-flex">
+                <button @click="changingPassword" class="btn me-5" style="background-color: #212529; color: beige;">Change Password</button>
+                <button @click="changingLocation" class="btn ms-5" style="background-color: #212529; color: beige;">Change Location</button>
               </p>
             </div>
           </div>
@@ -41,13 +42,15 @@
       </div>
     </div>
   </div>
-  <ChangeUserPassword v-if="uStore.isChangingUserPassword"/>
+  <ChangeUserPasswordModal v-if="uStore.isChangingUserPassword"/>
+  <EditLocationModal v-if="uStore.isChangingUserLocation"/>
 </template>
 
 <script setup>
 import { userStore } from '@/store/userStore';
 import { computed } from 'vue';
-import ChangeUserPassword from '../../common-templates/ChangeUserPassword.vue';
+import ChangeUserPasswordModal from '@/common-templates/ChangeUserPasswordModal.vue';
+import EditLocationModal from '../../common-templates/EditLocationModal.vue';
 
 const uStore = userStore();
 
@@ -55,5 +58,9 @@ const user = computed(() => uStore.currentUser);
 
 const changingPassword = () => {
   uStore.isChangingUserPassword = true;
+}
+
+const changingLocation = () => {
+  uStore.isChangingUserLocation = true;
 }
 </script>

@@ -1,5 +1,10 @@
 import firebaseData from '@/services/firebaseConfig.js';
-import { reauthenticateWithCredential, EmailAuthProvider, updatePassword } from "firebase/auth";
+import {
+  reauthenticateWithCredential,
+  EmailAuthProvider,
+  updatePassword,
+} from 'firebase/auth';
+import { userStore } from '@/store/userStore';
 
 export default {
   async signUp(user, password) {
@@ -64,19 +69,46 @@ export default {
 
   async changePassword(email, currentPassword, newPassword) {
     try {
-        const user = firebaseData.fireAuth.currentUser;
+      const user = firebaseData.fireAuth.currentUser;
 
-        if (user) {
-            const credential = EmailAuthProvider.credential(email, currentPassword);
-            await reauthenticateWithCredential(user, credential);
+      if (user) {
+        const credential = EmailAuthProvider.credential(email, currentPassword);
+        await reauthenticateWithCredential(user, credential);
 
-            await updatePassword(user, newPassword);
-            await this.logout();
-        } else {
-            throw new Error("User is not authenticated or found.");
-        }
+        await updatePassword(user, newPassword);
+        await this.logout();
+      } else {
+        throw new Error('User is not authenticated or found.');
+      }
     } catch (error) {
-       throw new Error('Error while changing password, please try again!')
+      throw new Error('Error while changing password, please try again!');
     }
-},
+  },
+  async editUserLocation(userLocation, user) {
+    if (!user || !user.email) {
+      console.error("User or user email is undefined");
+      return;
+    }
+  
+    try {
+      const querySnapshot = await firebaseData.fireStore
+        .collection('users')
+        .where('email', '==', user.email)
+        .get();
+  
+      const doc = querySnapshot.docs[0];
+  
+      if (doc) {
+        await doc.ref.update({
+          location: userLocation,
+        });
+      } else {
+        console.log('No matching user found.');
+      }
+    } catch (error) {
+      console.error("Error editing event: ", error);
+    }
+  }
+  
+  
 };

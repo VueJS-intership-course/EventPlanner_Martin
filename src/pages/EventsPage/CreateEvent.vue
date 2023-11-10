@@ -108,10 +108,14 @@
               <ErrorMessage name="budget" class="text-danger" />
             </div>
           </div>
-          <div class="d-flex align-self-center w-100">
+          <div class="d-flex flex-column align-self-center w-100">
+            <label class="form-control-label" for="location"
+                >Choose location<span style="color: red">*</span></label
+              >
+            <p v-if="errorMsg" class="text-danger">{{ errorMsg }}</p>
             <MapComponent
               class="mt-2"
-              style="height: 450px; width: 900px"
+              style="height: 450px; width: 830px"
               @selectedLocation="handleCoordinates"
             ></MapComponent>
           </div>
@@ -162,6 +166,10 @@ const handleCoordinates = (coordinates) => {
 };
 
 const handleCreateEvent = (values) => {
+  if (!selectedCoordinates.value) {
+    errorMsg.value = 'Please select a location on the map.';
+    return;
+  }
   try {
     const newEvent = {
       name: values.name,
@@ -180,7 +188,7 @@ const handleCreateEvent = (values) => {
   } catch (error) {
     errorMsg.value = error.message;
   }
-};
+}
 </script>
 
 <style scoped lang="scss">

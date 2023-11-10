@@ -36,17 +36,17 @@
           </div>
           <div class="card-footer bg-white d-flex justify-content-end">
             <button
-              class="btn btn-primary btn-sm me-2"
-              @click="editEvent"
+            class="btn btn-danger btn-sm"
+            @click="removeEvent"
             >
-              <i class="bi bi-pencil"></i> Edit
-            </button>
-            <button
-              class="btn btn-danger btn-sm"
-              @click="removeEvent"
-            >
-              <i class="bi bi-trash"></i> Remove
-            </button>
+            <i class="bi bi-trash"></i> Remove
+          </button>
+          <button
+            class="btn btn-primary btn-sm me-2"
+            @click="editEvent"
+          >
+            <i class="bi bi-pencil"></i> Edit
+          </button>
           </div>
         </div>
       </div>
