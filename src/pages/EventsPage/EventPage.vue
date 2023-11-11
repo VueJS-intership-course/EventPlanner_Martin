@@ -20,47 +20,49 @@
             <!-- <h5 class="card-title">{{ event.name }}</h5> -->
             <p class="card-text ms-3">Description: {{ event.description }}</p>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item d-flex justify-content-between align-items-center">
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center"
+              >
                 Date and time:
-                <span class="badge bg-info text-dark">{{ event.date }} {{ event.time }}</span>
+                <span class="badge bg-info text-dark"
+                  >{{ event.date }} {{ event.time }}</span
+                >
               </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center">
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center"
+              >
                 Price:
                 <span class="badge bg-success">${{ event.price }}</span>
               </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center">
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center"
+              >
                 Available tickets:
                 <span class="badge bg-danger">{{ event.ticket }}</span>
               </li>
             </ul>
           </div>
-          <div class="card-footer bg-white d-flex justify-content-end">
-            <button
-            class="btn btn-danger btn-sm"
-            @click="removeEvent"
-            >
-            <i class="bi bi-trash"></i> Remove
-          </button>
-          <button
-            class="btn btn-primary btn-sm me-2"
-            @click="editEvent"
-          >
-            <i class="bi bi-pencil"></i> Edit
-          </button>
+          <div v-if="isAdmin" class="card-footer bg-white d-flex justify-content-end">
+            <button class="btn btn-danger btn-sm" @click="removeEvent">
+              <i class="bi bi-trash"></i> Remove
+            </button>
+            <button class="btn btn-primary btn-sm ms-2" @click="editEvent">
+              <i class="bi bi-pencil"></i> Edit
+            </button>
           </div>
         </div>
       </div>
       <div class="col-md-6">
-          <MapComponent
+        <MapComponent
           :key="currentLocation"
-            :location="currentLocation"
-            class="border rounded map-container"
-            :readonly="true"
-          ></MapComponent>
+          :location="currentLocation"
+          class="border rounded map-container"
+          :readonly="true"
+        ></MapComponent>
       </div>
     </div>
   </div>
-  <EditEventModal v-if="isEditing" :event="event.value" />
+  <EditEventModal v-if="isEditing && isAdmin" :event="event.value" />
 </template>
 
 <script setup>
@@ -69,12 +71,16 @@ import { eventStore } from '@/store/eventStore.js';
 import { useRoute, useRouter } from 'vue-router';
 import MapComponent from '@/common-templates/MapComponent.vue';
 import EditEventModal from '@/common-templates/EditEventModal.vue';
+import { userStore } from '../../store/userStore';
 
 const route = useRoute();
 const router = useRouter();
+const uStore = userStore();
 const eStore = eventStore();
+
 const eventId = computed(() => route.params.id);
 const isEditing = computed(() => eStore.isEditing);
+const isAdmin = computed(() => uStore.isAdmin);
 
 eStore.getEventDetails(eventId.value);
 const event = computed(() => eStore.choosedEvent);
@@ -82,14 +88,13 @@ const currentLocation = computed(() => eStore.getCoordinates);
 
 const removeEvent = async () => {
   await eStore.removeEvent(event.value.id);
-  router.push({name: 'events'})
+  router.push({ name: 'events' });
 };
 
 const editEvent = () => {
   eStore.isEditing = true;
   eStore.editedEvent = { ...event.value };
 };
-
 </script>
 
 <style scoped>

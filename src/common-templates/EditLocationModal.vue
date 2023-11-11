@@ -43,7 +43,7 @@ const handleChangeLocation = async () => {
     console.log(editedUser.value.location);
     uStore.isChangingUserLocation = false;
 
-    router.push({ name: 'login' });
+    router.push({ name: 'profile' });
   } catch (error) {
     console.log(error);
   }

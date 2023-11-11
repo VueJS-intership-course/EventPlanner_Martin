@@ -35,6 +35,7 @@ export const userStore = defineStore('userStore', {
     async editUser(userLocation, user) {
       try {
         await userServices.editUserLocation(userLocation, user);
+        this.currentUser.location = userLocation;
       } catch (error) {
         console.error(error);
       }

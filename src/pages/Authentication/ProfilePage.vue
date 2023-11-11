@@ -31,11 +31,9 @@
 
         <div class="py-4 px-4">
           <div class="py-4">
-            <div class="p-4 bg-light rounded shadow-sm d-flex justify-content-between">
-              <p class="font-italic d-flex">
-                <button @click="changingPassword" class="btn me-5" style="background-color: #212529; color: beige;">Change Password</button>
-                <button @click="changingLocation" class="btn ms-5" style="background-color: #212529; color: beige;">Change Location</button>
-              </p>
+            <div class="p-4 bg-light rounded shadow-sm d-flex justify-content-around">
+              <button @click="changingPassword" class="btn" style="background-color: #212529; color: beige;">Change Password</button>
+              <button @click="changingLocation" class="btn" style="background-color: #212529; color: beige;">Change Location</button>
             </div>
           </div>
         </div>
