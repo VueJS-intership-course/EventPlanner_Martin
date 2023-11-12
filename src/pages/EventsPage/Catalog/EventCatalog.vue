@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div>
     <div v-if="isAdmin" class="text-center my-3">
       <RouterLink :to="'/events/createEvent'">
@@ -7,7 +7,7 @@
     </div>
     <div class="container mt-3">
       <div
-        class="row row-cols-1 row-cols-md-3 g-4 w-100 d-flex justify-content-center"
+        class="row row-cols-1 row-cols-md-4 g-4 w-100 d-flex justify-content-center"
       >
         <div
           class="col d-flex justify-content-center align-items-stretch mb-4"
@@ -83,6 +83,39 @@
       </div>
     </div>
   </div>
+</template> -->
+<template>
+  <div>
+    <div v-if="isAdmin" class="text-center my-3">
+      <RouterLink :to="'/events/createEvent'">
+        <button class="btn btn-success btn-lg">Create New Event</button>
+      </RouterLink>
+    </div>
+    <div class="container mt-3">
+      <div class="row row-cols-md-4 g-5">
+        <div v-for="(event, index) in events" :key="index" class="col d-flex align-items-stretch" @click="eventDetails(event.id)">
+          <div class="card larger-card shadow bg-white rounded">
+            <div class="position-relative image-container">
+              <img src="../../../assets/Overview.png" class="card-img-top" alt="Event Image">
+              <h5 class="card-title-overlay text-white position-absolute p-2">{{ event.name }}</h5>
+            </div>
+            <div class="card-body">
+              <p class="card-text">
+                <i class="bi bi-ticket-detailed align-middle"></i>
+                <span :class="{
+                  'text-danger': event.ticket < 10,
+                  'text-warning': event.ticket >= 10 && event.ticket < 20,
+                  'text-success': event.ticket >= 20
+                }" class="ms-2 align-middle">
+                  Tickets Available: {{ event.ticket }}
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -114,26 +147,64 @@ const handleBuyTicket = (event) => {
 };
 </script>
 
+<!-- <style scoped>
+  .event-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .card-container {
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-title {
+    font-weight: 600;
+    font-size: 1.25rem;
+  }
+  
+  .card-text {
+    margin-top: 10px;
+  }
+</style> -->
+
 <style scoped>
-.event-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
+.bi-ticket-detailed {
+  font-size: 1.5rem;
 }
 
-.card {
-  width: 300px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+.larger-card {
+  width: 100%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
 }
 
-.card-title {
-  font-weight: 600;
-  font-size: 1.25rem;
+.larger-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
 }
 
-.card-text {
-  margin-top: 10px;
+.card-img-top {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.image-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-title-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  font-size: 1.2rem;
+  margin-top: 0;
+  background-color: transparent;
 }
 </style>
