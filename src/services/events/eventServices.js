@@ -10,7 +10,7 @@ export default {
         .get();
 
       querySnapshot.forEach((doc) => {
-        const { name, description, id, location, budget, date, time, price, ticket, clients } =
+        const { name, description, id, location, budget, date, time, price, ticket, address, imageUrl, clients } =
           doc.data();
 
         const event = {
@@ -23,6 +23,8 @@ export default {
           time,
           price,
           ticket,
+          address,
+          imageUrl,
           clients
         };
         data.push(event);
@@ -47,6 +49,8 @@ export default {
         price: eventData.price,
         date: eventData.date,
         location: eventData.location,
+        address: eventData.address,
+        imageUrl: eventData.imageUrl,
         clients: eventData.clients
       });
       console.log(eventData.budget);

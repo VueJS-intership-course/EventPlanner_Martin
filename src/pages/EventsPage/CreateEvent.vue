@@ -94,7 +94,7 @@
             </div>
           </div>
           <div class="d-flex">
-            <div class="form-group w-50 mb-2">
+            <div class="form-group w-50 mb-2 me-5">
               <label class="form-control-label" for="budget"
                 >Budget<span style="color: red">*</span></label
               >
@@ -107,11 +107,24 @@
               />
               <ErrorMessage name="budget" class="text-danger" />
             </div>
+            <div class="form-group w-50 mb-2 ms-5">
+              <label class="form-control-label" for="imageUrl"
+                >Image URL<span style="color: red">*</span></label
+              >
+              <Field
+                type="text"
+                class="form-control"
+                id="form-group-input"
+                name="imageUrl"
+                placeholder="Type image url..."
+              />
+              <ErrorMessage name="imageUrl" class="text-danger" />
+            </div>
           </div>
           <div class="d-flex flex-column align-self-center w-100">
             <label class="form-control-label" for="location"
-                >Choose location<span style="color: red">*</span></label
-              >
+              >Choose location<span style="color: red">*</span></label
+            >
             <p v-if="errorMsg" class="text-danger">{{ errorMsg }}</p>
             <MapComponent
               class="mt-2"
@@ -141,6 +154,7 @@ import * as yup from 'yup';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import MapComponent from '@/common-templates/MapComponent.vue';
+import { getAddressFromCoordinates } from '../../utils/exact location/getAddressFromCoordinates';
 
 const router = useRouter();
 
@@ -151,7 +165,8 @@ const schema = yup.object({
   price: yup.number().required('This field is required!'),
   budget: yup.number().required('This field is required!'),
   date: yup.string().required('This field is required!'),
-  time: yup.string().required('This field is required'),
+  time: yup.string().required('This field is required!'),
+  imageUrl: yup.string().required('This field is required!'),
 });
 
 const store = eventStore();
@@ -159,17 +174,22 @@ const store = eventStore();
 const errorMsg = ref('');
 
 const selectedCoordinates = ref(null);
+const address = ref(null);
 
-const handleCoordinates = (coordinates) => {
+const handleCoordinates = async (coordinates) => {
   selectedCoordinates.value = coordinates;
+
   console.log(selectedCoordinates.value);
 };
 
-const handleCreateEvent = (values) => {
+const handleCreateEvent = async (values) => {
   if (!selectedCoordinates.value) {
     errorMsg.value = 'Please select a location on the map.';
     return;
   }
+
+  address.value = await getAddressFromCoordinates(selectedCoordinates.value)
+
   try {
     const newEvent = {
       name: values.name,
@@ -180,15 +200,17 @@ const handleCreateEvent = (values) => {
       date: values.date,
       time: values.time,
       location: selectedCoordinates.value,
-      clients: []
+      address: address.value,
+      imageUrl: values.imageUrl,
+      clients: [],
     };
-    console.log(newEvent);
+
     store.createEvent(newEvent);
     router.push({ name: 'events' });
   } catch (error) {
     errorMsg.value = error.message;
   }
-}
+};
 </script>
 
 <style scoped lang="scss">

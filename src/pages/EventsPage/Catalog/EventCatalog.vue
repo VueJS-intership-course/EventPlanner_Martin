@@ -91,22 +91,68 @@
         <button class="btn btn-success btn-lg">Create New Event</button>
       </RouterLink>
     </div>
+    <!-- <div class="container mt-3" style="background-color: blue">
+      <div class="row">
+        <div class="col m-2">
+          <div>
+            <label for="">Filter By Name</label>
+            <input
+              type="text"
+              v-model="searchText"
+              class="form-control w-50"
+              placeholder="Search events..."
+            />
+          </div>
+          <div>
+            <label for="startDate">Start Date</label>
+            <input type="date" id="startDate" class="form-control w-50" />
+          </div>
+          <div>
+            <label for="endDate" class="mt-2">End Date</label>
+            <input type="date" id="endDate" class="form-control w-50" />
+          </div>
+          <div>
+            <label for="searchText" class="mt-2">Filter By Name</label>
+            <input
+              type="text"
+              id="searchText"
+              class="form-control w-50"
+              placeholder="Search events..."
+            />
+          </div>
+        </div>
+      </div>
+    </div> -->
     <div class="container mt-3">
       <div class="row row-cols-md-4 g-5">
-        <div v-for="(event, index) in events" :key="index" class="col d-flex align-items-stretch" @click="eventDetails(event.id)">
+        <div
+          v-for="(event, index) in events"
+          :key="index"
+          class="col d-flex align-items-stretch"
+          @click="eventDetails(event.id)"
+        >
           <div class="card larger-card shadow bg-white rounded">
             <div class="position-relative image-container">
-              <img src="../../../assets/Overview.png" class="card-img-top" alt="Event Image">
-              <h5 class="card-title-overlay text-white position-absolute p-2">{{ event.name }}</h5>
+              <img
+                :src="event.imageUrl"
+                class="card-img-top"
+                alt="Event Image"
+              />
+              <h5 class="card-title-overlay text-white position-absolute p-2">
+                {{ event.name }}
+              </h5>
             </div>
             <div class="card-body">
               <p class="card-text">
                 <i class="bi bi-ticket-detailed align-middle"></i>
-                <span :class="{
-                  'text-danger': event.ticket < 10,
-                  'text-warning': event.ticket >= 10 && event.ticket < 20,
-                  'text-success': event.ticket >= 20
-                }" class="ms-2 align-middle">
+                <span
+                  :class="{
+                    'text-danger': event.ticket < 10,
+                    'text-warning': event.ticket >= 10 && event.ticket < 20,
+                    'text-success': event.ticket >= 20,
+                  }"
+                  class="ms-2 align-middle"
+                >
                   Tickets Available: {{ event.ticket }}
                 </span>
               </p>
@@ -128,11 +174,11 @@ const eStore = eventStore();
 const uStore = userStore();
 const router = useRouter();
 
-const isLoggedIn = computed(() => uStore.isLogged)
+// const isLoggedIn = computed(() => uStore.isLogged)
 const isAdmin = computed(() => uStore.isAdmin);
-const userEmail = computed(() =>
-  uStore.currentUser ? uStore.currentUser.email : null
-);
+// const userEmail = computed(() =>
+//   uStore.currentUser ? uStore.currentUser.email : null
+// );
 
 eStore.getEvents();
 const events = computed(() => eStore.events);
@@ -184,13 +230,14 @@ const handleBuyTicket = (event) => {
 
 .larger-card:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }
 
 .card-img-top {
   width: 100%;
   height: 180px;
   object-fit: cover;
+  filter: blur(1px);
 }
 
 .image-container {

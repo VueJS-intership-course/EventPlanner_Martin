@@ -14,6 +14,8 @@ import { Style, Circle, Fill } from 'ol/style';
 import { fromLonLat, toLonLat } from 'ol/proj';
 import { ref, onMounted, watch, nextTick } from 'vue';
 import 'ol/ol.css';
+import { getAddressFromCoordinates } from '../utils/exact location/getAddressFromCoordinates';
+import * as olProj from 'ol/proj';
 
 const emit = defineEmits();
 
@@ -44,6 +46,15 @@ const initializeMap = (element) => {
   if (!readonly) {
     mapInstance.on('click', (event) => {
       const lonLat = toLonLat(event.coordinate);
+
+      const transformedCoordnates = olProj.transform(
+        event.coordinate,
+        'EPSG:3857',
+        'EPSG:4326'
+      );
+
+      getAddressFromCoordinates(transformedCoordnates);
+
       handleMapClick(lonLat, vectorInstance);
     });
   }
@@ -100,10 +111,10 @@ watch(
   (newLocation) => {
     if (newLocation) {
       showLocationOnMap();
-      nextTick()
+      nextTick();
     }
   },
-  { immediate: true, deep: true}
+  { immediate: true, deep: true }
 );
 
 onMounted(() => {

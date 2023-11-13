@@ -51,10 +51,10 @@ export const eventStore = defineStore('events', {
       await eventServices.removeEvent(eventId);
       this.getEvents();
     },
-    async buyTicket(event) {
-      await eventServices.buyTicket(event);
+    async buyTicket() {
+      await eventServices.buyTicket(this.choosedEvent);
       
-      const eventIndex = this.events.findIndex((e) => e.id === event.id);
+      const eventIndex = this.events.findIndex((e) => e.id === this.choosedEvent.id);
       if (eventIndex !== -1) {
         this.events[eventIndex].clients.push(userStore().currentUser.email)
       }

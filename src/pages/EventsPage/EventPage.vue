@@ -12,12 +12,11 @@
       <div class="col-md-6">
         <div class="card mb-3 event-card">
           <img
-            src="https://picsum.photos/820/400"
+            :src="event.imageUrl"
             alt="Event Image"
             class="card-img-top"
           />
           <div class="card-body">
-            <!-- <h5 class="card-title">{{ event.name }}</h5> -->
             <p class="card-text ms-3">Description: {{ event.description }}</p>
             <ul class="list-group list-group-flush">
               <li
@@ -40,6 +39,12 @@
                 Available tickets:
                 <span class="badge bg-danger">{{ event.ticket }}</span>
               </li>
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center"
+              >
+                Address:
+                <span class="badge bg-danger">{{ event.address }}</span>
+              </li>
             </ul>
           </div>
           <div v-if="isAdmin" class="card-footer bg-white d-flex justify-content-end">
@@ -48,6 +53,11 @@
             </button>
             <button class="btn btn-primary btn-sm ms-2" @click="editEvent">
               <i class="bi bi-pencil"></i> Edit
+            </button>
+          </div>
+          <div v-if="!isAdmin && !event.clients.includes(userEmail) && isLoggedIn" class="card-footer bg-white d-flex justify-content-end">
+            <button class="btn btn-success btn-sm fw-bold" @click="handleBuyTicket">
+              <i class="bi bi-bookmark-dash"></i> Buy Ticket
             </button>
           </div>
         </div>
@@ -81,10 +91,14 @@ const eStore = eventStore();
 const eventId = computed(() => route.params.id);
 const isEditing = computed(() => eStore.isEditing);
 const isAdmin = computed(() => uStore.isAdmin);
+const isLoggedIn = computed(() => uStore.isLogged)
 
 eStore.getEventDetails(eventId.value);
 const event = computed(() => eStore.choosedEvent);
 const currentLocation = computed(() => eStore.getCoordinates);
+const userEmail = computed(() =>
+uStore.currentUser ? uStore.currentUser.email : null
+);
 
 const removeEvent = async () => {
   await eStore.removeEvent(event.value.id);
@@ -95,6 +109,13 @@ const editEvent = () => {
   eStore.isEditing = true;
   eStore.editedEvent = { ...event.value };
 };
+
+const handleBuyTicket = () => {
+  eStore.buyTicket(event.value);
+
+  router.push({name: 'profile'})
+};
+
 </script>
 
 <style scoped>
