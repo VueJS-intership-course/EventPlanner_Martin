@@ -154,7 +154,9 @@ import * as yup from 'yup';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import MapComponent from '@/common-templates/MapComponent.vue';
-import { getAddressFromCoordinates } from '../../utils/exact location/getAddressFromCoordinates';
+import { getAddressFromCoordinates } from '../../utils/getAddressFromCoordinates';
+import { getTimeZone } from '../../utils/getTimeZone';
+import moment from 'moment-timezone';
 
 const router = useRouter();
 
@@ -175,11 +177,11 @@ const errorMsg = ref('');
 
 const selectedCoordinates = ref(null);
 const address = ref(null);
+const timeZone = ref(null);
+const time = ref(null);
 
 const handleCoordinates = async (coordinates) => {
   selectedCoordinates.value = coordinates;
-
-  console.log(selectedCoordinates.value);
 };
 
 const handleCreateEvent = async (values) => {
@@ -188,7 +190,12 @@ const handleCreateEvent = async (values) => {
     return;
   }
 
-  address.value = await getAddressFromCoordinates(selectedCoordinates.value)
+  address.value = await getAddressFromCoordinates(selectedCoordinates.value);
+  timeZone.value = getTimeZone(selectedCoordinates.value);
+  const eventDateAndTime = `${values.date}T${values.time}`;
+  time.value = moment.tz(eventDateAndTime, timeZone.value).utc().toISOString();
+
+  console.log(time.value);
 
   try {
     const newEvent = {
@@ -197,10 +204,10 @@ const handleCreateEvent = async (values) => {
       ticket: values.tickets,
       price: values.price,
       budget: values.budget,
-      date: values.date,
-      time: values.time,
+      time: time.value,
       location: selectedCoordinates.value,
       address: address.value,
+      timeZone: timeZone.value,
       imageUrl: values.imageUrl,
       clients: [],
     };

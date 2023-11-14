@@ -144,16 +144,23 @@
             </div>
             <div class="card-body">
               <p class="card-text">
-                <i class="bi bi-ticket-detailed align-middle"></i>
+                <i
+                  class="bi bi-ticket-detailed align-middle"
+                  :class="{
+                    'text-danger': event.ticket < 20,
+                    'text-warning': event.ticket >= 20 && event.ticket < 50,
+                    'text-success': event.ticket >= 50,
+                  }"
+                ></i>
                 <span
                   :class="{
-                    'text-danger': event.ticket < 10,
-                    'text-warning': event.ticket >= 10 && event.ticket < 20,
-                    'text-success': event.ticket >= 20,
+                    'text-danger': event.ticket < 20,
+                    'text-warning': event.ticket >= 20 && event.ticket < 50,
+                    'text-success': event.ticket >= 50,
                   }"
-                  class="ms-2 align-middle"
+                  class="ms-2 align-middle fw-bold"
                 >
-                  Tickets Available: {{ event.ticket }}
+                  Tickets Available: {{ formatedTicketCount(event.ticket) }}
                 </span>
               </p>
             </div>
@@ -191,6 +198,15 @@ const eventDetails = (eventId) => {
 const handleBuyTicket = (event) => {
   eStore.buyTicket(event);
 };
+
+const formatedTicketCount = computed(() => {
+  return (tickets) => {
+    if (tickets > 1000) {
+      return `${Math.floor(tickets / 1000)}K`;
+    }
+    return tickets;
+  };
+});
 </script>
 
 <!-- <style scoped>
@@ -237,7 +253,7 @@ const handleBuyTicket = (event) => {
   width: 100%;
   height: 180px;
   object-fit: cover;
-  filter: blur(1px);
+  /* filter: blur(1px); */
 }
 
 .image-container {
@@ -252,6 +268,9 @@ const handleBuyTicket = (event) => {
   width: 100%;
   font-size: 1.2rem;
   margin-top: 0;
-  background-color: transparent;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  text-shadow: 1px 1px 2px black; /* black text shadow for better legibility */
+  padding: 0.5rem;
 }
 </style>

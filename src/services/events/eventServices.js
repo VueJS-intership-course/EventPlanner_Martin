@@ -10,7 +10,7 @@ export default {
         .get();
 
       querySnapshot.forEach((doc) => {
-        const { name, description, id, location, budget, date, time, price, ticket, address, imageUrl, clients } =
+        const { name, description, id, location, budget, time, price, ticket, address, imageUrl, timeZone, clients } =
           doc.data();
 
         const event = {
@@ -19,11 +19,11 @@ export default {
           id,
           location,
           budget,
-          date,
           time,
           price,
           ticket,
           address,
+          timeZone,
           imageUrl,
           clients
         };
@@ -47,13 +47,13 @@ export default {
         budget: eventData.budget,
         time: eventData.time,
         price: eventData.price,
-        date: eventData.date,
         location: eventData.location,
         address: eventData.address,
+        timeZone: eventData.timeZone,
         imageUrl: eventData.imageUrl,
         clients: eventData.clients
       });
-      console.log(eventData.budget);
+      console.log('service', eventData.timeZone);
     } catch (error) {
       throw error;
     }
@@ -67,6 +67,7 @@ export default {
         .get();
 
       if (querySnapshot.docs.length > 0) {
+        console.log(querySnapshot.docs[0].data());
         return querySnapshot.docs[0].data();
       }
     } catch (error) {
@@ -89,8 +90,9 @@ export default {
         ticket: event.ticket,
         budget: event.budget,
         time: event.time,
-        date: event.date,
         location: event.location,
+        address: event.address,
+        timeZone: event.timeZone,
         price: event.price,
       });
     } catch (error) {

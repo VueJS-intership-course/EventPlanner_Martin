@@ -111,6 +111,9 @@ import { computed, watch } from 'vue';
 import { eventStore } from '../store/eventStore';
 import { useRouter } from 'vue-router';
 import MapComponent from './MapComponent.vue';
+import { getAddressFromCoordinates } from '../utils/getAddressFromCoordinates.js';
+import { getTimeZone } from '../utils/getTimeZone';
+import moment from 'moment-timezone';
 
 const emit = defineEmits();
 
@@ -119,11 +122,18 @@ const router = useRouter();
 const eStore = eventStore();
 const editedEvent = computed(() => eStore.editedEvent);
 
-const handleCoordinates = (coordinates) => {
+const handleCoordinates = async (coordinates) => {
   editedEvent.value.location = coordinates;
+
+  editedEvent.value.address = await getAddressFromCoordinates(coordinates);
 };
 
+
 const saveEditedEvent = () => {
+  editedEvent.value.timeZone = getTimeZone(editedEvent.value.location);
+  const eventDateAndTime = `${editedEvent.value.date}T${editedEvent.value.time}`;
+  editedEvent.value.time = moment.tz(eventDateAndTime, editedEvent.value.timeZone).utc().toISOString();
+
   eStore.editEvent(editedEvent.value);
   eStore.isEditing = false;
   router.push('/events');

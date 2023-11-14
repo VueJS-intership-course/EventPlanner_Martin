@@ -11,11 +11,7 @@
     <div class="row">
       <div class="col-md-6">
         <div class="card mb-3 event-card">
-          <img
-            :src="event.imageUrl"
-            alt="Event Image"
-            class="card-img-top"
-          />
+          <img :src="event.imageUrl" alt="Event Image" class="card-img-top" />
           <div class="card-body">
             <p class="card-text ms-3">Description: {{ event.description }}</p>
             <ul class="list-group list-group-flush">
@@ -24,8 +20,14 @@
               >
                 Date and time:
                 <span class="badge bg-info text-dark"
-                  >{{ event.date }} {{ event.time }}</span
+                  >{{ getEventTime(event.time, event.timeZone) }}</span
                 >
+              </li>
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center"
+              >
+                Your time:
+                <span class="badge bg-info text-dark">{{ getUserTime(event.time) }}</span>
               </li>
               <li
                 class="list-group-item d-flex justify-content-between align-items-center"
@@ -43,11 +45,14 @@
                 class="list-group-item d-flex justify-content-between align-items-center"
               >
                 Address:
-                <span class="badge bg-danger">{{ event.address }}</span>
+                <span class="badge bg-danger rounded">{{ event.address }}</span>
               </li>
             </ul>
           </div>
-          <div v-if="isAdmin" class="card-footer bg-white d-flex justify-content-end">
+          <div
+            v-if="isAdmin"
+            class="card-footer bg-white d-flex justify-content-end"
+          >
             <button class="btn btn-danger btn-sm" @click="removeEvent">
               <i class="bi bi-trash"></i> Remove
             </button>
@@ -55,8 +60,14 @@
               <i class="bi bi-pencil"></i> Edit
             </button>
           </div>
-          <div v-if="!isAdmin && !event.clients.includes(userEmail) && isLoggedIn" class="card-footer bg-white d-flex justify-content-end">
-            <button class="btn btn-success btn-sm fw-bold" @click="handleBuyTicket">
+          <div
+            v-if="!isAdmin && !event.clients.includes(userEmail) && isLoggedIn"
+            class="card-footer bg-white d-flex justify-content-end"
+          >
+            <button
+              class="btn btn-success btn-sm fw-bold"
+              @click="handleBuyTicket"
+            >
               <i class="bi bi-bookmark-dash"></i> Buy Ticket
             </button>
           </div>
@@ -69,6 +80,11 @@
           class="border rounded map-container"
           :readonly="true"
         ></MapComponent>
+        <div v-if="event.clients.includes(userEmail) && isLoggedIn">
+          <div class="alert alert-success mt-5 text-center" role="alert">
+            <span class="fw-bold" style="font-size: 1.5rem;">You have subscribed for that event!</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -81,7 +97,9 @@ import { eventStore } from '@/store/eventStore.js';
 import { useRoute, useRouter } from 'vue-router';
 import MapComponent from '@/common-templates/MapComponent.vue';
 import EditEventModal from '@/common-templates/EditEventModal.vue';
-import { userStore } from '../../store/userStore';
+import { userStore } from '../../store/userStore.js';
+import { getUserTime } from '../../utils/getUserTime.js';
+import {getEventTime} from '../../utils/getEventTime.js'
 
 const route = useRoute();
 const router = useRouter();
@@ -91,13 +109,13 @@ const eStore = eventStore();
 const eventId = computed(() => route.params.id);
 const isEditing = computed(() => eStore.isEditing);
 const isAdmin = computed(() => uStore.isAdmin);
-const isLoggedIn = computed(() => uStore.isLogged)
+const isLoggedIn = computed(() => uStore.isLogged);
 
 eStore.getEventDetails(eventId.value);
 const event = computed(() => eStore.choosedEvent);
 const currentLocation = computed(() => eStore.getCoordinates);
 const userEmail = computed(() =>
-uStore.currentUser ? uStore.currentUser.email : null
+  uStore.currentUser ? uStore.currentUser.email : null
 );
 
 const removeEvent = async () => {
@@ -113,9 +131,8 @@ const editEvent = () => {
 const handleBuyTicket = () => {
   eStore.buyTicket(event.value);
 
-  router.push({name: 'profile'})
+  router.push({ name: 'profile' });
 };
-
 </script>
 
 <style scoped>

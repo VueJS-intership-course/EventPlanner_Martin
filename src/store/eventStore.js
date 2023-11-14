@@ -16,6 +16,8 @@ export const eventStore = defineStore('events', {
       location: [],
       ticket: '',
       price: '',
+      timeZone: '',
+      address: ''
     },
   }),
   getters: {
