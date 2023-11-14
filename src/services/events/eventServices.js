@@ -138,7 +138,8 @@ export default {
       const updatedClients = [...(eventData.clients || []), user.email];
       await eventDoc.ref.update({
         clients: updatedClients,
-        ticket: event.ticket - 1
+        ticket: event.ticket - 1,
+        budget: event.budget + event.price
       });
     } catch (error) {
       console.error('Error buying ticket: ', error);
