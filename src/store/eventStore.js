@@ -4,7 +4,7 @@ import { userStore } from './userStore';
 
 export const eventStore = defineStore('events', {
   state: () => ({
-    events: null,
+    events: [],
     choosedEvent: null,
     isEditing: false,
     editedEvent: {
@@ -19,10 +19,36 @@ export const eventStore = defineStore('events', {
       timeZone: '',
       address: ''
     },
+    filteredEvent: {
+      search: '',
+      fromDate: '',
+      toDate: '',
+      minPrice: '',
+      maxPrice: '',
+    }
   }),
   getters: {
     getCoordinates(state) {
       return state.choosedEvent.location;
+    },
+    filteredEvents: (state) => {
+      return state.events.filter(event => {
+        const fromDate = state.filteredEvent.fromDate ? new Date(state.filteredEvent.fromDate).toISOString().split('T')[0] : null;
+        const toDate = state.filteredEvent.toDate ? new Date(state.filteredEvent.toDate).toISOString().split('T')[0] : null;
+        const eventDate = event.time.split('T')[0];
+
+        const minPrice = parseFloat(state.filteredEvent.minPrice);
+        const maxPrice = parseFloat(state.filteredEvent.maxPrice);
+        const searchQuery = state.filteredEvent.search.toLowerCase();
+
+        return (
+          (!fromDate || eventDate >= fromDate) &&
+          (!toDate || eventDate <= toDate) &&
+          (!minPrice || event.price >= minPrice) &&
+          (!maxPrice || event.price <= maxPrice) &&
+          (!searchQuery || event.name.toLowerCase().includes(searchQuery))
+        );
+      });
     },
   },
   actions: {
@@ -62,5 +88,25 @@ export const eventStore = defineStore('events', {
       }
       await this.getEvents();
     },
+    applyFilters() {
+      this.filteredEvent = {
+        search: this.filteredEvent.search,
+        fromDate: this.filteredEvent.fromDate,
+        toDate: this.filteredEvent.toDate,
+        minPrice: this.filteredEvent.minPrice,
+        maxPrice: this.filteredEvent.maxPrice,
+      }
+    },
+    resetFilters() {
+      this.filteredEvent = {
+        search: '',
+        fromDate: '',
+        toDate: '',
+        minPrice: '',
+        maxPrice: '',
+      }
+
+      this.applyFilters();
+    }
   },
 });

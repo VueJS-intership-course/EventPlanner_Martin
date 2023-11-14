@@ -39,7 +39,7 @@
                 class="list-group-item d-flex justify-content-between align-items-center"
               >
                 Available tickets:
-                <span class="badge bg-danger">{{ event.ticket }}</span>
+                <span class="badge bg-danger">{{ formatedTicketCount(event.ticket) }}</span>
               </li>
               <li
                 class="list-group-item d-flex justify-content-between align-items-center"
@@ -133,6 +133,15 @@ const handleBuyTicket = () => {
 
   router.push({ name: 'profile' });
 };
+
+const formatedTicketCount = computed(() => {
+  return (tickets) => {
+    if (tickets > 1000) {
+      return `${Math.floor(tickets / 1000)}K`;
+    }
+    return tickets;
+  };
+});
 </script>
 
 <style scoped>
