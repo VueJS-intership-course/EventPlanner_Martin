@@ -1,5 +1,8 @@
 <template>
-  <EventFilter></EventFilter>
+  <div>
+    <button @click="toggleFilters">Filters</button>
+  </div>
+  <EventFilter v-if="isToggleFilters"></EventFilter>
   <div>
     <div v-if="isAdmin" class="text-center my-3">
       <RouterLink :to="'/events/createEvent'">
@@ -66,16 +69,18 @@ const uStore = userStore();
 const router = useRouter();
 
 const isAdmin = computed(() => uStore.isAdmin);
+const isToggleFilters = computed(() => eStore.isToggleFilters);
+const filteredEvents = computed(() => {return eStore.filteredEvents})
+
+const toggleFilters = () => {
+  eStore.isToggleFilters = !eStore.isToggleFilters;
+}
 
 eStore.getEvents();
-const events = computed(() => eStore.events);
-console.log(events);
 
 const eventDetails = (eventId) => {
   router.push({ name: 'event', params: { id: eventId } });
 };
-
-const filteredEvents = computed(() => {return eStore.filteredEvents})
 
 const formatedTicketCount = computed(() => {
   return (tickets) => {
@@ -85,6 +90,7 @@ const formatedTicketCount = computed(() => {
     return tickets;
   };
 });
+
 </script>
 
 <style scoped>

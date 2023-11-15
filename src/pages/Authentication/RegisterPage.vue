@@ -7,10 +7,10 @@
             <h3>Register</h3>
           </div>
           <div class="card-body">
-            <form @submit.prevent="onSubmit" :validationSchema="validation">
+            <Form @submit="onSubmit" :validationSchema="validation">
               <div class="mb-3">
                 <label for="username" class="form-label">Username<span style="color: red;">*</span></label>
-                <Field v-model="formData.username" name="username" class="form-control" id="username"
+                <Field v-model="formData.username" type="username" name="username" class="form-control" id="username"
                   placeholder="Enter username..." />
                 <ErrorMessage name="username" class="text-danger" />
               </div>
@@ -21,8 +21,8 @@
                 <ErrorMessage name="email" class="text-danger" />
               </div>
               <div class="mb-3">
-                <Dropdown v-model="formData.location" id="location" :name="'location'" :label="'Location'"></Dropdown>
-                <ErrorMessage name="location" />
+                <Dropdown @selectZone="handleTimeZone" id="location" :name="'location'" :label="'Location'"></Dropdown>
+                <!-- <ErrorMessage name="location" /> -->
               </div>
               <div class="mb-3">
                 <label for="password" class="form-label">Password<span style="color: red;">*</span></label>
@@ -41,7 +41,7 @@
                   Register
                 </button>
               </div>
-            </form>
+            </Form>
           </div>
         </div>
       </div>
@@ -55,25 +55,25 @@ import { Field, Form, ErrorMessage } from 'vee-validate';
 import Dropdown from '@/common-templates/Dropdown.vue';
 import { useRouter } from 'vue-router';
 import * as yup from 'yup';
+import { ref } from 'vue';
 
-const validation = yup.object().shape({
+const validation = yup.object({
   username: yup
     .string()
-    .required('Username is required')
-    .min(3, 'Username must be at least 3 characters'),
+    .required('Username is required!')
+    .min(3, 'Username must be at least 3 characters!'),
   email: yup
     .string()
-    .required('Email is required')
-    .email('Invalid email format'),
-  location: yup.string().required(),
+    .required('Email is required!')
+    .email('Invalid email format!'),
   password: yup
     .string()
-    .required('Password is required')
-    .min(6, 'Password must be at least 6 characters'),
+    .required('Password is required!')
+    .min(6, 'Password must be at least 6 characters!'),
   repeatPassword: yup
     .string()
-    .required('Repeat password is required')
-    .oneOf([yup.ref('password')], 'Passwords must match'),
+    .required('Repeat password is required!')
+    .oneOf([yup.ref('password')], 'Passwords must match!'),
 });
 
 const router = useRouter();
@@ -81,10 +81,16 @@ const router = useRouter();
 const formData = {
   username: '',
   email: '',
-  location: '',
   password: '',
   repeatPassword: '',
 };
+
+const location = ref("");
+
+const handleTimeZone = (selectedZone) => {
+  location.value = selectedZone;
+  console.log(selectedZone);
+}
 
 const onSubmit = async () => {
   console.log('here');
@@ -92,12 +98,12 @@ const onSubmit = async () => {
     if (formData.password !== formData.repeatPassword) {
       throw new Error('Passwords do not match!');
     }
-    console.log(formData);
+
     await userServices.signUp(
       {
         email: formData.email,
         username: formData.username,
-        location: formData.location,
+        location: location.value,
       },
       formData.password
     );

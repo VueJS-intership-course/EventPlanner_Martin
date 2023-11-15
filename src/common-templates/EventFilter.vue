@@ -139,9 +139,9 @@ const tempFilterOptions = ref({
 });
 
 const setFilters = () => {
-
   eStore.filteredEvent = { ...tempFilterOptions.value };
   eStore.applyFilters();
+  eStore.isToggleFilters = false;
 };
 
 const resetFilters = () => {

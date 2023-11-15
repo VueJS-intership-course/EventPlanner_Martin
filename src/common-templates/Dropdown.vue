@@ -16,12 +16,12 @@
 import { ref, computed, watch } from 'vue';
 import moment from "moment-timezone";
 
-const props = defineProps({
-  modelValue: {
-    type: String,
-    required: true
-  }
-})
+// const props = defineProps({
+//   modelValue: {
+//     type: String,
+//     required: true
+//   }
+// })
 
 const zones = moment.tz.names();
 const selectedValue = ref('');
@@ -45,7 +45,8 @@ const selectZone = (zone) => {
   selectedValue.value = zone;
   showDropdown.value = false;
   showError.value = false; 
-  emit('update:modelValue', zone);
+  // emit('update:modelValue', zone);
+  emit('selectZone', zone)
 }
 
 const toggleDropdown = () => {

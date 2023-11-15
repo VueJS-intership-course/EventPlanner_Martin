@@ -7,7 +7,7 @@
                         <h1>Login</h1>
                     </div>
                     <div class="card-body">
-                        <form @submit.prevent="onSumbit" :validationSchema="schema">
+                        <Form @submit="onSumbit" :validationSchema="schema">
                             <div class="mb-3 ms-1">
                                 <label for="email" class="form-label">Email<span style="color: red;">*</span></label>
                                 <Field type="email" v-model="loginData.email" name="email" id="email" class="form-control"
@@ -27,7 +27,7 @@
                                 </span>
                                 <button type="submit" class="btn btn-primary">Login</button>
                             </div>
-                        </form>
+                        </Form>
                     </div>
                 </div>
             </div>
