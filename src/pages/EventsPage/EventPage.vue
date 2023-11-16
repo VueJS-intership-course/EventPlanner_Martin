@@ -109,7 +109,7 @@ const eStore = eventStore();
 const eventId = computed(() => route.params.id);
 const isEditing = computed(() => eStore.isEditing);
 const isAdmin = computed(() => uStore.isAdmin);
-const isLoggedIn = computed(() => uStore.isLogged);
+const isLoggedIn = computed(() => uStore.isLoggedIn);
 
 eStore.getEventDetails(eventId.value);
 const event = computed(() => eStore.choosedEvent);

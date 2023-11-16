@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-primary">
     <div>
-      <RouterLink :to="'/events'">
+      <RouterLink :to="'/home'">
         <img
           src="../utils/logo/Event_Planner LOGO.png"
           style="width: 100px; height: 75px"
@@ -54,13 +54,12 @@
 
 <script setup>
 import { useRouter } from 'vue-router';
-import userServices from '@/services/users/userServices';
 import { computed } from 'vue';
 import { userStore } from '@/store/userStore.js';
 
 const uStore = userStore();
 
-const isLoggedIn = computed(() => uStore.isLogged);
+const isLoggedIn = computed(() => uStore.isLoggedIn);
 console.log(isLoggedIn);
 const isAdmin = computed(() => uStore.isAdmin);
 
@@ -69,8 +68,7 @@ console.log(isAdmin);
 const router = useRouter();
 
 const handleLogout = async () => {
-  uStore.currentUser = null;
-  await userServices.logout();
+  await uStore.logout();
 
   router.push({ name: 'login' });
 };

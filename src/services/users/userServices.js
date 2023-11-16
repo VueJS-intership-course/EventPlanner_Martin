@@ -108,7 +108,20 @@ export default {
     } catch (error) {
       console.error("Error editing event: ", error);
     }
-  }
-  
+  },
+  async getUserData(email) {
+    try {
+        const userDoc = await firebaseData.fireStore.collection('users').where('email', '==', email).get();
+
+        const [doc] = userDoc.docs;
+
+        console.log(doc.data());
+        return doc.data();
+
+    } catch (error) {
+        console.error('Error retrieving user data:', error);
+        throw error;
+    }
+},
   
 };
