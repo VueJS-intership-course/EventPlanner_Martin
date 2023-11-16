@@ -66,7 +66,7 @@ router.beforeResolve(async (to, from, next) => {
   const isLoggedIn = uStore.isLoggedIn;
   const isAdmin = uStore.isAdmin;
 
-  const publicPages = ['login', 'register', 'home'];
+  const publicPages = ['login', 'register'];
   const adminOnlyPages = ['createEvent'];
   const loggedInOnlyPages = ['profile'];
 

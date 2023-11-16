@@ -17,9 +17,7 @@ export const userStore = defineStore('userStore', {
       }
     },
     isLoggedIn(state) {
-      if (state.currentUser) {
-        return true;
-      }
+      return Boolean(state.currentUser);
     },
   },
   actions: {
@@ -27,7 +25,6 @@ export const userStore = defineStore('userStore', {
       if (user) {
         const userData = await userServices.getUserData(user.email);
         this.currentUser = userData;
-        console.log(this.currentUser.username);
       }
     },
     async logout() {

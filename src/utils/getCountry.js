@@ -8,7 +8,7 @@ export const getCountry = async (coordinates) => {
       const locationData = await response.json();
       return locationData.address.country;
     } catch (error) {
-      console.error('Error fetching address:', error);
+      console.error('Error fetching country:', error);
     }
   };
   
