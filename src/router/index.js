@@ -62,23 +62,28 @@ const router = createRouter({
 });
 
 router.beforeResolve(async (to, from, next) => {
-
   const uStore = userStore();
   const isLoggedIn = uStore.isLoggedIn;
   const isAdmin = uStore.isAdmin;
 
-  console.log(isLoggedIn);
+  const publicPages = ['login', 'register', 'home'];
+  const adminOnlyPages = ['createEvent'];
+  const loggedInOnlyPages = ['profile'];
 
-  if (
-    (to.name === 'login' && isLoggedIn) ||
-    (to.name === 'register' && isLoggedIn) ||
-    (to.name === 'profile' && !isLoggedIn) ||
-    (to.name === 'createEvent' && !isAdmin)
-  ) {
+  const isPublicPage = publicPages.includes(to.name);
+  const isAdminOnlyPage = adminOnlyPages.includes(to.name);
+  const isloggedInOnlyPage = loggedInOnlyPages.includes(to.name);
+
+  if (isLoggedIn && isPublicPage) {
+    next({ name: 'home' });
+  } else if (!isLoggedIn && isloggedInOnlyPage) {
+    next({ name: 'login' });
+  } else if (!isAdmin && isAdminOnlyPage) {
     next({ name: 'home' });
   } else {
     next();
   }
 });
+
 
 export default router;
