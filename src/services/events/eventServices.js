@@ -65,8 +65,7 @@ export default {
         .where('id', '==', eventId)
         .get();
 
-      if (querySnapshot.docs.length > 0) {
-        console.log(querySnapshot.docs[0].data());
+      if (querySnapshot.docs.length > 0) {  
         return querySnapshot.docs[0].data();
       }
     } catch (error) {

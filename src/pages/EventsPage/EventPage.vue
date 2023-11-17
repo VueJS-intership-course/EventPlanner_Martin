@@ -53,7 +53,10 @@
             v-if="isAdmin"
             class="card-footer bg-white d-flex justify-content-end"
           >
-            <button class="btn btn-danger btn-sm" @click="removeEvent">
+          <button class="btn btn-danger btn-sm" @click="viewBudget(event.id)">
+            <i class="bi bi-calculator"></i> View Budget
+            </button>
+            <button class="btn btn-danger btn-sm ms-2" @click="removeEvent">
               <i class="bi bi-trash"></i> Remove
             </button>
             <button class="btn btn-primary btn-sm ms-2" @click="editEvent">
@@ -133,6 +136,10 @@ const handleBuyTicket = () => {
 
   router.push({ name: 'profile' });
 };
+
+const viewBudget = (eventId) => {
+  router.push({name: 'event-budget', params: {id: eventId}})
+}
 
 const formatedTicketCount = computed(() => {
   return (tickets) => {

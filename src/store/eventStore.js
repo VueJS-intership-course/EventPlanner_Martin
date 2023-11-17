@@ -62,7 +62,6 @@ export const eventStore = defineStore('events', {
     async getEventDetails(eventId) {
       try {
         this.choosedEvent = await eventServices.getSingleEvent(eventId);
-        console.warn(this.choosedEvent);
       } catch (error) {
         console.log(error);
       }

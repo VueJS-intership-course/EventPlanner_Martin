@@ -8,7 +8,7 @@ import CreateEvent from '@/pages/EventsPage/CreateEvent.vue';
 import NotFound from '@/common-templates/NotFound.vue';
 import HomePage from '@/pages/HomePage.vue';
 import { userStore } from '../store/userStore.js';
-import { computed } from 'vue';
+import BudgetPage from '../pages/budget/BudgetPage.vue';
 
 const routes = [
   {
@@ -25,6 +25,11 @@ const routes = [
     path: '/events/:id',
     name: 'event',
     component: EventPage,
+  },
+  {
+    path: '/events/:id/budget',
+    name: 'event-budget',
+    component: BudgetPage,
   },
   {
     path: '/events/createEvent',
