@@ -60,10 +60,7 @@ import { userStore } from '@/store/userStore.js';
 const uStore = userStore();
 
 const isLoggedIn = computed(() => uStore.isLoggedIn);
-console.log(isLoggedIn);
 const isAdmin = computed(() => uStore.isAdmin);
-
-console.log(isAdmin);
 
 const router = useRouter();
 

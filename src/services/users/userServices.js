@@ -115,7 +115,6 @@ export default {
 
         const [doc] = userDoc.docs;
 
-        console.log(doc.data());
         return doc.data();
 
     } catch (error) {

@@ -29,7 +29,6 @@ export default {
         };
         data.push(event);
       });
-      console.log(data);
       return data;
     } catch (error) {
       throw error;
