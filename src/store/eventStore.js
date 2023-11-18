@@ -88,6 +88,15 @@ export const eventStore = defineStore('events', {
       }
       await this.getEvents();
     },
+    async addExpenses(price) {
+      await eventServices.addExpenses(this.choosedEvent, price);
+
+      if (this.choosedEvent) {
+        this.choosedEvent.expenses += price;
+      }
+      
+      await this.getEvents();
+    },
     applyFilters() {
       this.filteredEvent = {
         search: this.filteredEvent.search,

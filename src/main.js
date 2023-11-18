@@ -7,11 +7,13 @@ import { userStore } from '@/store/userStore.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import router from '@/router/index.js';
+import HighchartsVue from 'highcharts-vue'
 
 const app = createApp(App);
 const pinia = createPinia();
-app.use(pinia);
 
+app.use(pinia);
+app.use(HighchartsVue);
 
 const uStore = userStore();
 

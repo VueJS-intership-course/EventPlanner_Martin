@@ -210,6 +210,8 @@ const handleCreateEvent = async (values) => {
       timeZone: timeZone.value,
       imageUrl: values.imageUrl,
       clients: [],
+      profit: 0,
+      expenses: 0
     };
 
     store.createEvent(newEvent);

@@ -10,7 +10,7 @@ export default {
         .get();
 
       querySnapshot.forEach((doc) => {
-        const { name, description, id, location, budget, time, price, ticket, address, imageUrl, timeZone, clients } =
+        const { name, description, id, location, budget, profit, expenses, time, price, ticket, address, imageUrl, timeZone, clients } =
           doc.data();
 
         const event = {
@@ -19,6 +19,8 @@ export default {
           id,
           location,
           budget,
+          profit,
+          expenses,
           time,
           price,
           ticket,
@@ -27,6 +29,7 @@ export default {
           imageUrl,
           clients
         };
+        console.log(event);
         data.push(event);
       });
       return data;
@@ -50,7 +53,9 @@ export default {
         address: eventData.address,
         timeZone: eventData.timeZone,
         imageUrl: eventData.imageUrl,
-        clients: eventData.clients
+        clients: eventData.clients,
+        profit: eventData.profit,
+        expenses: eventData.expenses
       });
       console.log('service', eventData.timeZone);
     } catch (error) {
@@ -137,7 +142,31 @@ export default {
       await eventDoc.ref.update({
         clients: updatedClients,
         ticket: event.ticket - 1,
-        budget: event.budget + event.price
+        budget: event.budget + event.price,
+        profit: event.profit + event.price
+      });
+    } catch (error) {
+      console.error('Error buying ticket: ', error);
+      throw error;
+    }
+  },
+
+  async addExpenses(event, price) {
+    const querySnapshot = await firebaseData.fireStore
+      .collection("events")
+      .where("id", "==", event.id)
+      .get();
+
+    const eventDoc = querySnapshot.docs[0];
+    if (!eventDoc) {
+      throw new Error('Event not found');
+    }
+
+    const eventData = eventDoc.data();
+
+    try {
+      await eventDoc.ref.update({
+        expenses: event.expenses + price
       });
     } catch (error) {
       console.error('Error buying ticket: ', error);
