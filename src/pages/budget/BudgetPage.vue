@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div v-if="event" class="container mt-4">
     <div class="row">
       <div class="col">
@@ -26,14 +26,72 @@
       </div>
     </div>
   </div>
-  <ProfitChart :profit="profit" :expenses="expenses"></ProfitChart>
+  <ProfitChart :profit="profit" :expenses="expenses" style="height: 300px; width: 300px;"></ProfitChart>
+</template> -->
+<template>
+  <div v-if="event" class="container py-5">
+    <div class="d-flex flex-wrap justify-content-center align-items-start">
+      <div class="me-4">
+        <div class="card shadow-lg border-0 rounded-lg mb-4">
+          <div class="card-header bg-dark text-white">
+            <h3 class="card-title text-center">Event Financial Summary</h3>
+          </div>
+          <div class="card-body bg-light">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="mb-0">Profit:</h5>
+              <span class="badge rounded-pill bg-success">{{
+                event.profit
+              }}</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+              <h5 class="mb-0">Budget:</h5>
+              <span class="badge rounded-pill bg-info">{{
+                event.expenses
+              }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="text-center mb-4">
+          <h5>Add Expenses</h5>
+        </div>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+          <button
+            class="btn btn-outline-primary btn-lg px-4 me-md-2"
+            @click="addExpense('food')"
+          >
+            Food
+          </button>
+          <button
+            class="btn btn-outline-secondary btn-lg px-4 me-md-2"
+            @click="addExpense('rent')"
+          >
+            Rent
+          </button>
+          <button
+            class="btn btn-outline-success btn-lg px-4"
+            @click="addExpense('staff')"
+          >
+            Staff
+          </button>
+        </div>
+      </div>
+
+      <div>
+        <ProfitChart
+          :profit="profit"
+          :expenses="expenses"
+          style="height: 400px; width: 400px"
+        ></ProfitChart>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
 import { eventStore } from '../../store/eventStore';
 import { computed, watch, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import ProfitChart from '../../common-templates/ProfitChart.vue'
+import ProfitChart from '../../common-templates/ProfitChart.vue';
 
 const eStore = eventStore();
 const route = useRoute();
@@ -63,7 +121,6 @@ const addExpense = (type) => {
   }
 
   eStore.addExpenses(price.value);
-  // eStore.choosedEvent = eStore.getEventDetails(eventId.value)
 };
 
 onMounted(() => {

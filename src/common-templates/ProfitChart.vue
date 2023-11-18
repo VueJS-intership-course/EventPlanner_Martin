@@ -1,25 +1,11 @@
 <template>
-  <div id="chart">
-    <Chart :options="chartOptions" :key="chartOptions"></Chart>
-
-  </div>
+    <div id="chart">
+      <Chart :options="chartOptions" :key="chartOptions"></Chart>
+    </div>
 </template>
 
 <script setup>
-import Highcharts from 'highcharts';
-import { ref, watch, onMounted, computed } from 'vue';
-import { eventStore } from '../store/eventStore';
-import {useRoute} from 'vue-router';
-
-const route = useRoute();
-
-const eStore = eventStore();
-
-// const event = computed(() => eStore.choosedEvent);
-
-const eventId = computed(() => route.params.id);
-
-console.log(eventId.value);
+import { ref, watch } from 'vue';
 
 const props = defineProps({
   profit: {
@@ -82,13 +68,8 @@ watch(
 watch(
   () => props.expenses,
   (newVal) => {
-
     updateChart();
   },
   { immediate: true }
 );
-
-onMounted(() => {
-  Highcharts.chart('chart', chartOptions.value);
-});
 </script>
