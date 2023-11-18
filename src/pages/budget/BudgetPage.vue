@@ -1,33 +1,3 @@
-<!-- <template>
-  <div v-if="event" class="container mt-4">
-    <div class="row">
-      <div class="col">
-        <span class="badge bg-success">Profit: {{ event.profit }}</span>
-      </div>
-    </div>
-    <div class="row mt-2">
-      <div class="col">
-        <span class="badge bg-info">Budget: {{ event.expenses }}</span>
-      </div>
-    </div>
-
-    <div class="row mt-3">
-      <div class="col">
-        <span>Add expenses</span>
-        <button class="btn btn-primary me-2" @click="addExpense('food')">
-          Food
-        </button>
-        <button class="btn btn-secondary me-2" @click="addExpense('rent')">
-          Rent
-        </button>
-        <button class="btn btn-success" @click="addExpense('staff')">
-          Staff
-        </button>
-      </div>
-    </div>
-  </div>
-  <ProfitChart :profit="profit" :expenses="expenses" style="height: 300px; width: 300px;"></ProfitChart>
-</template> -->
 <template>
   <div v-if="event" class="container py-5">
     <div class="d-flex flex-wrap justify-content-center align-items-start">
@@ -41,13 +11,13 @@
               <h5 class="mb-0">Profit:</h5>
               <span class="badge rounded-pill bg-success">{{
                 event.profit
-              }}</span>
+              }}$</span>
             </div>
             <div class="d-flex justify-content-between align-items-center">
-              <h5 class="mb-0">Budget:</h5>
-              <span class="badge rounded-pill bg-info">{{
+              <h5 class="mb-0">Expenses:</h5>
+              <span class="badge rounded-pill bg-danger">{{
                 event.expenses
-              }}</span>
+              }}$</span>
             </div>
           </div>
         </div>

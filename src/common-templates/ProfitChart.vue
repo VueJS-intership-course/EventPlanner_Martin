@@ -25,7 +25,7 @@ const chartOptions = ref({
     type: 'column',
   },
   title: {
-    text: 'Basic Column Chart',
+    text: 'Profit vs. Expenses',
   },
   xAxis: {
     categories: ['Profit/Loss'],
@@ -60,6 +60,7 @@ const updateChart = () => {
 watch(
   () => props.profit,
   (newVal) => {
+    
     updateChart();
   },
   { immediate: true }
