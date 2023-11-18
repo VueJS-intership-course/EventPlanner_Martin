@@ -40,7 +40,7 @@ const route = useRoute();
 
 const eventId = computed(() => route.params.id);
 
-const event = computed(() => eStore.choosedEvent || { profit: 0, expenses: 0 });
+const event = computed(() => eStore.choosedEvent);
 
 const price = ref(0);
 const profit = ref(0);
@@ -63,6 +63,7 @@ const addExpense = (type) => {
   }
 
   eStore.addExpenses(price.value);
+  // eStore.choosedEvent = eStore.getEventDetails(eventId.value)
 };
 
 onMounted(() => {

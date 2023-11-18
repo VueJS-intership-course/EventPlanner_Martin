@@ -1,66 +1,34 @@
-<!-- <template>
-  <div>
-    <highcharts :options="chartOptions"></highcharts>
-  </div>
-</template>
-
-<script>
-import Highcharts from 'highcharts';
-import HighchartsVue from 'highcharts-vue';
-
-export default {
-  name: 'ColumnChart',
-  data() {
-    return {
-      chartOptions: {
-        chart: {
-          type: 'column',
-        },
-        title: {
-          text: 'Basic Column Chart',
-        },
-        xAxis: {
-          categories: ['Category 1', 'Category 2', 'Category 3'],
-        },
-        yAxis: {
-          min: 0,
-          title: {
-            text: 'Values',
-          },
-        },
-        series: [
-          {
-            name: 'Series 1',
-            data: [10, 20, 30],
-          },
-        ],
-        accessibility: {
-          enabled: false,
-        },
-      },
-    };
-  },
-};
-</script> -->
 <template>
   <div id="chart">
-    <highcharts :options="chartOptions" :key="chartOptions"></highcharts>
+    <Chart :options="chartOptions" :key="chartOptions"></Chart>
+
   </div>
 </template>
-
 
 <script setup>
 import Highcharts from 'highcharts';
-import { ref, watch, onMounted } from 'vue';
+import { ref, watch, onMounted, computed } from 'vue';
+import { eventStore } from '../store/eventStore';
+import {useRoute} from 'vue-router';
+
+const route = useRoute();
+
+const eStore = eventStore();
+
+// const event = computed(() => eStore.choosedEvent);
+
+const eventId = computed(() => route.params.id);
+
+console.log(eventId.value);
 
 const props = defineProps({
   profit: {
     type: Number,
-    default: 0
+    default: 0,
   },
   expenses: {
     type: Number,
-    default: 0
+    default: 0,
   },
 });
 
@@ -100,7 +68,7 @@ const chartOptions = ref({
 
 const updateChart = () => {
   chartOptions.value.series[0].data = [props.profit];
-  chartOptions.value.series[1].data = [props.expenses]; 
+  chartOptions.value.series[1].data = [props.expenses];
 };
 
 watch(
@@ -114,6 +82,7 @@ watch(
 watch(
   () => props.expenses,
   (newVal) => {
+
     updateChart();
   },
   { immediate: true }
