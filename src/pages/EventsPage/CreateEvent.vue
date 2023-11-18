@@ -21,6 +21,7 @@
                 class="form-control"
                 id="form-group-input"
                 name="name"
+                ref="eventName"
                 placeholder="Type name..."
               />
               <ErrorMessage name="name" class="text-danger" />
@@ -107,7 +108,7 @@
               />
               <ErrorMessage name="budget" class="text-danger" />
             </div>
-            <div class="form-group w-50 mb-2 ms-5">
+            <!-- <div class="form-group w-50 mb-2 ms-5">
               <label class="form-control-label" for="imageUrl"
                 >Image URL<span style="color: red">*</span></label
               >
@@ -119,6 +120,19 @@
                 placeholder="Type image url..."
               />
               <ErrorMessage name="imageUrl" class="text-danger" />
+            </div> -->
+            <div class="form-group w-50 mb-2 ms-5">
+              <label class="form-control-label" for="imageFile">
+                Upload Image<span style="color: red">*</span>
+              </label>
+              <input
+                type="file"
+                class="form-control"
+                id="imageFile"
+                ref="imageFile"
+                @change="handleFileUpload"
+              />
+              <ErrorMessage name="imageFile" class="text-danger" />
             </div>
           </div>
           <div class="d-flex flex-column align-self-center w-100">
@@ -157,8 +171,11 @@ import MapComponent from '@/common-templates/MapComponent.vue';
 import { getAddressFromCoordinates } from '../../utils/getAddressFromCoordinates';
 import { getTimeZone } from '../../utils/getTimeZone';
 import moment from 'moment-timezone';
+import firebaseData from '../../services/firebaseConfig.js';
 
 const router = useRouter();
+
+const firebaseStorage = firebaseData.fireStorage.ref();
 
 const schema = yup.object({
   name: yup.string().required('This field is required!'),
@@ -168,7 +185,6 @@ const schema = yup.object({
   budget: yup.number().required('This field is required!'),
   date: yup.string().required('This field is required!'),
   time: yup.string().required('This field is required!'),
-  imageUrl: yup.string().required('This field is required!'),
 });
 
 const store = eventStore();
@@ -179,9 +195,23 @@ const selectedCoordinates = ref(null);
 const address = ref(null);
 const timeZone = ref(null);
 const time = ref(null);
+const imageUrl = ref(null);
+const eventName= ref('');
 
 const handleCoordinates = async (coordinates) => {
   selectedCoordinates.value = coordinates;
+};
+
+const handleFileUpload = async (event) => {
+  const imageFile = event.target.files[0];
+  const storageRef = firebaseStorage.child(`images/${imageFile.name}`);
+  try {
+    const snapshot = await storageRef.put(imageFile);
+    imageUrl.value = await snapshot.ref.getDownloadURL();
+    console.log('Successfully upload!');
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const handleCreateEvent = async (values) => {
@@ -208,10 +238,10 @@ const handleCreateEvent = async (values) => {
       location: selectedCoordinates.value,
       address: address.value,
       timeZone: timeZone.value,
-      imageUrl: values.imageUrl,
+      imageUrl: imageUrl.value,
       clients: [],
       profit: 0,
-      expenses: 0
+      expenses: 0,
     };
 
     store.createEvent(newEvent);
