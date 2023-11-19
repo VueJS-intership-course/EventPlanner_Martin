@@ -1,13 +1,25 @@
 <template>
   <div>
-    <button @click="toggleFilters">Filters</button>
-  </div>
-  <EventFilter v-if="isToggleFilters"></EventFilter>
-  <div>
-    <div v-if="isAdmin" class="text-center my-3">
-      <RouterLink :to="'/events/createEvent'">
-        <button class="btn btn-success btn-lg">Create New Event</button>
-      </RouterLink>
+    <div v-if="isAdmin" class="mt-3">
+      <div class="d-flex justify-content-center">
+        <div v-if="!isToggleFilters" class="text-center my-3 me-3">
+          <button class="btn btn-outline-primary btn-lg" @click="toggleFilters">
+            Filters
+          </button>
+        </div>
+        <div class="text-center my-3 ms-3">
+          <RouterLink :to="'/events/createEvent'">
+            <button class="btn btn-success btn-lg">Create New Event</button>
+          </RouterLink>
+        </div>
+      </div>
+      <EventFilter v-if="isToggleFilters"></EventFilter>
+    </div>
+    <div v-if="!isAdmin" class="text-center mt-3">
+      <button v-if="!isToggleFilters" class="btn btn-outline-primary btn-lg" @click="toggleFilters">
+        Filters
+      </button>
+      <EventFilter v-if="isToggleFilters"></EventFilter>
     </div>
     <div class="container mt-3">
       <div class="row row-cols-md-4 g-5">
@@ -62,7 +74,7 @@ import { eventStore } from '@/store/eventStore';
 import { computed } from 'vue';
 import { userStore } from '@/store/userStore.js';
 import { useRouter } from 'vue-router';
-import EventFilter from '../../../common-templates/EventFilter.vue';
+import EventFilter from '@/common-templates/EventFilter.vue';
 
 const eStore = eventStore();
 const uStore = userStore();
@@ -70,11 +82,13 @@ const router = useRouter();
 
 const isAdmin = computed(() => uStore.isAdmin);
 const isToggleFilters = computed(() => eStore.isToggleFilters);
-const filteredEvents = computed(() => {return eStore.filteredEvents})
+const filteredEvents = computed(() => {
+  return eStore.filteredEvents;
+});
 
 const toggleFilters = () => {
   eStore.isToggleFilters = !eStore.isToggleFilters;
-}
+};
 
 eStore.getEvents();
 
@@ -90,7 +104,6 @@ const formatedTicketCount = computed(() => {
     return tickets;
   };
 });
-
 </script>
 
 <style scoped>
