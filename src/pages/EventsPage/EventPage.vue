@@ -74,6 +74,12 @@
               <i class="bi bi-bookmark-dash"></i> Buy Ticket
             </button>
           </div>
+          <div
+            v-if="!isAdmin && !isLoggedIn"
+            class="card-footer bg-white d-flex justify-content-end"
+          >
+            <span>Login or Register to buy a ticket.</span>
+          </div>
         </div>
       </div>
       <div class="col-md-6">
@@ -93,6 +99,7 @@
   </div>
   <EditEventModal v-if="isEditing && isAdmin" :event="event.value" />
 </template>
+
 
 <script setup>
 import { computed } from 'vue';

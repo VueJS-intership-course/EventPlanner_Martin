@@ -45,7 +45,7 @@ const selectZone = (zone) => {
   selectedValue.value = zone;
   showDropdown.value = false;
   showError.value = false; 
-  // emit('update:modelValue', zone);
+  emit('update:modelValue', zone);
   emit('selectZone', zone)
 }
 

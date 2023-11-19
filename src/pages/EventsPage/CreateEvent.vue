@@ -108,19 +108,6 @@
               />
               <ErrorMessage name="budget" class="text-danger" />
             </div>
-            <!-- <div class="form-group w-50 mb-2 ms-5">
-              <label class="form-control-label" for="imageUrl"
-                >Image URL<span style="color: red">*</span></label
-              >
-              <Field
-                type="text"
-                class="form-control"
-                id="form-group-input"
-                name="imageUrl"
-                placeholder="Type image url..."
-              />
-              <ErrorMessage name="imageUrl" class="text-danger" />
-            </div> -->
             <div class="form-group w-50 mb-2 ms-5">
               <label class="form-control-label" for="imageFile">
                 Upload Image<span style="color: red">*</span>

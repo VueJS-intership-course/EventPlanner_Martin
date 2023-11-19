@@ -1,7 +1,6 @@
 <template>
   <div class="container-fluid">
     <div class="row align-items-start justify-content-around mt-5 ms-3 me-3">
-      <!-- User Profile Section -->
       <div class="col-lg-4">
         <div v-if="user" class="bg-white shadow rounded overflow-hidden">
           <div class="px-4 pt-4 pb-4 bg-dark text-white">
@@ -30,9 +29,7 @@
           </div>
         </div>
       </div>
-
-      <!-- Calendar Section -->
-      <div class="col-lg-4">
+      <div v-if="user" class="col-lg-4">
         <Calendar :userEvents="userEvents"></Calendar>
       </div>
     </div>
