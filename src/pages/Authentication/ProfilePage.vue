@@ -29,7 +29,7 @@
           </div>
         </div>
       </div>
-      <div v-if="user" class="col-lg-4">
+      <div v-if="user && !uStore.isAdmin" class="col-lg-4">
         <Calendar :userEvents="userEvents"></Calendar>
       </div>
     </div>
