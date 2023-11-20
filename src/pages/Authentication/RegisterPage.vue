@@ -9,35 +9,78 @@
           <div class="card-body">
             <Form @submit="onSubmit" :validationSchema="validation">
               <div class="mb-3">
-                <label for="username" class="form-label">Username<span style="color: red;">*</span></label>
-                <Field v-model="formData.username" type="username" name="username" class="form-control" id="username"
-                  placeholder="Enter username..." />
+                <label for="username" class="form-label"
+                  >Username<span style="color: red">*</span></label
+                >
+                <Field
+                  v-model="formData.username"
+                  type="username"
+                  name="username"
+                  class="form-control"
+                  id="username"
+                  placeholder="Enter username..."
+                />
                 <ErrorMessage name="username" class="text-danger" />
               </div>
               <div class="mb-3">
-                <label for="email" class="form-label">Email<span style="color: red;">*</span></label>
-                <Field v-model="formData.email" name="email" type="email" class="form-control" id="email"
-                  placeholder="Enter email..." />
+                <label for="email" class="form-label"
+                  >Email<span style="color: red">*</span></label
+                >
+                <Field
+                  v-model="formData.email"
+                  name="email"
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  placeholder="Enter email..."
+                />
                 <ErrorMessage name="email" class="text-danger" />
               </div>
               <div class="mb-3">
-                <Dropdown @selectZone="handleTimeZone" id="location" :name="'location'" :label="'Location'"></Dropdown>
+                <Dropdown
+                  @selectZone="handleTimeZone"
+                  id="location"
+                  :name="'location'"
+                  :label="'Location'"
+                ></Dropdown>
                 <!-- <ErrorMessage name="location" /> -->
               </div>
               <div class="mb-3">
-                <label for="password" class="form-label">Password<span style="color: red;">*</span></label>
-                <Field v-model="formData.password" name="password" type="password" class="form-control" id="password"
-                  autocomplete="on" placeholder="Enter password..." />
+                <label for="password" class="form-label"
+                  >Password<span style="color: red">*</span></label
+                >
+                <Field
+                  v-model="formData.password"
+                  name="password"
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  autocomplete="on"
+                  placeholder="Enter password..."
+                />
                 <ErrorMessage name="password" class="text-danger" />
               </div>
               <div class="mb-3">
-                <label for="repeatPassword" class="form-label">Repeat password<span style="color: red;">*</span></label>
-                <Field v-model="formData.repeatPassword" name="repeatPassword" type="password" class="form-control"
-                  id="repeatPassword" autocomplete="on" placeholder="Repeat the password..." />
+                <label for="repeatPassword" class="form-label"
+                  >Repeat password<span style="color: red">*</span></label
+                >
+                <Field
+                  v-model="formData.repeatPassword"
+                  name="repeatPassword"
+                  type="password"
+                  class="form-control"
+                  id="repeatPassword"
+                  autocomplete="on"
+                  placeholder="Repeat the password..."
+                />
                 <ErrorMessage name="repeatPassword" class="text-danger" />
               </div>
-              <div class="mb-3">
-                <button type="submit" class="btn btn-primary" btn-style="default-button-small">
+              <div class="mb-3 text-center">
+                <button
+                  type="submit"
+                  class="btn"
+                  btn-style="default-button-small"
+                >
                   Register
                 </button>
               </div>
@@ -85,12 +128,12 @@ const formData = {
   repeatPassword: '',
 };
 
-const location = ref("");
+const location = ref('');
 
 const handleTimeZone = (selectedZone) => {
   location.value = selectedZone;
   console.log(selectedZone);
-}
+};
 
 const onSubmit = async () => {
   console.log('here');
@@ -115,3 +158,26 @@ const onSubmit = async () => {
   }
 };
 </script>
+
+<style scoped lang="scss">
+@import '@/styles/variables.scss';
+
+.card {
+  background-color: $lighter-gray;
+
+  .card-header {
+    background-color: $dark-gray;
+    color: $classic-cream;
+  }
+
+  .btn {
+    background-color: $elegant-gold;
+    color: $classic-cream;
+    border: none;
+  }
+
+  .form-label {
+    color: $classic-cream;
+  }
+}
+</style>

@@ -9,13 +9,13 @@
           <div class="card-body bg-light">
             <div class="d-flex justify-content-between align-items-center mb-3">
               <h5 class="mb-0">Profit:</h5>
-              <span class="badge rounded-pill bg-success">{{
+              <span class="badge rounded-pill badge-profit">{{
                 event.profit
               }}$</span>
             </div>
             <div class="d-flex justify-content-between align-items-center">
               <h5 class="mb-0">Expenses:</h5>
-              <span class="badge rounded-pill bg-danger">{{
+              <span class="badge rounded-pill badge-expenses">{{
                 event.expenses
               }}$</span>
             </div>
@@ -99,3 +99,19 @@ onMounted(() => {
 
 watch(event, updateFinancials, { immediate: true });
 </script>
+
+<style scoped lang="scss">
+@import '@/styles/variables.scss';
+
+.badge-profit {
+  background-color: $medium-spring-green;
+  color: $dark-gray;
+  font-weight: bold;
+}
+
+.badge-expenses {
+  background-color: $candy-apple-red;
+  color: $dark-gray;
+  font-weight: bold;
+}
+</style>

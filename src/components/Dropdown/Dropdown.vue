@@ -60,6 +60,10 @@ watch(selectedValue, () => {
 </script>
 
 <style scoped lang="scss">
+@import '@/styles/variables.scss';
+.form-label {
+  color: $classic-cream;
+}
 .custom-dropdown {
   position: absolute;
   border: 1px solid #ccc;

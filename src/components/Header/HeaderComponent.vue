@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+  <nav class="navbar navbar-expand-lg">
     <div>
       <RouterLink :to="'/home'">
         <img
@@ -26,26 +26,29 @@
         <li v-if="!isLoggedIn" class="nav-item px-2">
           <RouterLink
             :to="'/login'"
-            class="nav-link nav-link-hover fw-bold fs-5"
+            class="nav-link fw-bold fs-5"
+            :class="{ active: isActive('/login') }"
             >Login</RouterLink
           >
         </li>
         <li class="nav-item px-2">
           <RouterLink
             :to="'/events'"
-            class="nav-link nav-link-hover fw-bold fs-5"
+            class="nav-link fw-bold fs-5"
+            :class="{ active: isActive('/events') }"
             >Events</RouterLink
           >
         </li>
         <li v-if="isLoggedIn" class="nav-item px-2">
           <RouterLink
             :to="'/profile'"
-            class="nav-link nav-link-hover fw-bold fs-5"
+            class="nav-link fw-bold fs-5"
+            :class="{ active: isActive('/profile') }"
             >Profile</RouterLink
           >
         </li>
-        <li v-if="isLoggedIn" class="nav-item px-2 mt-2">
-          <button @click="handleLogout" class="fw-bold fs-5">Logout</button>
+        <li v-if="isLoggedIn" class="nav-item px-2">
+          <button @click="handleLogout" class="btn fw-bold fs-5">Logout</button>
         </li>
       </ul>
     </div>
@@ -69,9 +72,47 @@ const handleLogout = async () => {
 
   router.push({ name: 'login' });
 };
+
+const isActive = (route) => {
+  return router.currentRoute.value.path === route;
+};
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
+@import '@/styles/variables.scss';
+
+.navbar {
+  background-color: $dark-gray;
+
+  .nav-link-user {
+    color: $classic-cream;
+  }
+  .nav-item {
+    .nav-link {
+      color: $off-white;
+
+      &:hover {
+        color: $vibrant-teal;
+      }
+    }
+    .active {
+      color: $vibrant-teal !important;
+      border-bottom: 3px solid $vibrant-teal;
+    }
+
+    .btn {
+      background-color: $dark-gray;
+      color: $off-white;
+      border: none;
+      padding: 8px;
+
+      &:hover {
+        color: $vibrant-teal;
+      }
+    }
+  }
+}
+
 button {
   background-color: #0d6efd;
   color: #052c65;

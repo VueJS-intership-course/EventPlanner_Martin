@@ -60,7 +60,7 @@ watch(
 );
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .event {
   overflow: hidden;
 }

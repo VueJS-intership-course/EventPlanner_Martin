@@ -3,13 +3,13 @@
     <div v-if="isAdmin" class="mt-3">
       <div class="d-flex justify-content-center">
         <div v-if="!isToggleFilters" class="text-center my-3 me-3">
-          <button class="btn btn-outline-primary btn-lg" @click="toggleFilters">
+          <button class="btn btn-filter btn-lg" @click="toggleFilters">
             Filters
           </button>
         </div>
         <div class="text-center my-3 ms-3">
           <RouterLink :to="'/events/createEvent'">
-            <button class="btn btn-success btn-lg">Create New Event</button>
+            <button class="btn btn-create-event btn-lg">Create New Event</button>
           </RouterLink>
         </div>
       </div>
@@ -125,7 +125,29 @@ const formatedTicketCount = computed(() => {
 });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import '@/styles/variables.scss';
+.btn-create-event {
+  background-color: $medium-spring-green;
+  color: $dark-gray;
+  font-weight: bold;
+
+  &:hover {
+    background-color: #00d26e;
+    color: $classic-cream;
+  }
+}
+
+.btn-filter {
+  background-color: $blue-cola;
+  color: $dark-gray;
+  font-weight: bold;
+
+  &:hover {
+    background-color: #00537c;
+    color: $classic-cream;
+  }
+}
 .bi-ticket-detailed {
   font-size: 1.5rem;
 }
@@ -163,5 +185,9 @@ const formatedTicketCount = computed(() => {
   color: white;
   text-shadow: 1px 1px 2px black;
   padding: 0.5rem;
+}
+
+.card {
+  border: none;
 }
 </style>

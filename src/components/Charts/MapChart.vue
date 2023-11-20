@@ -27,7 +27,8 @@ const data = computed(() => {
 const initMap = () => {
   Highcharts.mapChart('container', {
     chart: {
-        map: mapData
+        map: mapData,
+        backgroundColor: '#00ADB5'
     },
     title: {
         text: 'Events by countries'

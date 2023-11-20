@@ -74,15 +74,13 @@
       </div>
       <div
         class="col-lg-12 d-flex justify-content-lg-end justify-content-center mt-3"
-        >
-        <button type="submit" class="btn btn-primary me-2">
-          Apply Filters
-        </button>
-        <button class="btn btn-danger me-2" @click="cancel">
-          <i class="bi bi-x-circle"></i> Cancel
-        </button>
-        <button @click="resetFilters" class="btn btn-outline-secondary">
+      >
+        <button type="submit" class="btn btn-apply me-2">Apply Filters</button>
+        <button @click="resetFilters" class="btn btn-reset">
           <i class="bi bi-arrow-counterclockwise"></i>Reset Filters
+        </button>
+        <button class="btn btn-cancel ms-2" @click="cancel">
+          <i class="bi bi-x-circle"></i> Cancel
         </button>
       </div>
     </Form>
@@ -147,7 +145,6 @@ const setFilters = () => {
 };
 
 const resetFilters = () => {
-
   tempFilterOptions.value = {
     search: '',
     fromDate: '',
@@ -164,27 +161,48 @@ const cancel = () => {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import '@/styles/variables.scss';
 .container {
   background-color: #f8f9fa;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-.form-label {
-  font-weight: bold;
-  color: #333;
-}
-.btn-primary {
-  background-color: #0056b3;
-  border-color: #004085;
-}
-.btn-outline-secondary {
-  border-color: #6c757d;
-  color: #6c757d;
-}
-.btn-outline-secondary:hover {
-  background-color: #6c757d;
-  color: #fff;
+  .form-label {
+    font-weight: bold;
+    color: #333;
+  }
+  .btn-apply {
+    background-color: $blue-cola;
+    color: $dark-gray;
+    font-weight: bold;
+
+    &:hover {
+      background-color: #00537c;
+      color: $classic-cream;
+    }
+  }
+
+  .btn-cancel {
+    background-color: $candy-apple-red;
+    color: $dark-gray;
+    font-weight: bold;
+
+    &:hover {
+      background-color: #8d0016;
+      color: $classic-cream;
+    }
+  }
+
+  .btn-reset {
+    background-color: $lighter-gray;
+    color: $classic-cream;
+    font-weight: bold;
+
+    &:hover {
+      background-color: #8d0016;
+      color: $classic-cream;
+    }
+  }
 }
 </style>

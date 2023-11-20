@@ -19,33 +19,38 @@
                 class="list-group-item d-flex justify-content-between align-items-center"
               >
                 Date and time:
-                <span class="badge bg-info text-dark"
-                  >{{ getEventTime(event.time, event.timeZone) }}</span
-                >
+                <span class="badge badge-date text-dark">{{
+                  getEventTime(event.time, event.timeZone)
+                }}</span>
               </li>
-              <li v-if="isLoggedIn"
+              <li
+                v-if="isLoggedIn"
                 class="list-group-item d-flex justify-content-between align-items-center"
               >
                 Your time:
-                <span class="badge bg-info text-dark">{{ getUserTime(event.time) }}</span>
+                <span class="badge badge-date text-dark">{{
+                  getUserTime(event.time)
+                }}</span>
               </li>
               <li
                 class="list-group-item d-flex justify-content-between align-items-center"
               >
                 Price:
-                <span class="badge bg-success">${{ event.price }}</span>
+                <span class="badge badge-price">${{ event.price }}</span>
               </li>
               <li
                 class="list-group-item d-flex justify-content-between align-items-center"
               >
                 Available tickets:
-                <span class="badge bg-danger">{{ formatedTicketCount(event.ticket) }}</span>
+                <span class="badge badge-tickets">{{ event.ticket }} left</span>
               </li>
               <li
                 class="list-group-item d-flex justify-content-between align-items-center"
               >
                 Address:
-                <span class="badge bg-danger rounded">{{ event.address }}</span>
+                <span class="badge badge-address rounded ms-3">{{
+                  event.address
+                }}</span>
               </li>
             </ul>
           </div>
@@ -53,13 +58,13 @@
             v-if="isAdmin"
             class="card-footer bg-white d-flex justify-content-end"
           >
-          <button class="btn btn-success btn-sm" @click="viewBudget(event.id)">
-            <i class="bi bi-calculator"></i> View Budget
+            <button class="btn btn-budget btn-sm" @click="viewBudget(event.id)">
+              <i class="bi bi-calculator"></i> View Budget
             </button>
-            <button class="btn btn-danger btn-sm ms-2" @click="removeEvent">
+            <button class="btn btn-remove btn-sm ms-2" @click="removeEvent">
               <i class="bi bi-trash"></i> Remove
             </button>
-            <button class="btn btn-primary btn-sm ms-2" @click="editEvent">
+            <button class="btn btn-edit btn-sm ms-2" @click="editEvent">
               <i class="bi bi-pencil"></i> Edit
             </button>
           </div>
@@ -91,7 +96,9 @@
         ></MapComponent>
         <div v-if="event.clients.includes(userEmail) && isLoggedIn">
           <div class="alert alert-success mt-5 text-center" role="alert">
-            <span class="fw-bold" style="font-size: 1.5rem;">You have subscribed for that event!</span>
+            <span class="fw-bold" style="font-size: 1.5rem"
+              >You have subscribed for that event!</span
+            >
           </div>
         </div>
       </div>
@@ -99,7 +106,6 @@
   </div>
   <EditEventModal v-if="isEditing && isAdmin" :event="event.value" />
 </template>
-
 
 <script setup>
 import { computed } from 'vue';
@@ -109,7 +115,7 @@ import MapComponent from '@/components/Map/MapComponent.vue';
 import EditEventModal from '@/components/Event-Modals/EditEventModal.vue';
 import { userStore } from '@/store/userStore.js';
 import { getUserTime } from '@/utils/getUserTime.js';
-import {getEventTime} from '@/utils/getEventTime.js'
+import { getEventTime } from '@/utils/getEventTime.js';
 
 const route = useRoute();
 const router = useRouter();
@@ -145,26 +151,55 @@ const handleBuyTicket = () => {
 };
 
 const viewBudget = (eventId) => {
-  router.push({name: 'event-budget', params: {id: eventId}})
-}
-
-const formatedTicketCount = computed(() => {
-  return (tickets) => {
-    if (tickets > 1000) {
-      return `${Math.floor(tickets / 1000)}K`;
-    }
-    return tickets;
-  };
-});
+  router.push({ name: 'event-budget', params: { id: eventId } });
+};
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import '@/styles/variables.scss';
+
 .event-card {
   transition: transform 0.2s;
-}
+  border: none;
 
-.event-card:hover {
-  transform:translateY(-5px)
+  &:hover {
+    transform: translateY(-5px);
+  }
+
+  .badge-tickets {
+    background-color: $vibrant-coral;
+    color: $dark-gray;
+  }
+
+  .badge-price {
+    background-color: $soft-mint;
+    color: $dark-gray;
+  }
+
+  .badge-date {
+    background-color: $vibrant-teal;
+    color: $dark-gray;
+  }
+
+  .badge-address {
+    background-color: $vibrant-coral;
+    color: $dark-gray;
+    white-space: normal;
+  }
+
+  .btn-remove {
+    background-color: $candy-apple-red;
+    font-weight: bold;
+  }
+
+  .btn-budget {
+    background-color: $medium-spring-green;
+    font-weight: bold;
+  }
+  .btn-edit {
+    background-color: $vibrant-teal;
+    font-weight: bold;
+  }
 }
 
 .map-container {

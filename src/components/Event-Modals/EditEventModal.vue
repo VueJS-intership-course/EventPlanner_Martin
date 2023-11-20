@@ -156,7 +156,7 @@ watch(
 );
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .map-container {
   height: 300px;
 }

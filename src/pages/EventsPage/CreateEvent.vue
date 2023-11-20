@@ -1,7 +1,7 @@
 <template>
   <div class="container py-4 d-flex flex-column">
     <div class="card shadow align-self-center rounded-3 col-lg-8">
-      <div class="card-header p-3 h4 bg-primary text-white">Create Event</div>
+      <div class="card-header p-3 h4">Create Event</div>
       <div
         class="card-body d-flex justify-content-center align-self-center w-100"
       >
@@ -136,7 +136,7 @@
           <div class="form-group align-self-center mt-2">
             <button
               type="submit"
-              class="btn btn-primary float-end mt-2"
+              class="btn float-end mt-2"
               for="form-group-input"
             >
               Create Event
@@ -155,10 +155,10 @@ import * as yup from 'yup';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import MapComponent from '@/components/Map/MapComponent.vue';
-import { getAddressFromCoordinates } from '../../utils/getAddressFromCoordinates';
-import { getTimeZone } from '../../utils/getTimeZone';
+import { getAddressFromCoordinates } from '@/utils/getAddressFromCoordinates';
+import { getTimeZone } from '@/utils/getTimeZone';
 import moment from 'moment-timezone';
-import firebaseData from '../../services/firebaseConfig.js';
+import firebaseData from '@/services/firebaseConfig.js';
 
 const router = useRouter();
 
@@ -183,7 +183,7 @@ const address = ref(null);
 const timeZone = ref(null);
 const time = ref(null);
 const imageUrl = ref(null);
-const eventName= ref('');
+const eventName = ref('');
 
 const handleCoordinates = async (coordinates) => {
   selectedCoordinates.value = coordinates;
@@ -240,6 +240,7 @@ const handleCreateEvent = async (values) => {
 </script>
 
 <style scoped lang="scss">
+@import '@/styles/variables.scss';
 .back-modal {
   position: fixed;
   top: 0;
@@ -253,6 +254,25 @@ const handleCreateEvent = async (values) => {
     position: absolute;
     top: 20%;
     left: 10%;
+  }
+}
+
+.card {
+  background-color: $lighter-gray;
+
+  .card-header {
+    background-color: $dark-gray;
+    color: $classic-cream;
+  }
+
+  .btn {
+    background-color: $elegant-gold;
+    color: $classic-cream;
+    border: none;
+  }
+
+  .form-control-label {
+    color: $classic-cream;
   }
 }
 </style>

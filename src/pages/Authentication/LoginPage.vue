@@ -20,12 +20,16 @@
                                     placeholder="Enter your password" required autocomplete="on" />
                                 <ErrorMessage name="password" class="text-danger" />
                             </div>
-                            <div class="mb-3 ms-1 d-flex row col-6">
-                                <span class="mb-2">
-                                    Don't have an account?
-                                    <RouterLink :to="'/register'">Sign Up</RouterLink>
-                                </span>
-                                <button type="submit" class="btn btn-primary">Login</button>
+                            <div class="mb-3 ms-1">
+                                <div>
+                                    <span class="mb-2 label">
+                                        Don't have an account?
+                                        <RouterLink :to="'/register'" class="btn-signup">Sign Up</RouterLink>
+                                    </span>
+                                </div>
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary" btn-style="default-button-small">Login</button>
+                                </div>
                             </div>
                         </Form>
                     </div>
@@ -68,3 +72,32 @@ const onSumbit = async () => {
     }
 }
 </script>
+
+<style scoped lang="scss">
+@import '@/styles/variables.scss';
+.card {
+    background-color: $lighter-gray;
+
+    .card-header {
+      background-color: $dark-gray;
+      color: $classic-cream;
+    }
+
+    .label {
+        color: $classic-cream;
+    }
+
+    .form-label {
+      color: $classic-cream;
+    }
+
+    .btn {
+        background-color: $elegant-gold;
+        border: none;
+    }
+
+    .btn-signup {
+        color: $elegant-gold;
+    }
+}
+</style>
