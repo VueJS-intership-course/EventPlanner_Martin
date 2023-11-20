@@ -140,8 +140,8 @@ const removeEvent = async () => {
 };
 
 const editEvent = () => {
-  eStore.isEditing = true;
   eStore.editedEvent = { ...event.value };
+  eStore.isEditing = true;
 };
 
 const handleBuyTicket = () => {

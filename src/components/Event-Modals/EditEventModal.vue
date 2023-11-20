@@ -107,7 +107,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, watch } from 'vue';
+import { computed, watch, ref } from 'vue';
 import { eventStore } from '../../store/eventStore.js';
 import { useRouter } from 'vue-router';
 import MapComponent from '../../components/Map/MapComponent.vue';
@@ -128,8 +128,23 @@ const handleCoordinates = async (coordinates) => {
   editedEvent.value.address = await getAddressFromCoordinates(coordinates);
 };
 
+const isValidDate = (date) => date && !isNaN(Date.parse(date));
+const isValidTime = (time) => time && time.match(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/);
 
 const saveEditedEvent = () => {
+
+  if (!isValidDate(editedEvent.value.date)) {
+   alert('Please select date!')
+   
+    return;
+  }
+
+  if (!isValidTime(editedEvent.value.time)) {
+    alert('Please select time!')
+    
+    return;
+  }
+
   editedEvent.value.timeZone = getTimeZone(editedEvent.value.location);
   const eventDateAndTime = `${editedEvent.value.date}T${editedEvent.value.time}`;
   editedEvent.value.time = moment.tz(eventDateAndTime, editedEvent.value.timeZone).utc().toISOString();
@@ -147,9 +162,9 @@ watch(
   () => editedEvent.value.location,
   (newLocation, oldLocation) => {
     if (newLocation !== oldLocation) {
-      // emit('update-location', newLocation);
-      console.warn(newLocation)
-      handleCoordinates(newLocation)
+      emit('update-location', newLocation);
+      console.warn(newLocation);
+      handleCoordinates(newLocation);
     }
   },
   { deep: true }

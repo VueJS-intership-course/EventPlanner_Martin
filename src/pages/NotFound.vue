@@ -1,8 +1,8 @@
 <template>
-    <div class="d-flex align-items-center justify-content-center vh-100">
+    <div class="d-flex align-items-center justify-content-center container">
             <div class="text-center row">
                 <div class=" col-md-6">
-                    <img src="https://cdn.pixabay.com/photo/2017/03/09/12/31/error-2129569__340.jpg" alt=""
+                    <img src="../utils/images/Not Found.png" alt=""
                         class="img-fluid">
                 </div>
                 <div class=" col-md-6 mt-5">
@@ -11,7 +11,7 @@
                         The page you're looking for doesn't exist.
                     </p>
                     <RouterLink :to="'/events'">
-                        <button class="btn btn-primary">Go Home</button>
+                        <button class="btn btn-home">Go Home</button>
                     </RouterLink>
                 </div>
             </div>
@@ -19,3 +19,14 @@
 </template>
 
 <script setup></script>
+
+<style scoped lang="scss">
+@import '@/styles/variables.scss';
+.container {
+    height: calc(100vh - 91px);
+
+    .btn-home {
+        background-color: $blue-cola;
+    }
+}
+</style>

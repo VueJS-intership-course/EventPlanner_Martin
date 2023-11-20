@@ -8,7 +8,6 @@
         </div>
         <form @submit.prevent="handleChangeLocation" class="modal-body">
           <div class="mb-3">
-            <label for="password" class="col-form-label">Choose location</label>
             <Dropdown
               v-model="editedUser.location"
               id="location"
@@ -16,8 +15,8 @@
               :label="'Location'"
             ></Dropdown>
           </div>
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Save</button>
+          <div class="text-center">
+            <button type="submit" class="btn btn-save-location">Save</button>
           </div>
         </form>
       </div>
@@ -38,6 +37,11 @@ const editedUser = computed(() => uStore.editedUser);
 const currentUser = computed(() => uStore.currentUser);
 
 const handleChangeLocation = async () => {
+  if (editedUser.value.location === '') {
+    uStore.isChangingUserLocation = false;
+    return;
+  }
+
   try {
     await uStore.editUser(editedUser.value.location, currentUser.value);
     uStore.isChangingUserLocation = false;
@@ -52,3 +56,27 @@ const cancelModal = () => {
   uStore.isChangingUserLocation = false;
 };
 </script>
+
+<style scoped lang="scss">
+@import '@/styles/variables.scss';
+form {
+  background-color: $lighter-gray;
+}
+
+.modal-header {
+  background-color: $dark-gray;
+  color: $classic-cream;
+
+  .btn-close-modal {
+    color: $classic-cream !important;
+  }
+}
+.btn-save-location {
+  background-color: $blue-cola;
+  color: $classic-cream;
+
+  &:hover {
+    background-color: #00537c;
+  }
+}
+</style>

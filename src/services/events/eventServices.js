@@ -162,8 +162,6 @@ export default {
       throw new Error('Event not found');
     }
 
-    const eventData = eventDoc.data();
-
     try {
       await eventDoc.ref.update({
         expenses: event.expenses + price

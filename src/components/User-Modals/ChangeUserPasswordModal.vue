@@ -43,8 +43,8 @@
             />
             <ErrorMessage name="rePass" class="text-danger mt-1"/>
           </div>
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Save</button>
+          <div class="text-center">
+            <button type="submit" class="btn btn-save">Save</button>
           </div>
         </Form>
       </div>
@@ -92,3 +92,27 @@ const cancelModal = () => {
   uStore.isChangingUserPassword = false;
 }
 </script>
+
+<style scoped lang="scss">
+@import '@/styles/variables.scss';
+form {
+  background-color: $lighter-gray;
+}
+
+.modal-header {
+  background-color: $dark-gray;
+  color: $classic-cream;
+}
+.btn-save {
+  background-color: $blue-cola;
+  color: $classic-cream;
+
+  &:hover {
+    background-color: #00537c;
+  }
+}
+
+.col-form-label {
+  color: $classic-cream;
+}
+</style>
