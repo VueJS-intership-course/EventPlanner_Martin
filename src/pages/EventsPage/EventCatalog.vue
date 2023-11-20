@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="filteredEvents">
     <div v-if="isAdmin" class="mt-3">
       <div class="d-flex justify-content-center">
         <div v-if="!isToggleFilters" class="text-center my-3 me-3">
@@ -16,7 +16,11 @@
       <EventFilter v-if="isToggleFilters"></EventFilter>
     </div>
     <div v-if="!isAdmin" class="text-center mt-3">
-      <button v-if="!isToggleFilters" class="btn btn-outline-primary btn-lg" @click="toggleFilters">
+      <button
+        v-if="!isToggleFilters"
+        class="btn btn-outline-primary btn-lg"
+        @click="toggleFilters"
+      >
         Filters
       </button>
       <EventFilter v-if="isToggleFilters"></EventFilter>
@@ -65,6 +69,21 @@
           </div>
         </div>
       </div>
+      <div
+        v-if="filteredEvents.length === 0"
+        class=" mt-5"
+      >
+        <div class="text-center">
+          <i
+            class="bi bi-calendar-x-fill mb-3"
+            style="font-size: 4rem; color: #6c757d"
+          ></i>
+          <h3>No Events Found</h3>
+          <p class="lead">
+            Try adjusting your filters or come back later to find more events.
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -74,7 +93,7 @@ import { eventStore } from '@/store/eventStore';
 import { computed } from 'vue';
 import { userStore } from '@/store/userStore.js';
 import { useRouter } from 'vue-router';
-import EventFilter from '@/common-templates/EventFilter.vue';
+import EventFilter from '@/pages/EventsPage/EventFilter.vue';
 
 const eStore = eventStore();
 const uStore = userStore();

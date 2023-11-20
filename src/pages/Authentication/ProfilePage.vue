@@ -29,7 +29,7 @@
           </div>
         </div>
       </div>
-      <div v-if="user && !uStore.isAdmin" class="col-lg-4">
+      <div v-if="user && !uStore.isAdmin" class="col-lg-5">
         <Calendar :userEvents="userEvents"></Calendar>
       </div>
     </div>
@@ -41,11 +41,11 @@
 
 <script setup>
 import { userStore } from '@/store/userStore';
-import { eventStore } from '../../store/eventStore';
+import { eventStore } from '@/store/eventStore';
 import { computed, onMounted } from 'vue';
-import ChangeUserPasswordModal from '@/common-templates/ChangeUserPasswordModal.vue';
-import EditLocationModal from '../../common-templates/EditLocationModal.vue';
-import Calendar from '../../common-templates/Calendar.vue';
+import ChangeUserPasswordModal from '@/components/User-Modals/ChangeUserPasswordModal.vue';
+import EditLocationModal from '@/components/User-Modals/EditLocationModal.vue';
+import Calendar from '@/components/Calendar/Calendar.vue';
 
 const uStore = userStore();
 const eStore = eventStore();
@@ -66,8 +66,6 @@ const userEvents = computed(() =>
     id: event.id
   }))
 );
-console.log(usersAndTheirEvents.value);
-console.log(userEvents.value);
 
 const changingPassword = () => {
   uStore.isChangingUserPassword = true;

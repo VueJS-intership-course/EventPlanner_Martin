@@ -53,7 +53,7 @@
 </template>
 
 <script setup>
-import { userStore } from '../store/userStore.js';
+import { userStore } from '@/store/userStore.js';
 import { useRouter } from 'vue-router';
 import { ErrorMessage, Field, Form } from 'vee-validate';
 import * as yup from 'yup';

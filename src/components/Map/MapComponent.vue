@@ -14,9 +14,9 @@ import { Style, Circle, Fill } from 'ol/style';
 import { fromLonLat, toLonLat } from 'ol/proj';
 import { ref, onMounted, watch, nextTick } from 'vue';
 import 'ol/ol.css';
-import { getAddressFromCoordinates } from '../utils/getAddressFromCoordinates';
+import { getAddressFromCoordinates } from '@/utils/getAddressFromCoordinates';
 import * as olProj from 'ol/proj';
-import { getTimeZone } from '../utils/getTimeZone';
+import { getTimeZone } from '@/utils/getTimeZone';
 
 const emit = defineEmits();
 

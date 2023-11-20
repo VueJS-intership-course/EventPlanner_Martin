@@ -108,11 +108,11 @@
 
 <script setup lang="ts">
 import { computed, watch } from 'vue';
-import { eventStore } from '../store/eventStore';
+import { eventStore } from '../../store/eventStore.js';
 import { useRouter } from 'vue-router';
-import MapComponent from './MapComponent.vue';
-import { getAddressFromCoordinates } from '../utils/getAddressFromCoordinates.js';
-import { getTimeZone } from '../utils/getTimeZone';
+import MapComponent from '../../components/Map/MapComponent.vue';
+import { getAddressFromCoordinates } from '../../utils/getAddressFromCoordinates.js';
+import { getTimeZone } from '../../utils/getTimeZone.js';
 import moment from 'moment-timezone';
 
 const emit = defineEmits();

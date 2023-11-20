@@ -10,7 +10,7 @@ import { watch, computed, onMounted } from 'vue';
 
 Highmaps(Highcharts);
 
-const eventsCount = defineProps({
+const props = defineProps({
   eventsCount: {
     type: Object,
     required: true
@@ -18,12 +18,11 @@ const eventsCount = defineProps({
 });
 
 const data = computed(() => {
-  return Object.keys(eventsCount.eventsCount).map(name => ({
+  return Object.keys(props.eventsCount).map(name => ({
     name,
-    value: eventsCount.eventsCount[name]
+    value: props.eventsCount[name]
   }));
 });
-console.log(eventsCount.eventsCount);
 
 const initMap = () => {
   Highcharts.mapChart('container', {
@@ -31,7 +30,7 @@ const initMap = () => {
         map: mapData
     },
     title: {
-        text: 'Sample Highcharts Map'
+        text: 'Events by countries'
     },
     series: [{
         data: data.value,

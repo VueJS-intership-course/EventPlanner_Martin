@@ -90,7 +90,7 @@
 </template>
 
 <script setup>
-import { eventStore } from '../store/eventStore';
+import { eventStore } from '@/store/eventStore';
 import { ref } from 'vue';
 import { Form, Field, ErrorMessage } from 'vee-validate';
 import * as yup from 'yup';

@@ -53,7 +53,7 @@
             v-if="isAdmin"
             class="card-footer bg-white d-flex justify-content-end"
           >
-          <button class="btn btn-danger btn-sm" @click="viewBudget(event.id)">
+          <button class="btn btn-success btn-sm" @click="viewBudget(event.id)">
             <i class="bi bi-calculator"></i> View Budget
             </button>
             <button class="btn btn-danger btn-sm ms-2" @click="removeEvent">
@@ -105,11 +105,11 @@
 import { computed } from 'vue';
 import { eventStore } from '@/store/eventStore.js';
 import { useRoute, useRouter } from 'vue-router';
-import MapComponent from '@/common-templates/MapComponent.vue';
-import EditEventModal from '@/common-templates/EditEventModal.vue';
-import { userStore } from '../../store/userStore.js';
-import { getUserTime } from '../../utils/getUserTime.js';
-import {getEventTime} from '../../utils/getEventTime.js'
+import MapComponent from '@/components/Map/MapComponent.vue';
+import EditEventModal from '@/components/Event-Modals/EditEventModal.vue';
+import { userStore } from '@/store/userStore.js';
+import { getUserTime } from '@/utils/getUserTime.js';
+import {getEventTime} from '@/utils/getEventTime.js'
 
 const route = useRoute();
 const router = useRouter();
@@ -164,11 +164,11 @@ const formatedTicketCount = computed(() => {
 }
 
 .event-card:hover {
-  transform: scale(1.05);
+  transform:translateY(-5px)
 }
 
 .map-container {
-  height: 400px;
+  height: 25rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 </style>

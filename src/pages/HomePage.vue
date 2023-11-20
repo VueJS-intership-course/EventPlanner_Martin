@@ -1,13 +1,12 @@
 <template>
   <div>
-    <h1>HOME</h1>
     <MapChart :eventsCount="eventsCount"></MapChart>
   </div>
 </template>
 
 <script setup>
 import { onMounted, ref } from 'vue';
-import MapChart from '@/common-templates/MapChart.vue';
+import MapChart from '@/components/Charts/MapChart.vue';
 import { eventStore } from '../store/eventStore.js';
 import { getCountry } from '@/utils/getCountry.js';
 

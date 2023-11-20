@@ -26,9 +26,9 @@
 </template>
 
 <script setup>
-import { userStore } from '../store/userStore.js';
+import { userStore } from '@/store/userStore.js';
 import { useRouter } from 'vue-router';
-import Dropdown from '../common-templates/Dropdown.vue';
+import Dropdown from '@/components/Dropdown/Dropdown.vue';
 import { computed } from 'vue';
 
 const router = useRouter();
@@ -40,7 +40,6 @@ const currentUser = computed(() => uStore.currentUser);
 const handleChangeLocation = async () => {
   try {
     await uStore.editUser(editedUser.value.location, currentUser.value);
-    console.log(editedUser.value.location);
     uStore.isChangingUserLocation = false;
 
     router.push({ name: 'profile' });

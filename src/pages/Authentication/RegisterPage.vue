@@ -52,7 +52,7 @@
 <script setup>
 import userServices from '@/services/users/userServices.js';
 import { Field, Form, ErrorMessage } from 'vee-validate';
-import Dropdown from '@/common-templates/Dropdown.vue';
+import Dropdown from '@/components/Dropdown/Dropdown.vue';
 import { useRouter } from 'vue-router';
 import * as yup from 'yup';
 import { ref } from 'vue';

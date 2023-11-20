@@ -154,7 +154,7 @@ import { Form, Field, ErrorMessage } from 'vee-validate';
 import * as yup from 'yup';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import MapComponent from '@/common-templates/MapComponent.vue';
+import MapComponent from '@/components/Map/MapComponent.vue';
 import { getAddressFromCoordinates } from '../../utils/getAddressFromCoordinates';
 import { getTimeZone } from '../../utils/getTimeZone';
 import moment from 'moment-timezone';

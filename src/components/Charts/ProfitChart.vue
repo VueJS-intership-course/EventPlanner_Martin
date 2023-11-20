@@ -40,11 +40,12 @@ const chartOptions = ref({
     {
       name: 'Profit',
       data: [props.profit],
-      color: 'purple',
+      color: 'green',
     },
     {
       name: 'Expenses',
       data: [props.expenses],
+      color: 'red'
     },
   ],
   accessibility: {

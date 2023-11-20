@@ -61,7 +61,7 @@
 import { eventStore } from '../../store/eventStore';
 import { computed, watch, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import ProfitChart from '../../common-templates/ProfitChart.vue';
+import ProfitChart from '@/components/Charts/ProfitChart.vue';
 
 const eStore = eventStore();
 const route = useRoute();

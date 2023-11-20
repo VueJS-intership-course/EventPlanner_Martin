@@ -1,9 +1,10 @@
 <template>
-  <div class="container mt-4">
+  <div class="container">
     <FullCalendar
       class="container-calendar"
       :options="calendarOptions"
       :key="props.userEvents"
+      style="width: 100%;"
     >
       <template v-slot:eventContent="arg">
         <div
@@ -11,7 +12,7 @@
           @click="goToDetailsPage(arg.event.id)"
           style="background-color: #3788d8; width: 100%; border-radius: 5px; cursor: pointer;"
         >
-          <!-- <b style="color: white; font-size: 10px;">{{ arg.timeText }}</b -->
+          <b style="color: white; font-size: 10px;">{{ arg.timeText }}</b>&nbsp;
           <i style="color: black">{{ arg.event.title }}</i>
         </div>
       </template>
@@ -62,23 +63,5 @@ watch(
 <style scoped>
 .event {
   overflow: hidden;
-  font-size: 14px;
 }
-/* 
-.container-calendar {
-  font-size: 16px;
-}
-.fc-header-title h2 {
-  font-size: 1em;
-  white-space: normal !important;
-}
-.fc-view-agendaWeek .fc-event-vert {
-  font-size: 0;
-  overflow: hidden;
-  width: 2px !important;
-}
-.fc-agenda-axis {
-  width: 20px !important;
-  font-size: 0.7em;
-} */
 </style>
