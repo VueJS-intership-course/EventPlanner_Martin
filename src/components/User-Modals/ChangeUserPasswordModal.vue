@@ -1,7 +1,7 @@
 <template>
   <div class="modal show" style="display: block;">
     <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
+      <div class="modal-content" style="border: none;">
         <div class="modal-header">
           <h5 class="modal-title">Change Password</h5>
           <button type="button" class="btn-close" @click="cancelModal"></button>

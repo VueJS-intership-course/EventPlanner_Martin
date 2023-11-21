@@ -4,7 +4,6 @@
       class="container-calendar"
       :options="calendarOptions"
       :key="props.userEvents"
-      style="width: 100%;"
     >
       <template v-slot:eventContent="arg">
         <div
@@ -61,6 +60,15 @@ watch(
 </script>
 
 <style scoped lang="scss">
+@import '@/styles/variables.scss';
+.container-calendar {
+background-color: $dark-gray;
+color: $vibrant-teal;
+}
+
+.fc-daygrid-day-number {
+  color: $vibrant-teal !important;
+}
 .event {
   overflow: hidden;
 }

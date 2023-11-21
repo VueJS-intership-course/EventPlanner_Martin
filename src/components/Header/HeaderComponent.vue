@@ -19,7 +19,7 @@
           >
         </li>
         <li v-if="!isAdmin && isLoggedIn" class="nav-item px-2">
-          <span class="nav-link fw-bold fs-5 text-danger"
+          <span class="nav-link fw-bold fs-5" style="color: #f50500;"
             >Hi, {{ uStore.currentUser.username }}!</span
           >
         </li>
