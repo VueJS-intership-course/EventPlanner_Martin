@@ -19,7 +19,7 @@
                   name="name"
                   placeholder="Type name..."
                 />
-                <ErrorMessage name="name"/>
+                <ErrorMessage name="name" class="text-danger"/>
               </div>
               <div class="form-group w-100 mb-2 ms-5">
                 <label class="form-control-label" for="description"
@@ -33,7 +33,7 @@
                   name="description"
                   placeholder="Type description..."
                 />
-                <ErrorMessage name="description"/>
+                <ErrorMessage name="description" class="text-danger"/>
               </div>
             </div>
             <div class="d-flex">
@@ -47,7 +47,7 @@
                   name="tickets"
                   placeholder="Type count of tickets..."
                 />
-                <ErrorMessage name="tickets"/>
+                <ErrorMessage name="tickets" class="text-danger"/>
               </div>
               <div class="form-group w-100 mb-2 ms-5">
                 <label class="form-control-label" for="price">Price</label>
@@ -59,18 +59,19 @@
                   name="price"
                   placeholder="Type price..."
                 />
-                <ErrorMessage name="price"/>
+                <ErrorMessage name="price" class="text-danger"/>
               </div>
             </div>
             <div class="d-flex mb-3">
               <div class="form-group w-100 mb-2 me-5">
-                <label class="form-control-label" for="date">Date<span style="color: red;">*</span></label>
+                <label class="form-control-label" for="date">Date</label>
                 <Field
                   v-model="editedEvent.date"
                   type="date"
                   class="form-control"
                   id="form-group-input"
                   name="date"
+                  :value="today"
                 />
                 <ErrorMessage name="date" class="text-danger"/>
               </div>
@@ -78,11 +79,11 @@
               <div class="form-group w-100 mb-2 ms-5">
                 <label class="form-control-label" for="time">Time<span style="color: red;">*</span></label>
                 <Field
-                  v-model="editedEvent.time"
-                  type="time"
-                  class="form-control"
-                  id="form-group-input"
-                  name="time"
+                v-model="editedEvent.time"
+                type="time"
+                class="form-control"
+                id="form-group-input"
+                name="time"
                 />
                 <ErrorMessage name="time" class="text-danger"/>
               </div>
@@ -117,13 +118,22 @@ import moment from 'moment-timezone';
 import { Form, Field, ErrorMessage } from 'vee-validate';
 import * as yup from 'yup';
 
+const today = new Date().toISOString().slice(0,10)
+
+const yesterday = new Date();
+yesterday.setDate(yesterday.getDate() - 1);
+
 const validationSchema = yup.object({
-  name: yup.string(),
-  description: yup.string(),
-  tickets: yup.number().positive().integer(),
-  price: yup.number().positive(),
-  date: yup.date().required('Date is required!'),
-  time: yup.string().required('Time is required!').matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, 'Invalid time format')
+  name: yup.string().required('This field is required!'),
+  description: yup.string().required('This field is required!'),
+  tickets: yup.number().min(1, 'The count of tickets cannot be negative!').required('This field is required!'),
+  price: yup.number().min(1, 'The price of ticket cannot be negative!').required('This field is required!'),
+  date: yup.date()
+    .nullable()
+    .transform((value, originalValue) => (originalValue === '' ? null : value))
+    .min(yesterday, 'You can not select date, which is in the past!')
+    .required('This field is required!'),
+  time: yup.string().required('Time is required!').matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, 'Invalid time format!')
 });
 
 const emit = defineEmits();
