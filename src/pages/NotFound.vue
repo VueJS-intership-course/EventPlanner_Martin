@@ -27,6 +27,13 @@
 
     .btn-home {
         background-color: $blue-cola;
+        color: $dark-gray;
+        font-weight: bold;
+
+        &:hover {
+            background-color: #00537c;
+            color: $classic-cream;
+        }
     }
 }
 </style>

@@ -14,7 +14,7 @@
     >
       <ul class="navbar-nav ml-auto">
         <li v-if="isAdmin" class="nav-item px-2">
-          <span class="nav-link fw-bold fs-5"
+          <span class="nav-link fw-bold fs-5 text-danger"
             ><i class="bi bi-shield-lock"></i>Admin</span
           >
         </li>

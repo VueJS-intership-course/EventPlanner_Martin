@@ -9,9 +9,15 @@
         <div
           class="event"
           @click="goToDetailsPage(arg.event.id)"
-          style="background-color: #3788d8; width: 100%; border-radius: 5px; cursor: pointer;"
+          style="
+            background-color: #3788d8;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+          "
         >
-          <b style="color: white; font-size: 10px;">{{ arg.timeText }}</b>&nbsp;
+          <b style="color: white; font-size: 10px">{{ arg.timeText }}</b
+          >&nbsp;
           <i style="color: black">{{ arg.event.title }}</i>
         </div>
       </template>
@@ -24,7 +30,7 @@ import { reactive, watch } from 'vue';
 import FullCalendar from '@fullcalendar/vue3';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import {useRouter} from 'vue-router';
+import { useRouter } from 'vue-router';
 
 const router = useRouter();
 
@@ -49,6 +55,17 @@ const calendarOptions = reactive({
   firstDay: 1,
   events: props.userEvents,
   contentHeight: 'auto',
+  dayCellDidMount: function (info) {
+    const dayNumberElement = info.el.querySelector('.fc-daygrid-day-number');
+    if (dayNumberElement) {
+      dayNumberElement.style.color = '#00ADB5';
+    }
+  },
+  dayHeaderContent: (args) => {
+    return {
+      html: `<div class='custom-weekday-header' style='color: #00ADB5;'>${args.text}</div>`
+    };
+  },
 });
 
 watch(
@@ -62,12 +79,8 @@ watch(
 <style scoped lang="scss">
 @import '@/styles/variables.scss';
 .container-calendar {
-background-color: $dark-gray;
-color: $vibrant-teal;
-}
-
-.fc-daygrid-day-number {
-  color: $vibrant-teal !important;
+  background-color: $dark-gray;
+  color: $vibrant-teal;
 }
 .event {
   overflow: hidden;

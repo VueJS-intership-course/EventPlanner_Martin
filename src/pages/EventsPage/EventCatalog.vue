@@ -18,7 +18,7 @@
     <div v-if="!isAdmin" class="text-center mt-3">
       <button
         v-if="!isToggleFilters"
-        class="btn btn-outline-primary btn-lg"
+        class="btn btn-filter btn-lg"
         @click="toggleFilters"
       >
         Filters

@@ -4,6 +4,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="edit">Edit Event</h5>
+          <button type="button" class="btn-close" @click="cancelButton"></button>
         </div>
         <Form @submit="saveEditedEvent" :validation-schema="validationSchema">
           <div class="modal-body">
@@ -61,9 +62,9 @@
                 <ErrorMessage name="price"/>
               </div>
             </div>
-            <div class="d-flex">
+            <div class="d-flex mb-3">
               <div class="form-group w-100 mb-2 me-5">
-                <label class="form-control-label" for="date">Date</label>
+                <label class="form-control-label" for="date">Date<span style="color: red;">*</span></label>
                 <Field
                   v-model="editedEvent.date"
                   type="date"
@@ -75,7 +76,7 @@
               </div>
 
               <div class="form-group w-100 mb-2 ms-5">
-                <label class="form-control-label" for="time">Time</label>
+                <label class="form-control-label" for="time">Time<span style="color: red;">*</span></label>
                 <Field
                   v-model="editedEvent.time"
                   type="time"
@@ -93,19 +94,10 @@
               :location="editedEvent.location"
             ></MapComponent>
           </div>
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">
+          <div class="text-center">
+            <button type="submit" class="btn btn-save mb-3">
               <i class="bi bi-floppy"></i>
               Save
-            </button>
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-dismiss="modal"
-              @click="cancelButton"
-            >
-              <i class="bi bi-x-circle"></i>
-              Cancel
             </button>
           </div>
         </Form>
@@ -115,7 +107,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, watch, ref } from 'vue';
+import { computed, watch } from 'vue';
 import { eventStore } from '../../store/eventStore.js';
 import { useRouter } from 'vue-router';
 import MapComponent from '../../components/Map/MapComponent.vue';
@@ -132,7 +124,6 @@ const validationSchema = yup.object({
   price: yup.number().positive(),
   date: yup.date().required('Date is required!'),
   time: yup.string().required('Time is required!').matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, 'Invalid time format')
-  // Add other fields as needed
 });
 
 const emit = defineEmits();
@@ -148,24 +139,7 @@ const handleCoordinates = async (coordinates) => {
   editedEvent.value.address = await getAddressFromCoordinates(coordinates);
 };
 
-const isValidDate = (date) => date && !isNaN(Date.parse(date));
-const isValidTime = (time) =>
-  time && time.match(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/);
-
 const saveEditedEvent = () => {
-  console.log(editedEvent.value.time);
-  
-  if (!isValidDate(editedEvent.value.date)) {
-    alert('Please select date!');
-
-    return;
-  }
-
-  if (!isValidTime(editedEvent.value.time)) {
-    alert('Please select time!');
-
-    return;
-  }
 
   editedEvent.value.timeZone = getTimeZone(editedEvent.value.location);
   const eventDateAndTime = `${editedEvent.value.date}T${editedEvent.value.time}`;
@@ -199,5 +173,30 @@ watch(
 <style scoped lang="scss">
 .map-container {
   height: 300px;
+}
+
+@import '@/styles/variables.scss';
+.modal-content {
+  border: none;
+}
+form {
+  background-color: $lighter-gray;
+}
+
+.modal-header {
+  background-color: $dark-gray;
+  color: $classic-cream;
+}
+.btn-save {
+  background-color: $blue-cola;
+  color: $classic-cream;
+
+  &:hover {
+    background-color: #00537c;
+  }
+}
+
+.form-control-label {
+  color: $classic-cream;
 }
 </style>

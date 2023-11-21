@@ -47,26 +47,6 @@ export default {
       console.log(error);
     }
   },
-
-  async getUser(userId) {
-    try {
-      const userDoc = await firebaseData.fireStore
-        .collection('users')
-        .doc(userId)
-        .get();
-
-      if (userDoc) {
-        const userData = userDoc.data();
-        console.log(userData);
-        return userData;
-      } else {
-        console.log('User document does not exist.');
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  },
-
   async changePassword(email, currentPassword, newPassword) {
     try {
       const user = firebaseData.fireAuth.currentUser;

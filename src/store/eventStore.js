@@ -7,6 +7,7 @@ export const eventStore = defineStore('events', {
     events: [],
     choosedEvent: null,
     isEditing: false,
+    showDescription: false,
     isToggleFilters: false,
     editedEvent: {
       id: '',

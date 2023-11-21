@@ -1,4 +1,5 @@
 <template>
+  <div class="overlay" v-if="uStore.isChangingUserLocation || uStore.isChangingUserPassword"></div>
   <div class="container-fluid">
     <div class="row align-items-start justify-content-around mt-5 ms-3 me-3">
       <div class="col-lg-4">
@@ -6,7 +7,7 @@
           <div class="px-4 pt-4 pb-4 bg-dark text-white">
             <div class="media align-items-end profile-header">
               <div class="profile mr-3">
-                <img src="https://bootstrapious.com/i/snippets/sn-profile/teacher.jpg" alt="..." width="130" class="rounded mb-2 img-thumbnail"/>
+                <img src="../../utils/images//user-128.png" alt="..." width="130" class="rounded mb-2 img-thumbnail"/>
               </div>
               <div class="media-body mb-5">
                 <h4 class="mt-0 mb-0">{{ user.username }}</h4>
@@ -79,3 +80,16 @@ onMounted(() => {
   eStore.getEvents();
 });
 </script>
+
+<style scoped lang="scss">
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(3px);
+  z-index: 10;
+}
+</style>

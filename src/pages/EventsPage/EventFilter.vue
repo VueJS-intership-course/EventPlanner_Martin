@@ -30,6 +30,7 @@
               class="form-control"
               id="fromDate"
               v-model="tempFilterOptions.fromDate"
+              :value="today"
             />
             <ErrorMessage name="fromDate" class="text-danger" />
           </div>
@@ -93,13 +94,16 @@ import { ref } from 'vue';
 import { Form, Field, ErrorMessage } from 'vee-validate';
 import * as yup from 'yup';
 
+const yesterday = new Date();
+yesterday.setDate(yesterday.getDate() - 1);
+
 const schema = yup.object({
   search: yup.string(),
   fromDate: yup
     .date()
     .nullable()
     .transform((value, originalValue) => (originalValue === '' ? null : value))
-    .min(new Date(), 'You can not select date, which is in the past!')
+    .min(yesterday, 'You can not select date, which is in the past!')
     .max(yup.ref('toDate'), 'From date must be before To date!'),
   toDate: yup
     .date()
@@ -130,9 +134,11 @@ const schema = yup.object({
 
 const eStore = eventStore();
 
+const today = new Date().toISOString().slice(0, 10);
+
 const tempFilterOptions = ref({
   search: '',
-  fromDate: '',
+  fromDate: today,
   toDate: '',
   minPrice: '',
   maxPrice: '',

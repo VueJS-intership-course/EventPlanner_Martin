@@ -9,15 +9,15 @@
           <div class="card-body bg-light">
             <div class="d-flex justify-content-between align-items-center mb-3">
               <h5 class="mb-0">Profit:</h5>
-              <span class="badge rounded-pill badge-profit">{{
-                event.profit
-              }}$</span>
+              <span class="badge rounded-pill badge-profit"
+                >{{ event.profit }}$</span
+              >
             </div>
             <div class="d-flex justify-content-between align-items-center">
               <h5 class="mb-0">Expenses:</h5>
-              <span class="badge rounded-pill badge-expenses">{{
-                event.expenses
-              }}$</span>
+              <span class="badge rounded-pill badge-expenses"
+                >{{ event.expenses }}$</span
+              >
             </div>
           </div>
         </div>
@@ -26,19 +26,19 @@
         </div>
         <div class="d-grid gap-2 d-md-flex justify-content-md-center">
           <button
-            class="btn btn-outline-primary btn-lg px-4 me-md-2"
+            class="btn btn-food btn-lg px-4 me-md-2"
             @click="addExpense('food')"
           >
             Food
           </button>
           <button
-            class="btn btn-outline-secondary btn-lg px-4 me-md-2"
+            class="btn btn-rent btn-lg px-4 me-md-2"
             @click="addExpense('rent')"
           >
             Rent
           </button>
           <button
-            class="btn btn-outline-success btn-lg px-4"
+            class="btn btn-staff btn-lg px-4"
             @click="addExpense('staff')"
           >
             Staff
@@ -62,6 +62,7 @@ import { eventStore } from '../../store/eventStore';
 import { computed, watch, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import ProfitChart from '@/components/Charts/ProfitChart.vue';
+import showNotification from '@/utils/notifications/showNotification';
 
 const eStore = eventStore();
 const route = useRoute();
@@ -91,6 +92,8 @@ const addExpense = (type) => {
   }
 
   eStore.addExpenses(price.value);
+
+  showNotification(`You add an expense for ${type}!`);
 };
 
 onMounted(() => {
@@ -113,5 +116,38 @@ watch(event, updateFinancials, { immediate: true });
   background-color: $candy-apple-red;
   color: $dark-gray;
   font-weight: bold;
+}
+
+.btn-food {
+  background-color: $vibrant-coral;
+  color: $dark-gray;
+  font-weight: bold;
+
+  &:hover {
+    background-color: #ea3600;
+    color: $classic-cream;
+  }
+}
+
+.btn-rent {
+  background-color: $medium-spring-green;
+  color: $dark-gray;
+  font-weight: bold;
+
+  &:hover {
+    background-color: #00d26e;
+    color: $classic-cream;
+  }
+}
+
+.btn-staff {
+  background-color: $blue-cola;
+  color: $dark-gray;
+  font-weight: bold;
+
+  &:hover {
+    background-color: #00537c;
+    color: $classic-cream;
+  }
 }
 </style>

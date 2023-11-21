@@ -78,6 +78,7 @@
                 class="form-control"
                 id="form-group-input"
                 name="date"
+                :value="today"
               />
               <ErrorMessage name="date" class="text-danger" />
             </div>
@@ -90,6 +91,7 @@
                 class="form-control"
                 id="form-group-input"
                 name="time"
+                :value="currentTime"
               />
               <ErrorMessage name="time" class="text-danger" />
             </div>
@@ -119,7 +121,9 @@
                 ref="imageFile"
                 @change="handleFileUpload"
               />
-              <ErrorMessage name="imageFile" class="text-danger" />
+              <p v-if="errorMsgImage" class="text-danger">
+                {{ errorMsgImage }}
+              </p>
             </div>
           </div>
           <div class="d-flex flex-column align-self-center w-100">
@@ -160,23 +164,39 @@ import { getTimeZone } from '@/utils/getTimeZone';
 import moment from 'moment-timezone';
 import firebaseData from '@/services/firebaseConfig.js';
 
+const today = new Date().toISOString().slice(0, 10);
+
+const now = new Date();
+const hours = now.getHours().toString().padStart(2, '0');
+const minutes = now.getMinutes().toString().padStart(2, '0');
+const currentTime = `${hours}:${minutes}`;
+
 const router = useRouter();
 
 const firebaseStorage = firebaseData.fireStorage.ref();
 
+const yesterday = new Date();
+yesterday.setDate(yesterday.getDate() - 1);
+
 const schema = yup.object({
   name: yup.string().required('This field is required!'),
   description: yup.string().required('This field is required!'),
-  tickets: yup.number().required('This field is required!'),
-  price: yup.number().required('This field is required!'),
-  budget: yup.number().required('This field is required!'),
-  date: yup.string().required('This field is required!'),
+  tickets: yup.number().min(1, 'The count of tickets cannot be negative!').required('This field is required!'),
+  price: yup.number().min(1, 'The price of ticket cannot be negative!').required('This field is required!'),
+  budget: yup.number().min(0, 'The budget cannot be negative!').required('This field is required!'),
+  date: yup
+    .date()
+    .nullable()
+    .transform((value, originalValue) => (originalValue === '' ? null : value))
+    .min(yesterday, 'You can not select date, which is in the past!')
+    .required('This field is required!'),
   time: yup.string().required('This field is required!'),
 });
 
 const store = eventStore();
 
 const errorMsg = ref('');
+const errorMsgImage = ref('');
 
 const selectedCoordinates = ref(null);
 const address = ref(null);
@@ -203,7 +223,12 @@ const handleFileUpload = async (event) => {
 
 const handleCreateEvent = async (values) => {
   if (!selectedCoordinates.value) {
-    errorMsg.value = 'Please select a location on the map.';
+    errorMsg.value = 'Please select a location on the map!';
+    return;
+  }
+
+  if (!imageUrl.value) {
+    errorMsgImage.value = 'Please select a image!';
     return;
   }
 

@@ -1,10 +1,11 @@
 <template>
+  <div class="overlay" v-if="eStore.isEditing || eStore.showDescription"></div>
   <div v-if="!event" class="text-center mt-5">
     <div class="spinner-border text-primary" role="status">
       <span class="visually-hidden">Loading...</span>
     </div>
   </div>
-  <div v-if="event" class="text-center text-white mt-2">
+  <div v-if="event" class="text-center title mt-2">
     <h3>{{ event.name }}</h3>
   </div>
   <div v-if="event" class="container mt-4">
@@ -13,7 +14,9 @@
         <div class="card mb-3 event-card">
           <img :src="event.imageUrl" alt="Event Image" class="card-img-top" />
           <div class="card-body">
-            <p class="card-text ms-3">Description: {{ event.description }}</p>
+            <button class="btn btn-info btn-sm" @click="showDescriptionModal">
+              View Full Description
+            </button>
             <ul class="list-group list-group-flush">
               <li
                 class="list-group-item d-flex justify-content-between align-items-center"
@@ -104,11 +107,12 @@
       </div>
     </div>
   </div>
+  <DescriptionModal v-if="eStore.showDescription"></DescriptionModal>
   <EditEventModal v-if="isEditing && isAdmin" :event="event.value" />
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
 import { eventStore } from '@/store/eventStore.js';
 import { useRoute, useRouter } from 'vue-router';
 import MapComponent from '@/components/Map/MapComponent.vue';
@@ -116,6 +120,7 @@ import EditEventModal from '@/components/Event-Modals/EditEventModal.vue';
 import { userStore } from '@/store/userStore.js';
 import { getUserTime } from '@/utils/getUserTime.js';
 import { getEventTime } from '@/utils/getEventTime.js';
+import DescriptionModal from '@/pages/EventsPage/DescriptionModal.vue'
 
 const route = useRoute();
 const router = useRouter();
@@ -124,6 +129,7 @@ const eStore = eventStore();
 
 const eventId = computed(() => route.params.id);
 const isEditing = computed(() => eStore.isEditing);
+const showDescription = computed(() => eStore.showDescription)
 const isAdmin = computed(() => uStore.isAdmin);
 const isLoggedIn = computed(() => uStore.isLoggedIn);
 
@@ -153,10 +159,33 @@ const handleBuyTicket = () => {
 const viewBudget = (eventId) => {
   router.push({ name: 'event-budget', params: { id: eventId } });
 };
+
+const showDescriptionModal = () => {
+  eStore.showDescription = true;
+};
+
+watch(isEditing, (newVal) => {
+  if (newVal) {
+    document.body.style.overflow = 'hidden';
+  } else {
+    document.body.style.overflow = '';
+  }
+});
+
+watch(showDescription, (newVal) => {
+  if (newVal) {
+    document.body.style.overflow = 'hidden';
+  } else {
+    document.body.style.overflow = '';
+  }
+});
 </script>
 
 <style scoped lang="scss">
 @import '@/styles/variables.scss';
+.title {
+  color: $lighter-gray;
+}
 
 .event-card {
   transition: transform 0.2s;
@@ -205,5 +234,16 @@ const viewBudget = (eventId) => {
 .map-container {
   height: 25rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(3px);
+  z-index: 10;
 }
 </style>

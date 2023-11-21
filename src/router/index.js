@@ -14,42 +14,42 @@ const routes = [
   {
     path: '/home',
     name: 'home',
-    component: HomePage,
+    component: () => import('@/pages/HomePage.vue')
   },
   {
     path: '/events',
     name: 'events',
-    component: EventCatalog,
+    component: () => import('@/pages/EventsPage/EventCatalog.vue')
   },
   {
     path: '/events/:id',
     name: 'event',
-    component: EventDetailsPage,
+    component: () => import('@/pages/EventsPage/EventDetailsPage.vue')
   },
   {
     path: '/events/:id/budget',
     name: 'event-budget',
-    component: BudgetPage,
+    component: () => import('@/pages/Budget/BudgetPage.vue')
   },
   {
     path: '/events/createEvent',
     name: 'createEvent',
-    component: CreateEvent,
+    component: () => import('@/pages/EventsPage/CreateEvent.vue')
   },
   {
     path: '/login',
     name: 'login',
-    component: LoginPage,
+    component: () => import('@/pages/Authentication/LoginPage.vue')
   },
   {
     path: '/register',
     name: 'register',
-    component: RegisterPage,
+    component: () => import('@/pages/Authentication/RegisterPage.vue')
   },
   {
     path: '/profile',
     name: 'profile',
-    component: ProfilePage,
+    component: () => import('@/pages/Authentication/ProfilePage.vue')
   },
   {
     path: '/',
@@ -57,7 +57,7 @@ const routes = [
   },
   {
     path: '/:catchAll(.*)',
-    component: NotFound,
+    component: () => import('@/pages/NotFound.vue')
   },
 ];
 
