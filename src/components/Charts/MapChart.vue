@@ -34,22 +34,35 @@ const initMap = () => {
         text: 'Events by countries'
     },
     series: [{
-        data: data.value,
+        data: data.value.map(item => ({
+          ...item,
+          color: '#00537c'
+        })),
         name: 'Events',
+        color: '#00537c',
         joinBy: 'name',
         states: {
             hover: {
-                color: '#BADA55'
+                color: 'yellow'
             }
         },
         dataLabels: {
             enabled: true,
-            format: '{point.name}'
+            format: '{point.name}',
+            style: {
+              color: '#FFFCDE'
+            }
         }
     }],
     accessibility: {
       enabled: false,
     },
+    legend: {
+      itemStyle: {
+        color: '#222831',
+        fontWeight: 'bold'
+      },
+    }
 });
 
 };
