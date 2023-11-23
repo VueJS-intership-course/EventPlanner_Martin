@@ -3,12 +3,12 @@
     <Form
       @submit="setFilters"
       :validation-schema="schema"
-      class="row g-3 align-items-end"
+      class="row g-3"
       :validateOnBlur="false"
       :validateOnChange="false"
       :validateOnInput="false"
     >
-      <div class="col-lg-4 col-md-6">
+      <div class="col-sm">
         <label for="searchQuery" class="form-label">Search Event:</label>
         <Field
           type="text"
@@ -18,69 +18,60 @@
           placeholder="Enter event name"
           v-model="tempFilterOptions.search"
         />
-        <ErrorMessage name="search" class="text-danger" />
+        <!-- <ErrorMessage name="search" class="text-danger" /> -->
       </div>
-      <div class="col-lg-4 col-md-6">
-        <div class="row g-2">
-          <div class="col">
-            <label for="fromDate" class="form-label">From Date:</label>
-            <Field
-              type="date"
-              name="fromDate"
-              class="form-control"
-              id="fromDate"
-              v-model="tempFilterOptions.fromDate"
-              :value="today"
-            />
-            <ErrorMessage name="fromDate" class="text-danger" />
-          </div>
-          <div class="col">
-            <label for="toDate" class="form-label">To Date:</label>
-            <Field
-              type="date"
-              name="toDate"
-              class="form-control"
-              id="toDate"
-              v-model="tempFilterOptions.toDate"
-            />
-            <ErrorMessage name="toDate" class="text-danger" />
-          </div>
-        </div>
+      <div class="col-sm">
+        <label for="fromDate" class="form-label">From Date:</label>
+        <Field
+          type="date"
+          name="fromDate"
+          class="form-control"
+          id="fromDate"
+          v-model="tempFilterOptions.fromDate"
+        />
+        <!-- <ErrorMessage name="fromDate" class="text-danger" /> -->
       </div>
-      <div class="col-lg-4 col-md-6">
-        <div class="row g-2">
-          <div class="col">
-            <label for="minPrice" class="form-label">Min Price:</label>
-            <Field
-              type="number"
-              name="minPrice"
-              class="form-control"
-              id="minPrice"
-              v-model="tempFilterOptions.minPrice"
-            />
-            <ErrorMessage name="minPrice" class="text-danger" />
-          </div>
-          <div class="col">
-            <label for="maxPrice" class="form-label">Max Price:</label>
-            <Field
-              type="number"
-              name="maxPrice"
-              class="form-control"
-              id="maxPrice"
-              v-model="tempFilterOptions.maxPrice"
-            />
-            <ErrorMessage name="maxPrice" class="text-danger" />
-          </div>
-        </div>
+      <div class="col-sm">
+        <label for="toDate" class="form-label">To Date:</label>
+        <Field
+          type="date"
+          name="toDate"
+          class="form-control"
+          id="toDate"
+          v-model="tempFilterOptions.toDate"
+        />
+        <ErrorMessage name="toDate" class="text-danger" />
+      </div>
+      <div class="col-sm">
+        <label for="minPrice" class="form-label">Min Price:</label>
+        <Field
+          type="number"
+          name="minPrice"
+          class="form-control"
+          id="minPrice"
+          v-model="tempFilterOptions.minPrice"
+        />
+        <ErrorMessage name="minPrice" class="text-danger" />
+      </div>
+      <div class="col-sm">
+        <label for="maxPrice" class="form-label">Max Price:</label>
+        <Field
+          type="number"
+          name="maxPrice"
+          class="form-control"
+          id="maxPrice"
+          v-model="tempFilterOptions.maxPrice"
+        />
+        <ErrorMessage name="maxPrice" class="text-danger" />
       </div>
       <div
-        class="col-lg-12 d-flex justify-content-lg-end justify-content-center mt-3"
+        class="col-lg-4 mt-5"
       >
-        <button type="submit" class="btn btn-apply me-2">Apply Filters</button>
+        <button type="submit" class="btn btn-apply me-3">Apply Filters</button>
         <button @click="resetFilters" class="btn btn-reset">
           <i class="bi bi-arrow-counterclockwise"></i>Reset Filters
         </button>
-        <button class="btn btn-cancel ms-2" @click="cancel">
+        <button class="btn btn-cancel ms-3" @click="cancel">
           <i class="bi bi-x-circle"></i> Cancel
         </button>
       </div>
@@ -94,21 +85,12 @@ import { ref } from 'vue';
 import { Form, Field, ErrorMessage } from 'vee-validate';
 import * as yup from 'yup';
 
-const yesterday = new Date();
-yesterday.setDate(yesterday.getDate() - 1);
-
 const schema = yup.object({
-  search: yup.string(),
-  fromDate: yup
-    .date()
-    .nullable()
-    .transform((value, originalValue) => (originalValue === '' ? null : value))
-    .min(yesterday, 'You can not select date, which is in the past!')
-    .max(yup.ref('toDate'), 'From date must be before To date!'),
   toDate: yup
     .date()
     .nullable()
-    .transform((value, originalValue) => (originalValue === '' ? null : value)),
+    .transform((value, originalValue) => (originalValue === '' ? null : value))
+    .min(yup.ref('fromDate'), 'From date must be before To date!'),
   minPrice: yup
     .number()
     .nullable()
@@ -134,11 +116,9 @@ const schema = yup.object({
 
 const eStore = eventStore();
 
-const today = new Date().toISOString().slice(0, 10);
-
 const tempFilterOptions = ref({
   search: '',
-  fromDate: today,
+  fromDate: '',
   toDate: '',
   minPrice: '',
   maxPrice: '',
@@ -169,15 +149,18 @@ const cancel = () => {
 
 <style scoped lang="scss">
 @import '@/styles/variables.scss';
+
 .container {
   background-color: #f8f9fa;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
   .form-label {
     font-weight: bold;
     color: #333;
   }
+
   .btn-apply {
     background-color: $blue-cola;
     color: $dark-gray;
