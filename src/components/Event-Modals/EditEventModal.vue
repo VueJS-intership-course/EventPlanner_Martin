@@ -64,14 +64,13 @@
             </div>
             <div class="d-flex mb-3">
               <div class="form-group w-100 mb-2 me-5">
-                <label class="form-control-label" for="date">Date</label>
+                <label class="form-control-label" for="date">Date<span style="color: red;">*</span></label>
                 <Field
                   v-model="editedEvent.date"
                   type="date"
                   class="form-control"
                   id="form-group-input"
                   name="date"
-                  :value="today"
                 />
                 <ErrorMessage name="date" class="text-danger"/>
               </div>
@@ -118,8 +117,6 @@ import moment from 'moment-timezone';
 import { Form, Field, ErrorMessage } from 'vee-validate';
 import * as yup from 'yup';
 
-const today = new Date().toISOString().slice(0,10)
-
 const yesterday = new Date();
 yesterday.setDate(yesterday.getDate() - 1);
 
@@ -157,7 +154,7 @@ const saveEditedEvent = () => {
     .tz(eventDateAndTime, editedEvent.value.timeZone)
     .utc()
     .toISOString();
-
+  
   eStore.editEvent(editedEvent.value);
   eStore.isEditing = false;
   router.push('/events');
