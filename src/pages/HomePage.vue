@@ -43,6 +43,7 @@ const countryEvents = async () => {
   }
 };
 
+
 onMounted(async () => {
   await eStore.getEvents();
   events.value = eStore.events;

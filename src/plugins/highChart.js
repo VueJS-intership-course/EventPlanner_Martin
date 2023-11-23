@@ -7,7 +7,6 @@ import useHighMap from 'highcharts/modules/map';
 
 export default {
   install(app, options) {
-    exportingInit(HighCharts);
     acessibility(HighCharts);
     usAnnotations(HighCharts);
     useHighMap(HighCharts);

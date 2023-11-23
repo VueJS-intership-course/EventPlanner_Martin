@@ -26,7 +26,7 @@
         <li v-if="!isLoggedIn" class="nav-item px-2">
           <RouterLink
             :to="'/login'"
-            class="nav-link fw-bold fs-5"
+            class="nav-link fw-bold fs-5 login"
             :class="{ active: isActive('/login') }"
             >Login</RouterLink
           >
