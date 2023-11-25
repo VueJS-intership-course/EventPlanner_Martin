@@ -38,7 +38,7 @@ export const eventStore = defineStore('events', {
         const fromDate = state.filteredEvent.fromDate ? new Date(state.filteredEvent.fromDate).toISOString().split('T')[0] : null;
         const toDate = state.filteredEvent.toDate ? new Date(state.filteredEvent.toDate).toISOString().split('T')[0] : null;
         const eventDate = event.time ? event.time.split('T')[0] : null;
-        console.log(fromDate);
+        // console.log(fromDate);
         const minPrice = parseFloat(state.filteredEvent.minPrice);
         const maxPrice = parseFloat(state.filteredEvent.maxPrice);
         const searchQuery = state.filteredEvent.search.toLowerCase();

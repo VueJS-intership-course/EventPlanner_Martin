@@ -9,7 +9,9 @@
         </div>
         <div class="text-center my-3 ms-3">
           <RouterLink :to="'/events/createEvent'">
-            <button class="btn btn-create-event btn-lg">Create New Event</button>
+            <button class="btn btn-create-event btn-lg">
+              Create New Event
+            </button>
           </RouterLink>
         </div>
       </div>
@@ -69,10 +71,7 @@
           </div>
         </div>
       </div>
-      <div
-        v-if="filteredEvents.length === 0"
-        class=" mt-5"
-      >
+      <div v-if="filteredEvents.length === 0" class="mt-5">
         <div class="text-center">
           <i
             class="bi bi-calendar-x-fill mb-3"
