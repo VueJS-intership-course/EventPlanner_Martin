@@ -140,6 +140,17 @@ const router = useRouter();
 const eStore = eventStore();
 const editedEvent = computed(() => eStore.editedEvent);
 
+const eventDateTime = computed(() => {
+  const dateTime = eStore.getEventDateTime;
+  return {
+    date: dateTime.date,
+    time: dateTime.time
+  };
+});
+
+editedEvent.value.date = eventDateTime.value.date;
+editedEvent.value.time = eventDateTime.value.time;
+
 const handleCoordinates = async (coordinates) => {
   editedEvent.value.location = coordinates;
 

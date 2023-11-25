@@ -19,7 +19,7 @@ export const eventStore = defineStore('events', {
       ticket: '',
       price: '',
       timeZone: '',
-      address: ''
+      address: '',
     },
     filteredEvent: {
       search: '',
@@ -27,16 +27,20 @@ export const eventStore = defineStore('events', {
       toDate: '',
       minPrice: '',
       maxPrice: '',
-    }
+    },
   }),
   getters: {
     getCoordinates(state) {
       return state.choosedEvent.location;
     },
     filteredEvents: (state) => {
-      return state.events.filter(event => {
-        const fromDate = state.filteredEvent.fromDate ? new Date(state.filteredEvent.fromDate).toISOString().split('T')[0] : null;
-        const toDate = state.filteredEvent.toDate ? new Date(state.filteredEvent.toDate).toISOString().split('T')[0] : null;
+      return state.events.filter((event) => {
+        const fromDate = state.filteredEvent.fromDate
+          ? new Date(state.filteredEvent.fromDate).toISOString().split('T')[0]
+          : null;
+        const toDate = state.filteredEvent.toDate
+          ? new Date(state.filteredEvent.toDate).toISOString().split('T')[0]
+          : null;
         const eventDate = event.time ? event.time.split('T')[0] : null;
         // console.log(fromDate);
         const minPrice = parseFloat(state.filteredEvent.minPrice);
@@ -51,6 +55,24 @@ export const eventStore = defineStore('events', {
           (!searchQuery || event.name.toLowerCase().includes(searchQuery))
         );
       });
+    },
+    getEventDateTime() {
+      if (!this.choosedEvent || !this.choosedEvent.time)
+        return { date: '', time: '' };
+
+      const eventDate = new Date(this.choosedEvent.time);
+
+      const day = eventDate.getDate().toString().padStart(2, '0');
+      const month = (eventDate.getMonth() + 1).toString().padStart(2, '0');
+      const year = eventDate.getFullYear();
+
+      const hours = eventDate.getHours().toString().padStart(2, '0');
+      const minutes = eventDate.getMinutes().toString().padStart(2, '0');
+
+      return {
+        date: `${year}-${month}-${day}`,
+        time: `${hours}:${minutes}`,
+      };
     },
   },
   actions: {
@@ -82,10 +104,12 @@ export const eventStore = defineStore('events', {
     },
     async buyTicket() {
       await eventServices.buyTicket(this.choosedEvent);
-      
-      const eventIndex = this.events.findIndex((e) => e.id === this.choosedEvent.id);
+
+      const eventIndex = this.events.findIndex(
+        (e) => e.id === this.choosedEvent.id
+      );
       if (eventIndex !== -1) {
-        this.events[eventIndex].clients.push(userStore().currentUser.email)
+        this.events[eventIndex].clients.push(userStore().currentUser.email);
       }
       await this.getEvents();
     },
@@ -95,7 +119,7 @@ export const eventStore = defineStore('events', {
       if (this.choosedEvent) {
         this.choosedEvent.expenses += price;
       }
-      
+
       await this.getEvents();
     },
     applyFilters() {
@@ -105,7 +129,7 @@ export const eventStore = defineStore('events', {
         toDate: this.filteredEvent.toDate,
         minPrice: this.filteredEvent.minPrice,
         maxPrice: this.filteredEvent.maxPrice,
-      }
+      };
     },
     resetFilters() {
       this.filteredEvent = {
@@ -114,9 +138,9 @@ export const eventStore = defineStore('events', {
         toDate: '',
         minPrice: '',
         maxPrice: '',
-      }
+      };
 
       this.applyFilters();
-    }
+    },
   },
 });
