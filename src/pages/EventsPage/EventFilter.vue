@@ -29,7 +29,7 @@
           id="fromDate"
           v-model="tempFilterOptions.fromDate"
         />
-        <!-- <ErrorMessage name="fromDate" class="text-danger" /> -->
+        <ErrorMessage name="fromDate" class="text-danger" />
       </div>
       <div class="col-sm">
         <label for="toDate" class="form-label">To Date:</label>
@@ -86,11 +86,16 @@ import { Form, Field, ErrorMessage } from 'vee-validate';
 import * as yup from 'yup';
 
 const schema = yup.object({
+  fromDate: yup
+    .date()
+    .nullable()
+    .transform((value, originalValue) => (originalValue === '' ? null : value))
+    .max(yup.ref('toDate'), 'From date must be before or equal to To date!'),
   toDate: yup
     .date()
     .nullable()
     .transform((value, originalValue) => (originalValue === '' ? null : value))
-    .min(yup.ref('fromDate'), 'From date must be before To date!'),
+    .min(yup.ref('fromDate'), 'To date must be after or equal to From date!'),
   minPrice: yup
     .number()
     .nullable()
