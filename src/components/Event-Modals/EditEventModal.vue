@@ -6,7 +6,7 @@
           <h5 class="modal-title" id="edit">Edit Event</h5>
           <button
             type="button"
-            class="btn-close"
+            class="btn-close btn-close-white"
             @click="cancelButton"
           ></button>
         </div>

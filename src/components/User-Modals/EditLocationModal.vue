@@ -4,7 +4,7 @@
       <div class="modal-content" style="border: none;">
         <div class="modal-header">
           <h5 class="modal-title">Change Location</h5>
-          <button type="button" class="btn-close" @click="cancelModal"></button>
+          <button type="button" class="btn-close btn-close-white" @click="cancelModal"></button>
         </div>
         <form @submit.prevent="handleChangeLocation" class="modal-body">
           <div class="mb-3">
