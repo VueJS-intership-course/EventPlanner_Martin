@@ -72,7 +72,7 @@
             </button>
           </div>
           <div
-            v-if="!isAdmin && !event.clients.includes(userEmail) && isLoggedIn"
+            v-if="!isAdmin && !event.clients.includes(userEmail) && isLoggedIn && !eventHasPassed"
             class="card-footer bg-white d-flex justify-content-end"
           >
             <button
@@ -81,12 +81,6 @@
             >
               <i class="bi bi-bookmark-dash"></i> Buy Ticket
             </button>
-          </div>
-          <div
-            v-if="!isAdmin && !isLoggedIn"
-            class="card-footer bg-white d-flex justify-content-end"
-          >
-            <span>Login or Register to buy a ticket.</span>
           </div>
         </div>
       </div>
@@ -99,11 +93,24 @@
         ></MapComponent>
         <div v-if="event.clients.includes(userEmail) && isLoggedIn">
           <div class="alert alert-success mt-5 text-center" role="alert">
-            <span class="fw-bold" style="font-size: 1.5rem"
+            <span class="fw-bold display-6"
               >You have subscribed for that event!</span
             >
           </div>
         </div>
+        <div v-if="eventHasPassed && isLoggedIn && !event.clients.includes(userEmail)">
+          <div class="alert alert-danger mt-5 text-center" role="alert">
+            <span class="fw-bold display-6"
+              >We apologize, but the event has passed! You can choose other event!</span
+            >
+          </div>
+        </div>
+        <div
+            v-if="!isAdmin && !isLoggedIn"
+            class="alert alert-danger mt-5 text-center" role="alert"
+          >
+            <span class="fw-bold display-6">Login or Register to buy a ticket.</span>
+          </div>
       </div>
     </div>
   </div>
@@ -132,6 +139,11 @@ const isEditing = computed(() => eStore.isEditing);
 const showDescription = computed(() => eStore.showDescription)
 const isAdmin = computed(() => uStore.isAdmin);
 const isLoggedIn = computed(() => uStore.isLoggedIn);
+
+const eventHasPassed = computed(() => {
+  return event.value && new Date(event.value.time) < new Date();
+});
+
 
 eStore.getEventDetails(eventId.value);
 const event = computed(() => eStore.choosedEvent);

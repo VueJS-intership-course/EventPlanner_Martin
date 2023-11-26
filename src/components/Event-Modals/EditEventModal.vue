@@ -4,7 +4,11 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="edit">Edit Event</h5>
-          <button type="button" class="btn-close" @click="cancelButton"></button>
+          <button
+            type="button"
+            class="btn-close"
+            @click="cancelButton"
+          ></button>
         </div>
         <Form @submit="saveEditedEvent" :validation-schema="validationSchema">
           <div class="modal-body">
@@ -19,7 +23,7 @@
                   name="name"
                   placeholder="Type name..."
                 />
-                <ErrorMessage name="name" class="text-danger"/>
+                <ErrorMessage name="name" class="text-danger" />
               </div>
               <div class="form-group w-100 mb-2 ms-5">
                 <label class="form-control-label" for="description"
@@ -33,7 +37,7 @@
                   name="description"
                   placeholder="Type description..."
                 />
-                <ErrorMessage name="description" class="text-danger"/>
+                <ErrorMessage name="description" class="text-danger" />
               </div>
             </div>
             <div class="d-flex">
@@ -47,7 +51,7 @@
                   name="tickets"
                   placeholder="Type count of tickets..."
                 />
-                <ErrorMessage name="tickets" class="text-danger"/>
+                <ErrorMessage name="tickets" class="text-danger" />
               </div>
               <div class="form-group w-100 mb-2 ms-5">
                 <label class="form-control-label" for="price">Price</label>
@@ -59,12 +63,14 @@
                   name="price"
                   placeholder="Type price..."
                 />
-                <ErrorMessage name="price" class="text-danger"/>
+                <ErrorMessage name="price" class="text-danger" />
               </div>
             </div>
             <div class="d-flex mb-3">
               <div class="form-group w-100 mb-2 me-5">
-                <label class="form-control-label" for="date">Date<span style="color: red;">*</span></label>
+                <label class="form-control-label" for="date"
+                  >Date<span style="color: red">*</span></label
+                >
                 <Field
                   v-model="editedEvent.date"
                   type="date"
@@ -72,19 +78,21 @@
                   id="form-group-input"
                   name="date"
                 />
-                <ErrorMessage name="date" class="text-danger"/>
+                <ErrorMessage name="date" class="text-danger" />
               </div>
 
               <div class="form-group w-100 mb-2 ms-5">
-                <label class="form-control-label" for="time">Time<span style="color: red;">*</span></label>
+                <label class="form-control-label" for="time"
+                  >Time<span style="color: red">*</span></label
+                >
                 <Field
-                v-model="editedEvent.time"
-                type="time"
-                class="form-control"
-                id="form-group-input"
-                name="time"
+                  v-model="editedEvent.time"
+                  type="time"
+                  class="form-control"
+                  id="form-group-input"
+                  name="time"
                 />
-                <ErrorMessage name="time" class="text-danger"/>
+                <ErrorMessage name="time" class="text-danger" />
               </div>
             </div>
 
@@ -107,7 +115,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, watch } from 'vue';
+import { computed, watch, ref } from 'vue';
 import { eventStore } from '../../store/eventStore.js';
 import { useRouter } from 'vue-router';
 import MapComponent from '../../components/Map/MapComponent.vue';
@@ -123,14 +131,23 @@ yesterday.setDate(yesterday.getDate() - 1);
 const validationSchema = yup.object({
   name: yup.string().required('This field is required!'),
   description: yup.string().required('This field is required!'),
-  tickets: yup.number().min(1, 'The count of tickets cannot be negative!').required('This field is required!'),
-  price: yup.number().min(1, 'The price of ticket cannot be negative!').required('This field is required!'),
-  date: yup.date()
+  tickets: yup
+    .number()
+    .min(1, 'The count of tickets cannot be negative!')
+    .required('This field is required!'),
+  price: yup
+    .number()
+    .min(1, 'The price of ticket cannot be negative!')
+    .required('This field is required!'),
+  date: yup
+    .date()
     .nullable()
     .transform((value, originalValue) => (originalValue === '' ? null : value))
     .min(yesterday, 'You can not select date, which is in the past!')
     .required('This field is required!'),
-  time: yup.string().required('Time is required!').matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, 'Invalid time format!')
+  time: yup
+    .string()
+    .matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, 'Invalid time format!'),
 });
 
 const emit = defineEmits();
@@ -144,7 +161,7 @@ const eventDateTime = computed(() => {
   const dateTime = eStore.getEventDateTime;
   return {
     date: dateTime.date,
-    time: dateTime.time
+    time: dateTime.time,
   };
 });
 
@@ -158,14 +175,13 @@ const handleCoordinates = async (coordinates) => {
 };
 
 const saveEditedEvent = () => {
-
   editedEvent.value.timeZone = getTimeZone(editedEvent.value.location);
   const eventDateAndTime = `${editedEvent.value.date}T${editedEvent.value.time}`;
   editedEvent.value.time = moment
     .tz(eventDateAndTime, editedEvent.value.timeZone)
     .utc()
     .toISOString();
-  
+
   eStore.editEvent(editedEvent.value);
   eStore.isEditing = false;
   router.push('/events');

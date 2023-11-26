@@ -35,18 +35,23 @@
           class="col d-flex align-items-stretch"
           @click="eventDetails(event.id)"
         >
-          <div class="card larger-card shadow bg-white rounded">
-            <div class="position-relative image-container">
-              <img
-                :src="event.imageUrl"
-                class="card-img-top"
-                alt="Event Image"
-              />
-              <h5 class="card-title-overlay text-white position-absolute p-2">
-                {{ event.name }}
-              </h5>
-            </div>
-            <div class="card-body">
+        <div class="position-relative card larger-card shadow bg-white rounded">
+          <span
+            v-if="hasEnded(event.time)"
+            class="expired-badge"
+            >Expired</span
+          >
+          <div class="position-relative image-container">
+            <img
+            :src="event.imageUrl"
+            class="card-img-top"
+            alt="Event Image"
+            />
+            <h5 class="card-title-overlay text-white position-absolute p-2">
+              {{ event.name }}
+            </h5>
+          </div>
+          <div class="card-body">
               <p class="card-text">
                 <i
                   class="bi bi-ticket-detailed align-middle"
@@ -104,6 +109,10 @@ const filteredEvents = computed(() => {
   return eStore.filteredEvents;
 });
 
+const hasEnded = (time) => {
+  return new Date(time) < new Date()
+}
+
 const toggleFilters = () => {
   eStore.isToggleFilters = !eStore.isToggleFilters;
 };
@@ -155,6 +164,7 @@ const formatedTicketCount = computed(() => {
   width: 100%;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
+  overflow: hidden;
 }
 
 .larger-card:hover {
@@ -166,11 +176,6 @@ const formatedTicketCount = computed(() => {
   width: 100%;
   height: 180px;
   object-fit: cover;
-}
-
-.image-container {
-  position: relative;
-  overflow: hidden;
 }
 
 .card-title-overlay {
@@ -189,4 +194,20 @@ const formatedTicketCount = computed(() => {
 .card {
   border: none;
 }
+
+.expired-badge {
+    position: absolute;
+    top: 80px;
+    right: -20px;
+    z-index: 10;
+    overflow: hidden;
+    background-color: $candy-apple-red;
+    color: white;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transform: translateY(-50%) rotate(45deg);
+    transform-origin: top right;
+    width: 120px;
+    text-align: center;
+  }
 </style>
