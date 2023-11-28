@@ -12,7 +12,7 @@
         </div>
         <Form @submit="saveEditedEvent" :validation-schema="validationSchema">
           <div class="modal-body">
-            <div class="d-flex">
+            <div class="d-flex mb-3">
               <div class="form-group w-100 mb-2 me-5">
                 <label class="form-control-label" for="name">Name</label>
                 <Field
@@ -23,7 +23,7 @@
                   name="name"
                   placeholder="Type name..."
                 />
-                <ErrorMessage name="name" class="text-danger" />
+                <ErrorMessage name="name" class="text-danger position-absolute" />
               </div>
               <div class="form-group w-100 mb-2 ms-5">
                 <label class="form-control-label" for="description"
@@ -37,11 +37,11 @@
                   name="description"
                   placeholder="Type description..."
                 />
-                <ErrorMessage name="description" class="text-danger" />
+                <ErrorMessage name="description" class="text-danger position-absolute" />
               </div>
             </div>
-            <div class="d-flex">
-              <div class="form-group w-100 mb-2 me-5">
+            <div class="d-flex mb-3">
+              <div class="form-group w-100 mb-2 me-5 position-relative">
                 <label class="form-control-label" for="tickets">Tickets</label>
                 <Field
                   v-model="editedEvent.ticket"
@@ -51,7 +51,7 @@
                   name="tickets"
                   placeholder="Type count of tickets..."
                 />
-                <ErrorMessage name="tickets" class="text-danger" />
+                <ErrorMessage name="tickets" class="text-danger position-absolute" />
               </div>
               <div class="form-group w-100 mb-2 ms-5">
                 <label class="form-control-label" for="price">Price</label>
@@ -63,13 +63,13 @@
                   name="price"
                   placeholder="Type price..."
                 />
-                <ErrorMessage name="price" class="text-danger" />
+                <ErrorMessage name="price" class="text-danger position-absolute" />
               </div>
             </div>
             <div class="d-flex mb-3">
               <div class="form-group w-100 mb-2 me-5">
                 <label class="form-control-label" for="date"
-                  >Date<span style="color: red">*</span></label
+                  >Date</label
                 >
                 <Field
                   v-model="editedEvent.date"
@@ -78,12 +78,12 @@
                   id="form-group-input"
                   name="date"
                 />
-                <ErrorMessage name="date" class="text-danger" />
+                <ErrorMessage name="date" class="text-danger position-absolute" />
               </div>
 
               <div class="form-group w-100 mb-2 ms-5">
                 <label class="form-control-label" for="time"
-                  >Time<span style="color: red">*</span></label
+                  >Time</label
                 >
                 <Field
                   v-model="editedEvent.time"
@@ -92,7 +92,7 @@
                   id="form-group-input"
                   name="time"
                 />
-                <ErrorMessage name="time" class="text-danger" />
+                <ErrorMessage name="time" class="text-danger position-absolute " />
               </div>
             </div>
 
@@ -133,18 +133,18 @@ const validationSchema = yup.object({
   description: yup.string().required('This field is required!'),
   tickets: yup
     .number()
-    .min(1, 'The count of tickets cannot be negative!')
+    .transform(value => (isNaN(value) ? 0 : value)) 
+    .min(0, 'The count of tickets cannot be negative!')
     .required('This field is required!'),
   price: yup
     .number()
-    .min(1, 'The price of ticket cannot be negative!')
+    .min(0, 'The price of ticket cannot be negative!')
     .required('This field is required!'),
   date: yup
     .date()
     .nullable()
     .transform((value, originalValue) => (originalValue === '' ? null : value))
-    .min(yesterday, 'You can not select date, which is in the past!')
-    .required('This field is required!'),
+    .min(yesterday, 'You can not select past date!'),
   time: yup
     .string()
     .matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, 'Invalid time format!'),

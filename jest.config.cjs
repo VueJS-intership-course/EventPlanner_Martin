@@ -9,6 +9,7 @@ module.exports = {
   moduleFileExtensions: ['vue', 'js'],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
+    "\\.(css|less|sass|scss)$": "<rootDir>/src/styles/variables.scss",
   },
   coveragePathIgnorePatterns: ['/node_modules/', '/tests/'],
   coverageReporters: ['text', 'json-summary'],

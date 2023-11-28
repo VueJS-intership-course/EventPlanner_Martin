@@ -1,5 +1,5 @@
 <template>
-  <div class="overlay" v-if="eStore.isEditing || eStore.showDescription"></div>
+  <div class="overlay" v-if="isEditing || showDescription"></div>
   <div v-if="!event" class="text-center mt-5">
     <div class="spinner-border text-primary" role="status">
       <span class="visually-hidden">Loading...</span>
@@ -67,12 +67,17 @@
             <button class="btn btn-remove btn-sm ms-2" @click="removeEvent">
               <i class="bi bi-trash"></i> Remove
             </button>
-            <button class="btn btn-edit btn-sm ms-2" @click="editEvent">
+            <button v-if="!eventHasPassed" class="btn btn-edit btn-sm ms-2" @click="editEvent">
               <i class="bi bi-pencil"></i> Edit
             </button>
           </div>
           <div
-            v-if="!isAdmin && !event.clients.includes(userEmail) && isLoggedIn && !eventHasPassed"
+            v-if="
+              !isAdmin &&
+              !event.clients.includes(userEmail) &&
+              isLoggedIn &&
+              !eventHasPassed
+            "
             class="card-footer bg-white d-flex justify-content-end"
           >
             <button
@@ -98,28 +103,36 @@
             >
           </div>
         </div>
-        <div v-if="eventHasPassed && isLoggedIn && !event.clients.includes(userEmail)">
+        <div
+          v-if="
+            eventHasPassed && isLoggedIn && !event.clients.includes(userEmail)
+          "
+        >
           <div class="alert alert-danger mt-5 text-center" role="alert">
             <span class="fw-bold display-6"
-              >We apologize, but the event has passed! You can choose other event!</span
+              >We apologize, but the event has passed! You can choose other
+              event!</span
             >
           </div>
         </div>
         <div
-            v-if="!isAdmin && !isLoggedIn"
-            class="alert alert-danger mt-5 text-center" role="alert"
+          v-if="!isAdmin && !isLoggedIn"
+          class="alert alert-danger mt-5 text-center"
+          role="alert"
+        >
+          <span class="fw-bold display-6"
+            >Login or Register to buy a ticket.</span
           >
-            <span class="fw-bold display-6">Login or Register to buy a ticket.</span>
-          </div>
+        </div>
       </div>
     </div>
   </div>
-  <DescriptionModal v-if="eStore.showDescription"></DescriptionModal>
-  <EditEventModal v-if="isEditing && isAdmin" :event="event.value" />
+  <DescriptionModal v-if="showDescription" :style="showDescription ? 'overflow: hidden' : ''"></DescriptionModal>
+  <EditEventModal v-if="isEditing && isAdmin" :event="event.value" :style="isEditing ? 'overflow: hidden' : ''"/>
 </template>
 
 <script setup>
-import { computed, watch } from 'vue';
+import { computed } from 'vue';
 import { eventStore } from '@/store/eventStore.js';
 import { useRoute, useRouter } from 'vue-router';
 import MapComponent from '@/components/Map/MapComponent.vue';
@@ -127,7 +140,7 @@ import EditEventModal from '@/components/Event-Modals/EditEventModal.vue';
 import { userStore } from '@/store/userStore.js';
 import { getUserTime } from '@/utils/getUserTime.js';
 import { getEventTime } from '@/utils/getEventTime.js';
-import DescriptionModal from '@/pages/EventsPage/DescriptionModal.vue'
+import DescriptionModal from '@/pages/EventsPage/DescriptionModal.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -136,14 +149,13 @@ const eStore = eventStore();
 
 const eventId = computed(() => route.params.id);
 const isEditing = computed(() => eStore.isEditing);
-const showDescription = computed(() => eStore.showDescription)
+const showDescription = computed(() => eStore.showDescription);
 const isAdmin = computed(() => uStore.isAdmin);
 const isLoggedIn = computed(() => uStore.isLoggedIn);
 
 const eventHasPassed = computed(() => {
   return event.value && new Date(event.value.time) < new Date();
 });
-
 
 eStore.getEventDetails(eventId.value);
 const event = computed(() => eStore.choosedEvent);
@@ -175,22 +187,6 @@ const viewBudget = (eventId) => {
 const showDescriptionModal = () => {
   eStore.showDescription = true;
 };
-
-watch(isEditing, (newVal) => {
-  if (newVal) {
-    document.body.style.overflow = 'hidden';
-  } else {
-    document.body.style.overflow = '';
-  }
-});
-
-watch(showDescription, (newVal) => {
-  if (newVal) {
-    document.body.style.overflow = 'hidden';
-  } else {
-    document.body.style.overflow = '';
-  }
-});
 </script>
 
 <style scoped lang="scss">
@@ -247,7 +243,6 @@ watch(showDescription, (newVal) => {
   height: 25rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-
 .overlay {
   position: fixed;
   top: 0;

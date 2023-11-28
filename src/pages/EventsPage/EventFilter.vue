@@ -3,7 +3,7 @@
     <Form
       @submit="setFilters"
       :validation-schema="schema"
-      class="row g-3"
+      class="row g-3 mb-4"
       :validateOnBlur="false"
       :validateOnChange="false"
       :validateOnInput="false"
@@ -18,7 +18,6 @@
           placeholder="Enter event name"
           v-model="tempFilterOptions.search"
         />
-        <!-- <ErrorMessage name="search" class="text-danger" /> -->
       </div>
       <div class="col-sm">
         <label for="fromDate" class="form-label">From Date:</label>
@@ -90,22 +89,22 @@ const schema = yup.object({
     .date()
     .nullable()
     .transform((value, originalValue) => (originalValue === '' ? null : value))
-    .max(yup.ref('toDate'), 'From date must be before or equal to To date!'),
+    .max(yup.ref('toDate'), 'Date must be before to To date!'),
   toDate: yup
     .date()
     .nullable()
     .transform((value, originalValue) => (originalValue === '' ? null : value))
-    .min(yup.ref('fromDate'), 'To date must be after or equal to From date!'),
+    .min(yup.ref('fromDate'), 'Date must be after to From date!'),
   minPrice: yup
     .number()
     .nullable()
     .transform((value, originalValue) => (originalValue === '' ? null : value))
-    .min(0, 'The minimal price must be at least 0')
+    .min(0, 'The price must be at least 0')
     .when('maxPrice', (maxPrice, schema) =>
       maxPrice
         ? schema.max(
             maxPrice,
-            'The minimal price should be less than the maximum price'
+            'The price should be less than the maximum price'
           )
         : schema
     ),
@@ -115,7 +114,7 @@ const schema = yup.object({
     .transform((value, originalValue) => (originalValue === '' ? null : value))
     .min(
       yup.ref('minPrice'),
-      'The maximum price should be more than the minimal price'
+      'The price should be more than the minimal price'
     ),
 });
 

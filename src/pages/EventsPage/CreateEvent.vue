@@ -12,7 +12,7 @@
           class="d-flex flex-column column w-100"
         >
           <div class="d-flex">
-            <div class="form-group w-100 mb-2 me-5">
+            <div class="form-group w-100 mb-4 me-5">
               <label class="form-control-label" for="name"
                 >Name<span style="color: red">*</span></label
               >
@@ -24,9 +24,9 @@
                 ref="eventName"
                 placeholder="Type name..."
               />
-              <ErrorMessage name="name" class="text-danger" />
+              <ErrorMessage name="name" class="text-danger position-absolute" />
             </div>
-            <div class="form-group w-100 mb-2 ms-5">
+            <div class="form-group w-100 mb-4 ms-5">
               <label class="form-control-label" for="description"
                 >Description<span style="color: red">*</span></label
               >
@@ -37,11 +37,11 @@
                 name="description"
                 placeholder="Type description..."
               />
-              <ErrorMessage name="description" class="text-danger" />
+              <ErrorMessage name="description" class="text-danger position-absolute" />
             </div>
           </div>
           <div class="d-flex">
-            <div class="form-group w-100 mb-2 me-5">
+            <div class="form-group w-100 mb-4 me-5">
               <label class="form-control-label" for="tickets"
                 >Tickets<span style="color: red">*</span></label
               >
@@ -52,9 +52,9 @@
                 name="tickets"
                 placeholder="Type count of tickets..."
               />
-              <ErrorMessage name="tickets" class="text-danger" />
+              <ErrorMessage name="tickets" class="text-danger position-absolute" />
             </div>
-            <div class="form-group w-100 mb-2 ms-5">
+            <div class="form-group w-100 mb-4 ms-5">
               <label class="form-control-label" for="price"
                 >Price<span style="color: red">*</span></label
               >
@@ -65,11 +65,11 @@
                 name="price"
                 placeholder="Type price..."
               />
-              <ErrorMessage name="price" class="text-danger" />
+              <ErrorMessage name="price" class="text-danger position-absolute" />
             </div>
           </div>
           <div class="d-flex">
-            <div class="form-group w-100 mb-2 me-5">
+            <div class="form-group w-100 mb-4 me-5">
               <label class="form-control-label" for="date"
                 >Date<span style="color: red">*</span></label
               >
@@ -80,9 +80,9 @@
                 name="date"
                 :value="today"
               />
-              <ErrorMessage name="date" class="text-danger" />
+              <ErrorMessage name="date" class="text-danger position-absolute" />
             </div>
-            <div class="form-group w-100 mb-2 ms-5">
+            <div class="form-group w-100 mb-4 ms-5">
               <label class="form-control-label" for="time"
                 >Time<span style="color: red">*</span></label
               >
@@ -93,11 +93,11 @@
                 name="time"
                 :value="currentTime"
               />
-              <ErrorMessage name="time" class="text-danger" />
+              <ErrorMessage name="time" class="text-danger position-absolute" />
             </div>
           </div>
           <div class="d-flex">
-            <div class="form-group w-50 mb-2 me-5">
+            <div class="form-group w-50 mb-4 me-5">
               <label class="form-control-label" for="budget"
                 >Budget<span style="color: red">*</span></label
               >
@@ -108,9 +108,9 @@
                 name="budget"
                 placeholder="Type budget..."
               />
-              <ErrorMessage name="budget" class="text-danger" />
+              <ErrorMessage name="budget" class="text-danger position-absolute" />
             </div>
-            <div class="form-group w-50 mb-2 ms-5">
+            <div class="form-group w-50 mb-4 ms-5">
               <label class="form-control-label" for="imageFile">
                 Upload Image<span style="color: red">*</span>
               </label>
@@ -121,16 +121,18 @@
                 ref="imageFile"
                 @change="handleFileUpload"
               />
-              <p v-if="errorMsgImage" class="text-danger">
+              <p v-if="errorMsgImage" class="text-danger position-absolute">
                 {{ errorMsgImage }}
               </p>
             </div>
           </div>
           <div class="d-flex flex-column align-self-center w-100">
-            <label class="form-control-label" for="location"
-              >Choose location<span style="color: red">*</span></label
-            >
-            <p v-if="errorMsg" class="text-danger">{{ errorMsg }}</p>
+            <div class="d-flex justify-content-center">
+              <label class="form-control-label mb-2" for="location"
+                >Choose location<span style="color: red">*</span></label
+              >
+              <p v-if="errorMsg" class="text-danger mt-3 position-absolute">{{ errorMsg }}</p>
+            </div>
             <MapComponent
               class="mt-2"
               style="height: 450px; width: 830px"

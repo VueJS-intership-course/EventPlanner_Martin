@@ -7,7 +7,7 @@
             Filters
           </button>
         </div>
-        <div class="text-center my-3 ms-3">
+        <div class="text-center my-3 ms-3 event">
           <RouterLink :to="'/events/createEvent'">
             <button class="btn btn-create-event btn-lg">
               Create New Event
