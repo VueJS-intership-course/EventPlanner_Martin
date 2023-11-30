@@ -1,4 +1,4 @@
-import NotFound from '../pages/NotFound.vue';
+import NotFound from '@/pages/NotFound.vue';
 import { mount } from '@vue/test-utils';
 
 jest.mock('@/utils/images/Not Found.png', () => {

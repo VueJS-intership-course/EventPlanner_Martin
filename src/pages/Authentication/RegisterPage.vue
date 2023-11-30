@@ -2,14 +2,14 @@
   <div class="container mt-5">
     <div class="row justify-content-center">
       <div class="col-md-6">
-        <div class="card">
-          <div class="card-header">
+        <div class="card custom-card">
+          <div class="card-header custom-card-header">
             <h3>Register</h3>
           </div>
           <div class="card-body">
             <Form @submit="onSubmit" :validationSchema="validation">
               <div class="mb-3">
-                <label for="username" class="form-label"
+                <label for="username" class="form-label custom-form-label"
                   >Username<span style="color: red">*</span></label
                 >
                 <Field
@@ -23,7 +23,7 @@
                 <ErrorMessage name="username" class="text-danger" />
               </div>
               <div class="mb-3">
-                <label for="email" class="form-label"
+                <label for="email" class="form-label custom-form-label"
                   >Email<span style="color: red">*</span></label
                 >
                 <Field
@@ -46,7 +46,7 @@
                 <!-- <ErrorMessage name="location" /> -->
               </div>
               <div class="mb-3">
-                <label for="password" class="form-label"
+                <label for="password" class="form-label custom-form-label"
                   >Password<span style="color: red">*</span></label
                 >
                 <Field
@@ -61,7 +61,7 @@
                 <ErrorMessage name="password" class="text-danger" />
               </div>
               <div class="mb-3">
-                <label for="repeatPassword" class="form-label"
+                <label for="repeatPassword" class="form-label custom-form-label"
                   >Repeat password<span style="color: red">*</span></label
                 >
                 <Field
@@ -78,7 +78,7 @@
               <div class="mb-3 text-center">
                 <button
                   type="submit"
-                  class="btn"
+                  class="btn custom-btn"
                   btn-style="default-button-small"
                 >
                   Register
@@ -162,21 +162,20 @@ const onSubmit = async () => {
 <style scoped lang="scss">
 @import '@/styles/variables.scss';
 
-.card {
+.custom-card {
   background-color: $lighter-gray;
 
-  .card-header {
+  .custom-card-header {
     background-color: $dark-gray;
     color: $classic-cream;
   }
 
-  .btn {
+  .custom-btn {
     background-color: $elegant-gold;
-    color: $classic-cream;
     border: none;
   }
 
-  .form-label {
+  .custom-form-label {
     color: $classic-cream;
   }
 }

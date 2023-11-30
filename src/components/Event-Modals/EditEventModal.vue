@@ -114,7 +114,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { computed, watch, ref } from 'vue';
 import { eventStore } from '../../store/eventStore.js';
 import { useRouter } from 'vue-router';

@@ -1,42 +1,69 @@
 <template>
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h1>Login</h1>
-                    </div>
-                    <div class="card-body">
-                        <Form @submit="onSumbit" :validationSchema="schema">
-                            <div class="mb-3 ms-1">
-                                <label for="email" class="form-label">Email<span style="color: red;">*</span></label>
-                                <Field type="email" v-model="loginData.email" name="email" id="email" class="form-control"
-                                    placeholder="Enter your email" required />
-                                <ErrorMessage name="email" class="text-danger" />
-                            </div>
-                            <div class="mb-3 ms-1">
-                                <label for="password" class="form-label">Password<span style="color: red;">*</span></label>
-                                <Field type="password" v-model="loginData.password" name="password" class="form-control"
-                                    placeholder="Enter your password" required autocomplete="on" />
-                                <ErrorMessage name="password" class="text-danger" />
-                            </div>
-                            <div class="mb-3 ms-1">
-                                <div>
-                                    <span class="mb-2 label">
-                                        Don't have an account?
-                                        <RouterLink :to="'/register'" class="btn-signup">Sign Up</RouterLink>
-                                    </span>
-                                </div>
-                                <div class="text-center">
-                                    <button type="submit" class="btn btn-primary" btn-style="default-button-small">Login</button>
-                                </div>
-                            </div>
-                        </Form>
-                    </div>
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card card-color">
+          <div class="card-header card-header-color">
+            <h1>Login</h1>
+          </div>
+          <div class="card-body">
+            <Form @submit="onSumbit" :validationSchema="schema">
+              <div class="mb-3 ms-1">
+                <label for="email" class="form-label custom-form-label"
+                  >Email<span style="color: red">*</span></label
+                >
+                <Field
+                  type="email"
+                  v-model="loginData.email"
+                  name="email"
+                  id="email"
+                  class="form-control"
+                  placeholder="Enter your email"
+                  required
+                />
+                <ErrorMessage name="email" class="text-danger" />
+              </div>
+              <div class="mb-3 ms-1">
+                <label for="password" class="form-label custom-form-label"
+                  >Password<span style="color: red">*</span></label
+                >
+                <Field
+                  type="password"
+                  v-model="loginData.password"
+                  name="password"
+                  id="password"
+                  class="form-control"
+                  placeholder="Enter your password"
+                  required
+                  autocomplete="on"
+                />
+                <ErrorMessage name="password" class="text-danger" />
+              </div>
+              <div class="mb-3 ms-1">
+                <div>
+                  <span class="mb-2 label">
+                    Don't have an account?
+                    <RouterLink :to="'/register'" class="btn-signup"
+                      >Sign Up</RouterLink
+                    >
+                  </span>
                 </div>
-            </div>
+                <div class="text-center">
+                  <button
+                    type="submit"
+                    class="btn custom-btn"
+                    btn-style="default-button-small"
+                  >
+                    Login
+                  </button>
+                </div>
+              </div>
+            </Form>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script setup>
@@ -48,56 +75,56 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 
 const schema = yup.object({
-    email: yup
-        .string()
-        .email('Enter a valid email!')
-        .required('This field is required!'),
-    password: yup
-        .string()
-        .min(8, 'Password must be at least 8 symbols!')
-        .required('This field is required!'),
+  email: yup
+    .string()
+    .email('Enter a valid email!')
+    .required('This field is required!'),
+  password: yup
+    .string()
+    .min(8, 'Password must be at least 8 symbols!')
+    .required('This field is required!'),
 });
 
 const loginData = {
-    email: '',
-    password: '',
+  email: '',
+  password: '',
 };
 
 const onSumbit = async () => {
-    try {
-        await userServices.signIn(loginData.email, loginData.password);
-        router.push({ name: 'events' })
-    } catch (error) {
-        console.log(error);
-    }
-}
+  try {
+    await userServices.signIn(loginData.email, loginData.password);
+    router.push({ name: 'events' });
+  } catch (error) {
+    console.log(error);
+  }
+};
 </script>
 
 <style scoped lang="scss">
 @import '@/styles/variables.scss';
-.card {
-    background-color: $lighter-gray;
+.card-color {
+  background-color: $lighter-gray;
 
-    .card-header {
-      background-color: $dark-gray;
-      color: $classic-cream;
-    }
+  .card-header-color {
+    background-color: $dark-gray;
+    color: $classic-cream;
+  }
 
-    .label {
-        color: $classic-cream;
-    }
+  .label {
+    color: $classic-cream;
+  }
 
-    .form-label {
-      color: $classic-cream;
-    }
+  .custom-form-label {
+    color: $classic-cream;
+  }
 
-    .btn {
-        background-color: $elegant-gold;
-        border: none;
-    }
+  .custom-btn {
+    background-color: $elegant-gold;
+    border: none;
+  }
 
-    .btn-signup {
-        color: $elegant-gold;
-    }
+  .btn-signup {
+    color: $elegant-gold;
+  }
 }
 </style>

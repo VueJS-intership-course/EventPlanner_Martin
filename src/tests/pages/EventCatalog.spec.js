@@ -18,7 +18,7 @@ jest.mock('vue-router', () => ({
   }),
 }));
 
-jest.mock('../pages/EventsPage/EventFilter.vue', () => {
+jest.mock('@/pages/EventsPage/EventFilter.vue', () => {
   return {
     template: '<div>Mocked Event Filter</div>',
   };

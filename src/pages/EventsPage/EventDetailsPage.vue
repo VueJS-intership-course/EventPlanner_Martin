@@ -45,7 +45,12 @@
                 class="list-group-item d-flex justify-content-between align-items-center"
               >
                 Available tickets:
-                <span class="badge badge-tickets">{{ event.ticket }} left</span>
+                <span v-if="event.ticket > 0" class="badge badge-tickets"
+                  >{{ event.ticket }} left</span
+                >
+                <span v-if="event.ticket <= 0" class="badge badge-tickets"
+                  >SOLD OUT!</span
+                >
               </li>
               <li
                 class="list-group-item d-flex justify-content-between align-items-center"
@@ -67,7 +72,11 @@
             <button class="btn btn-remove btn-sm ms-2" @click="removeEvent">
               <i class="bi bi-trash"></i> Remove
             </button>
-            <button v-if="!eventHasPassed" class="btn btn-edit btn-sm ms-2" @click="editEvent">
+            <button
+              v-if="!eventHasPassed"
+              class="btn btn-edit btn-sm ms-2"
+              @click="editEvent"
+            >
               <i class="bi bi-pencil"></i> Edit
             </button>
           </div>
@@ -76,7 +85,8 @@
               !isAdmin &&
               !event.clients.includes(userEmail) &&
               isLoggedIn &&
-              !eventHasPassed
+              !eventHasPassed &&
+              event.ticket > 0
             "
             class="card-footer bg-white d-flex justify-content-end"
           >
@@ -115,6 +125,14 @@
             >
           </div>
         </div>
+        <div v-if="event.ticket < 0">
+          <div class="alert alert-danger mt-5 text-center" role="alert">
+            <span class="fw-bold display-6"
+              >We apologize, but the tickets are sold out! You can choose other
+              event!</span
+            >
+          </div>
+        </div>
         <div
           v-if="!isAdmin && !isLoggedIn"
           class="alert alert-danger mt-5 text-center"
@@ -127,8 +145,15 @@
       </div>
     </div>
   </div>
-  <DescriptionModal v-if="showDescription" :style="showDescription ? 'overflow: hidden' : ''"></DescriptionModal>
-  <EditEventModal v-if="isEditing && isAdmin" :event="event.value" :style="isEditing ? 'overflow: hidden' : ''"/>
+  <DescriptionModal
+    v-if="showDescription"
+    :style="showDescription ? 'overflow: hidden' : ''"
+  ></DescriptionModal>
+  <EditEventModal
+    v-if="isEditing && isAdmin"
+    :event="event.value"
+    :style="isEditing ? 'overflow: hidden' : ''"
+  />
 </template>
 
 <script setup>

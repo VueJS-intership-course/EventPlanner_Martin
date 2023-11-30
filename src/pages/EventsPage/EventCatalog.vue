@@ -52,7 +52,10 @@
             </h5>
           </div>
           <div class="card-body">
-              <p class="card-text">
+            <p v-if="event.ticket <= 0 " class="card-text text-center">
+              <span class="fw-bold text-danger custom-sold-out">SOLD OUT!</span>
+            </p>
+              <p v-if="event.ticket > 0" class="card-text">
                 <i
                   class="bi bi-ticket-detailed align-middle"
                   :class="{
@@ -209,5 +212,9 @@ const formatedTicketCount = computed(() => {
     transform-origin: top right;
     width: 120px;
     text-align: center;
+  }
+
+  .custom-sold-out {
+    font-size: 24px;
   }
 </style>

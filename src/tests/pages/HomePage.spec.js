@@ -1,11 +1,8 @@
 import { mount, shallowMount } from '@vue/test-utils';
 import HomePage from '@/pages/HomePage.vue';
 import { createTestingPinia } from '@pinia/testing';
-// import { createPinia, setActivePinia } from 'pinia';
-import userStoreMock from './_mocks_/userStoreMock';
+import userStoreMock from '@/tests/_mocks_/userStoreMock';
 import MapChart from '@/components/Charts/MapChart.vue'
-
-// setActivePinia(createPinia());
 
 jest.mock('@/services/firebaseConfig.js', () => {
   return {
