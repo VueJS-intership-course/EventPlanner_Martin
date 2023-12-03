@@ -65,11 +65,11 @@ beforeEach(() => {
 });
 
 describe('HomePage Component', () => {
-  it('Should renders', () => {
+  it('Should render', () => {
     expect(wrapper.exists()).toBe(true);
   });
 
-  it('Should renders MapChart when there are events', async () => {
+  it('Should render MapChart when there are events', async () => {
     await wrapper.vm.$nextTick();
     
     expect(wrapper.findComponent(MapChart).exists()).toBe(true);
@@ -81,7 +81,7 @@ describe('HomePage Component', () => {
     expect(wrapper.vm.eStore.getEvents).toBeCalled();
   })
 
-  it('Should not rendering the Map Component', async () => {
+  it('Should not render the Map Component', async () => {
     const wrapper = shallowMount(HomePage, {
       global: {
         plugins: [

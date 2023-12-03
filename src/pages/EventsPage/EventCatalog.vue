@@ -72,7 +72,7 @@
                   }"
                   class="ms-2 align-middle fw-bold"
                 >
-                  Tickets Available: {{ formatedTicketCount(event.ticket) }}
+                  Tickets Available: {{ event.ticket }}
                 </span>
               </p>
             </div>
@@ -125,15 +125,6 @@ eStore.getEvents();
 const eventDetails = (eventId) => {
   router.push({ name: 'event', params: { id: eventId } });
 };
-
-const formatedTicketCount = computed(() => {
-  return (tickets) => {
-    if (tickets > 1000) {
-      return `${Math.floor(tickets / 1000)}K`;
-    }
-    return tickets;
-  };
-});
 </script>
 
 <style scoped lang="scss">

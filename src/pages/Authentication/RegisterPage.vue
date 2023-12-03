@@ -132,7 +132,6 @@ const location = ref('');
 
 const handleTimeZone = (selectedZone) => {
   location.value = selectedZone;
-  console.log(selectedZone);
 };
 
 const onSubmit = async () => {

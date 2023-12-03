@@ -69,7 +69,7 @@ beforeEach(() => {
 });
 
 describe('EventCatalog Component with user', () => {
-  it('Should renders events', async () => {
+  it('Should render events', async () => {
     await wrapper.vm.$nextTick();
 
     const eventCards = wrapper.findAll('.card');
@@ -90,7 +90,7 @@ describe('EventCatalog Component with user', () => {
     expect(createEventBtn.exists()).toBe(false);
   });
 
-  it('Should toggles the "EventFilter" component on button click', async () => {
+  it('Should toggle the "EventFilter" component on button click', async () => {
     await wrapper.vm.$nextTick();
     expect(wrapper.findComponent(EventFilter).exists()).toBe(false);
     
@@ -107,6 +107,17 @@ describe('EventCatalog Component with user', () => {
     expect(eventCard.find('.card-img-top').attributes('src')).toBe(
       event.imageUrl
     );
+  });
+
+  it('Should navigate to event details on event click', async () => {
+    const eventElement = wrapper.find('.align-items-stretch');
+
+    await eventElement.trigger('click');
+
+    expect(wrapper.vm.router.push).toHaveBeenCalledWith({
+      name: 'event',
+      params: { id: 'sjvnkjnviandvijndkjvndkjvnkj' },
+    });
   });
 });
 
@@ -150,7 +161,7 @@ describe('EventCatalog component with Admin', () => {
       ],
     },
   });
-  it('Should renders the "Create Event" button', async () => {
+  it('Should render the "Create Event" button', async () => {
     await wrapperWithAdmin.vm.$nextTick();
     const createEventBtn = wrapperWithAdmin.find('.event');
     expect(createEventBtn.exists()).toBe(true);

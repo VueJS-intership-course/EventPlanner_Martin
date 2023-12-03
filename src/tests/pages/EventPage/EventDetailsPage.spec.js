@@ -4,7 +4,7 @@ import { createTestingPinia } from '@pinia/testing';
 import userStoreMock from '@/tests/_mocks_/userStoreMock.js';
 import MapComponent from '@/components/Map/MapComponent.vue';
 import EditEventModal from '@/components/Event-Modals/EditEventModal.vue';
-import DescriptionModal from '@/pages/EventsPage/DescriptionModal.vue';
+import DescriptionModal from '@/components/Event-Modals/DescriptionModal.vue';
 
 jest.mock('@/services/firebaseConfig.js', () => {
   return {
@@ -35,7 +35,7 @@ jest.mock('@/components/Event-Modals/EditEventModal.vue', () => {
   };
 });
 
-jest.mock('@/pages/EventsPage/DescriptionModal.vue', () => {
+jest.mock('@/components/Event-Modals/DescriptionModal.vue', () => {
   return {
     template: '<div>Mocked Event Description Modal</div>',
   };
@@ -112,7 +112,7 @@ beforeEach(() => {
 });
 
 describe('EventDeatailsPage Component', () => {
-  it('Should renders the page', async () => {
+  it('Should render the page', async () => {
     await wrapper.vm.$nextTick();
     expect(wrapper.exists()).toBe(true);
   });
@@ -125,7 +125,7 @@ describe('EventDeatailsPage Component', () => {
     expect(getUserTimeSpy).toBeCalled();
   });
 
-  it('Should renders the right price and tickets of choosed event', () => {
+  it('Should render the right price and tickets of choosed event', () => {
 
     const priceField = wrapper.find('.badge-price');
     const ticketField = wrapper.find('.badge-tickets');
@@ -134,7 +134,7 @@ describe('EventDeatailsPage Component', () => {
     expect(ticketField.text()).toContain('12313 left');
   });
 
-  it('Should rednders the event name correctly', async () => {
+  it('Should render the event name correctly', async () => {
     await wrapper.vm.$nextTick();
     const eventName = wrapper.find('.title h3');
 
@@ -155,7 +155,7 @@ describe('EventDeatailsPage Component', () => {
     expect(map.exists()).toBe(true)
   });
 
-  it('Should shows the Description Modal', async () => {
+  it('Should show the Description Modal', async () => {
 
     expect(wrapper.findComponent(DescriptionModal).exists()).toBe(false);
 
@@ -166,7 +166,7 @@ describe('EventDeatailsPage Component', () => {
     expect(wrapper.findComponent(DescriptionModal).exists()).toBe(true);
   });
 
-  it('Should renders the "Buy Ticket" button', async () => {
+  it('Should render the "Buy Ticket" button', async () => {
     const buyTicketBtnSpy = jest.spyOn(wrapper.vm.eStore, 'buyTicket');
     const buyTicketBtn = wrapper.find('.btn-success');
     
@@ -184,7 +184,7 @@ describe('EventDeatailsPage Component', () => {
     expect(eventDetailsSpy).toBeCalled()
   });
 
-  it('Should renders the alert for subscribed for event user', async () => {
+  it('Should render the alert for subscribed for event user', async () => {
     wrapper.vm.eStore.choosedEvent.clients = ['martin@abv.bg'];
     await wrapper.vm.$nextTick()
     
@@ -265,7 +265,7 @@ beforeEach(() => {
 
 describe('EventDeatailsPage Component with Admin', () => {
 
-  it('Should renders the Edit Event Modal', async () => {
+  it('Should render the Edit Event Modal', async () => {
     expect(wrapperWithAdmin.findComponent(EditEventModal).exists()).toBe(false);
     const editBtn = wrapperWithAdmin.find('.btn-edit');
     await editBtn.trigger('click');
@@ -286,7 +286,7 @@ describe('EventDeatailsPage Component with Admin', () => {
     expect(budgetBtnSpy).toBeCalled();
   });
 
-  it('Should renders the "Remove" button and called the method', async () => {
+  it('Should render the "Remove" button and called the method', async () => {
     const removeBtnSpy = jest.spyOn(wrapperWithAdmin.vm.eStore, 'removeEvent');
     const removeBtn = wrapperWithAdmin.find('.btn-remove');
     expect(removeBtn.exists()).toBe(true);
@@ -345,9 +345,6 @@ beforeEach(() => {
               showDescription: false,
               eventHasPassed: false,
             },
-            // userStore: {
-            //   currentUser: userStoreMock.nonLoggedInUser,
-            // },
           },
         }),
       ],
@@ -365,10 +362,10 @@ beforeEach(() => {
 });
 
 describe('EventDetailsPage Component with non-loggedIn user', () => {
-  it('Should renders the alert for login or register', async () => {
+  it('Should render the alert for login or register', async () => {
     const alertFields = wrapperWithNonLoggedInUser.find('.alert');
     
     expect(alertFields.exists()).toBe(true)
     expect(alertFields.text()).toBe('Login or Register to buy a ticket.')
-  })
+  });
 })

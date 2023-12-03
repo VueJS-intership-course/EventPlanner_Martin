@@ -19,7 +19,7 @@
               <Field
                 type="text"
                 class="form-control"
-                id="form-group-input"
+                id="name"
                 name="name"
                 ref="eventName"
                 placeholder="Type name..."
@@ -33,7 +33,7 @@
               <Field
                 type="text"
                 class="form-control"
-                id="form-group-input"
+                id="description"
                 name="description"
                 placeholder="Type description..."
               />
@@ -48,7 +48,7 @@
               <Field
                 type="number"
                 class="form-control"
-                id="form-group-input"
+                id="tickets"
                 name="tickets"
                 placeholder="Type count of tickets..."
               />
@@ -61,7 +61,7 @@
               <Field
                 type="number"
                 class="form-control"
-                id="form-group-input"
+                id="price"
                 name="price"
                 placeholder="Type price..."
               />
@@ -76,7 +76,7 @@
               <Field
                 type="date"
                 class="form-control"
-                id="form-group-input"
+                id="date"
                 name="date"
                 :value="today"
               />
@@ -89,7 +89,7 @@
               <Field
                 type="time"
                 class="form-control"
-                id="form-group-input"
+                id="time"
                 name="time"
                 :value="currentTime"
               />
@@ -104,7 +104,7 @@
               <Field
                 type="number"
                 class="form-control"
-                id="form-group-input"
+                id="budget"
                 name="budget"
                 placeholder="Type budget..."
               />
@@ -135,7 +135,7 @@
             </div>
             <MapComponent
               class="mt-2"
-              style="height: 450px; width: 830px"
+              style="height: 28.125rem; width: 51.875rem"
               @selectedLocation="handleCoordinates"
             ></MapComponent>
           </div>
@@ -183,8 +183,8 @@ yesterday.setDate(yesterday.getDate() - 1);
 const schema = yup.object({
   name: yup.string().required('This field is required!'),
   description: yup.string().required('This field is required!'),
-  tickets: yup.number().min(1, 'The count of tickets cannot be negative!').required('This field is required!'),
-  price: yup.number().min(1, 'The price of ticket cannot be negative!').required('This field is required!'),
+  tickets: yup.number().min(1, 'The count of tickets cannot be negative!').max(30000, 'The count of tickets cannot be higher than 30000!').required('This field is required!'),
+  price: yup.number().min(1, 'The price of ticket cannot be negative!').max(1000, 'The price of ticket cannot be higherthan 1000$!').required('This field is required!'),
   budget: yup.number().min(0, 'The budget cannot be negative!').required('This field is required!'),
   date: yup
     .date()

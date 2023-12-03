@@ -6,7 +6,7 @@
 import Highcharts from 'highcharts';
 import Highmaps from 'highcharts/modules/map';
 import mapData from '@highcharts/map-collection/custom/world.geo.json';
-import { watch, computed, onMounted } from 'vue';
+import { watch, computed } from 'vue';
 
 Highmaps(Highcharts);
 

@@ -31,11 +31,11 @@ describe('Not Found', () => {
     expect(wrapper.exists()).toBe(true);
   });
 
-  it('Should renders the text', async () => {
+  it('Should render the text', async () => {
     expect(wrapper.find('.lead').text()).toBe("The page you're looking for doesn't exist.")
   });
 
-  it('Should renders the image', () => {
+  it('Should render the image', () => {
     expect(wrapper.find('.img-fluid').exists()).toBe(true)
   });
 });

@@ -14,26 +14,26 @@
           <div class="modal-body">
             <div class="d-flex mb-3">
               <div class="form-group w-100 mb-2 me-5">
-                <label class="form-control-label" for="name">Name</label>
+                <label class="form-control-label label" for="name">Name</label>
                 <Field
                   v-model="editedEvent.name"
                   type="text"
                   class="form-control"
-                  id="form-group-input"
+                  id="name"
                   name="name"
                   placeholder="Type name..."
                 />
                 <ErrorMessage name="name" class="text-danger position-absolute" />
               </div>
               <div class="form-group w-100 mb-2 ms-5">
-                <label class="form-control-label" for="description"
+                <label class="form-control-label label" for="description"
                   >Description</label
                 >
                 <Field
                   v-model="editedEvent.description"
                   type="text"
                   class="form-control"
-                  id="form-group-input"
+                  id="description"
                   name="description"
                   placeholder="Type description..."
                 />
@@ -42,24 +42,24 @@
             </div>
             <div class="d-flex mb-3">
               <div class="form-group w-100 mb-2 me-5 position-relative">
-                <label class="form-control-label" for="tickets">Tickets</label>
+                <label class="form-control-label label" for="tickets">Tickets</label>
                 <Field
                   v-model="editedEvent.ticket"
                   type="number"
                   class="form-control"
-                  id="form-group-input"
+                  id="tickets"
                   name="tickets"
                   placeholder="Type count of tickets..."
                 />
                 <ErrorMessage name="tickets" class="text-danger position-absolute" />
               </div>
               <div class="form-group w-100 mb-2 ms-5">
-                <label class="form-control-label" for="price">Price</label>
+                <label class="form-control-label label" for="price">Price</label>
                 <Field
                   v-model="editedEvent.price"
                   type="number"
                   class="form-control"
-                  id="form-group-input"
+                  id="price"
                   name="price"
                   placeholder="Type price..."
                 />
@@ -68,28 +68,28 @@
             </div>
             <div class="d-flex mb-3">
               <div class="form-group w-100 mb-2 me-5">
-                <label class="form-control-label" for="date"
+                <label class="form-control-label label" for="date"
                   >Date</label
                 >
                 <Field
                   v-model="editedEvent.date"
                   type="date"
                   class="form-control"
-                  id="form-group-input"
+                  id="date"
                   name="date"
                 />
                 <ErrorMessage name="date" class="text-danger position-absolute" />
               </div>
 
               <div class="form-group w-100 mb-2 ms-5">
-                <label class="form-control-label" for="time"
+                <label class="form-control-label label" for="time"
                   >Time</label
                 >
                 <Field
                   v-model="editedEvent.time"
                   type="time"
                   class="form-control"
-                  id="form-group-input"
+                  id="time"
                   name="time"
                 />
                 <ErrorMessage name="time" class="text-danger position-absolute " />
@@ -115,12 +115,12 @@
 </template>
 
 <script setup>
-import { computed, watch, ref } from 'vue';
-import { eventStore } from '../../store/eventStore.js';
+import { computed, watch } from 'vue';
+import { eventStore } from '@/store/eventStore.js';
 import { useRouter } from 'vue-router';
-import MapComponent from '../../components/Map/MapComponent.vue';
-import { getAddressFromCoordinates } from '../../utils/getAddressFromCoordinates.js';
-import { getTimeZone } from '../../utils/getTimeZone.js';
+import MapComponent from '@/components/Map/MapComponent.vue';
+import { getAddressFromCoordinates } from '@/utils/getAddressFromCoordinates.js';
+import { getTimeZone } from '@/utils/getTimeZone.js';
 import moment from 'moment-timezone';
 import { Form, Field, ErrorMessage } from 'vee-validate';
 import * as yup from 'yup';
@@ -230,7 +230,7 @@ form {
   }
 }
 
-.form-control-label {
+.label {
   color: $classic-cream;
 }
 </style>

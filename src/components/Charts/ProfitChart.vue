@@ -18,8 +18,6 @@ const props = defineProps({
   },
 });
 
-console.log(props.expenses);
-
 const chartOptions = ref({
   chart: {
     type: 'column',

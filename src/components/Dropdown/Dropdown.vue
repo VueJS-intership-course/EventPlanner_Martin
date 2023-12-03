@@ -29,13 +29,6 @@
 import { ref, computed, watch } from 'vue';
 import moment from 'moment-timezone';
 
-// const props = defineProps({
-//   modelValue: {
-//     type: String,
-//     required: true
-//   }
-// })
-
 const zones = moment.tz.names();
 const selectedValue = ref('');
 const filteredZones = ref(zones);

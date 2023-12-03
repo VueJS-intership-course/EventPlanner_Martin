@@ -91,13 +91,13 @@ beforeEach(() => {
 });
 
 describe('ProfilePage Component with user', () => {
-  it('Should renders the page', async () => {
+  it('Should render the page', async () => {
     await wrapper.vm.$nextTick();
 
     expect(wrapper.exists()).toBe(true)
   });
 
-  it('Should shows the change password modal', async () => {
+  it('Should show the change password modal', async () => {
     await wrapper.vm.$nextTick();
 
     expect(wrapper.findComponent(ChangeUserPasswordModal).exists()).toBe(false)
@@ -108,7 +108,7 @@ describe('ProfilePage Component with user', () => {
     expect(wrapper.findComponent(ChangeUserPasswordModal).exists()).toBe(true)
   });
 
-  it('Should shows the change location modal', async () => {
+  it('Should show the change location modal', async () => {
     await wrapper.vm.$nextTick();
 
     expect(wrapper.findComponent(EditLocationModal).exists()).toBe(false)
@@ -119,7 +119,7 @@ describe('ProfilePage Component with user', () => {
     expect(wrapper.findComponent(EditLocationModal).exists()).toBe(true)
   });
 
-  it("Should renders the user's name and email correctly", async () => {
+  it("Should render the user's name and email correctly", async () => {
     await wrapper.vm.$nextTick();
     const user = wrapper.vm.uStore.currentUser;
     expect(wrapper.find('.media-body h4').text()).toBe(user.username);
@@ -127,7 +127,7 @@ describe('ProfilePage Component with user', () => {
     expect(wrapper.find('.media-body p').text()).toBe(user.email);
   });
 
-  it('Should renders the Calendar Component', async () => {
+  it('Should render the Calendar Component', async () => {
     await wrapper.vm.$nextTick();
 
     expect(wrapper.findComponent(Calendar).exists()).toBe(true)

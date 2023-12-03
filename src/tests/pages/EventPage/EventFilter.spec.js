@@ -1,4 +1,4 @@
-import EventFilter from '../pages/EventsPage/EventFilter.vue';
+import EventFilter from '@/pages/EventsPage/EventFilter.vue';
 import { mount } from '@vue/test-utils';
 import userStoreMock from '@/tests/_mocks_/userStoreMock.js';
 import { createTestingPinia } from '@pinia/testing';
@@ -54,7 +54,7 @@ describe('Event Filter', () => {
     expect(wrapper.exists()).toBe(true);
   });
 
-  it('initializes with the correct default values', () => {
+  it('Initializes with the correct default values', () => {
     const searchInput = wrapper.find('#searchQuery');
     const fromDateInput = wrapper.find('#fromDate');
     const toDateInput = wrapper.find('#toDate');
@@ -88,7 +88,7 @@ describe('Event Filter', () => {
     expect(maxPriceInput.element.value).toBe('10');
   });
 
-  it('Should resets the form to its initial state on reset button click', async () => {
+  it('Should reset the form to its initial state on reset button click', async () => {
     const searchInput = wrapper.find('#searchQuery');
 
     await searchInput.setValue('Sample Event');

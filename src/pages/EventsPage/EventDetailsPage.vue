@@ -165,7 +165,7 @@ import EditEventModal from '@/components/Event-Modals/EditEventModal.vue';
 import { userStore } from '@/store/userStore.js';
 import { getUserTime } from '@/utils/getUserTime.js';
 import { getEventTime } from '@/utils/getEventTime.js';
-import DescriptionModal from '@/pages/EventsPage/DescriptionModal.vue';
+import DescriptionModal from '@/components/Event-Modals/DescriptionModal.vue';
 
 const route = useRoute();
 const router = useRouter();
