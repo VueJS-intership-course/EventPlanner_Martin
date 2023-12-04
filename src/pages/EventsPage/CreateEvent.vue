@@ -267,8 +267,6 @@ const handleCreateEvent = async (values) => {
 </script>
 
 <style scoped lang="scss">
-@import '@/styles/variables.scss';
-
 .custom-card {
   background-color: $lighter-gray;
 

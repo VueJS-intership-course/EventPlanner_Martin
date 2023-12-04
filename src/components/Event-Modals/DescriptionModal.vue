@@ -32,7 +32,6 @@ const hideDescriptionModal = () => {
 </script>
 
 <style scoped lang="scss">
-@import '@/styles/variables.scss';
 .custom-modal-dialog {
   display: flex;
     justify-content: center;

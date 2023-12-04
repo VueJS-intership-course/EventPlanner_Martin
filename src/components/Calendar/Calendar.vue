@@ -77,7 +77,6 @@ watch(
 </script>
 
 <style scoped lang="scss">
-@import '@/styles/variables.scss';
 .custom-container {
   background-color: $dark-gray;
   color: $vibrant-teal;

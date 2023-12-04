@@ -215,7 +215,6 @@ const showDescriptionModal = () => {
 </script>
 
 <style scoped lang="scss">
-@import '@/styles/variables.scss';
 .title {
   color: $lighter-gray;
 }

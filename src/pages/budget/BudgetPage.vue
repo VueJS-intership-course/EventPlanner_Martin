@@ -104,7 +104,6 @@ watch(event, updateFinancials, { immediate: true });
 </script>
 
 <style scoped lang="scss">
-@import '@/styles/variables.scss';
 
 .badge-profit {
   background-color: $medium-spring-green;

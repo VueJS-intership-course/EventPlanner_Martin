@@ -21,7 +21,6 @@
 <script setup></script>
 
 <style scoped lang="scss">
-@import '@/styles/variables.scss';
 .custom-container {
     height: calc(100vh - 91px);
 

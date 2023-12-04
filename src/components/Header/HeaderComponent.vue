@@ -79,8 +79,6 @@ const isActive = (route) => {
 </script>
 
 <style scoped lang="scss">
-@import '@/styles/variables.scss';
-
 .custom-navbar {
   background-color: $dark-gray;
 

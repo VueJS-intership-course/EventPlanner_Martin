@@ -128,7 +128,6 @@ const eventDetails = (eventId) => {
 </script>
 
 <style scoped lang="scss">
-@import '@/styles/variables.scss';
 .btn-create-event {
   background-color: $medium-spring-green;
   color: $dark-gray;

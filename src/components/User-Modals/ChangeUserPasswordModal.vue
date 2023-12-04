@@ -109,7 +109,6 @@ const cancelModal = () => {
 </script>
 
 <style scoped lang="scss">
-@import '@/styles/variables.scss';
 .custom-form {
   background-color: $lighter-gray;
 }

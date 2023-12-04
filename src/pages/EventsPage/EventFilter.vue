@@ -152,7 +152,6 @@ const cancel = () => {
 </script>
 
 <style scoped lang="scss">
-@import '@/styles/variables.scss';
 
 .container {
   background-color: #f8f9fa;

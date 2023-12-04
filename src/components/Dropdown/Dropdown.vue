@@ -68,8 +68,6 @@ watch(selectedValue, () => {
 </script>
 
 <style scoped lang="scss">
-@import '@/styles/variables.scss';
-
 div {
   background-color: $lighter-gray;
 }

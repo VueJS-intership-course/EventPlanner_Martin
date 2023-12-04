@@ -208,8 +208,6 @@ watch(
 .map-container {
   height: 300px;
 }
-
-@import '@/styles/variables.scss';
 .custom-modal-content {
   border: none;
 }
