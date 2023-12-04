@@ -1,5 +1,5 @@
 <template>
-  <div class="container mt-5">
+  <div class="container mt-4">
     <div class="row justify-content-center">
       <div class="col-md-6">
         <div class="card custom-card">
@@ -8,7 +8,7 @@
           </div>
           <div class="card-body">
             <Form @submit="onSubmit" :validationSchema="validation">
-              <div class="mb-3">
+              <div class="mb-4">
                 <label for="username" class="form-label custom-form-label"
                   >Username<span style="color: red">*</span></label
                 >
@@ -20,9 +20,9 @@
                   id="username"
                   placeholder="Enter username..."
                 />
-                <ErrorMessage name="username" class="text-danger" />
+                <ErrorMessage name="username" class="text-danger position-absolute" />
               </div>
-              <div class="mb-3">
+              <div class="mb-4">
                 <label for="email" class="form-label custom-form-label"
                   >Email<span style="color: red">*</span></label
                 >
@@ -34,9 +34,9 @@
                   id="email"
                   placeholder="Enter email..."
                 />
-                <ErrorMessage name="email" class="text-danger" />
+                <ErrorMessage name="email" class="text-danger position-absolute" />
               </div>
-              <div class="mb-3">
+              <div class="mb-4">
                 <Dropdown
                   @selectZone="handleTimeZone"
                   id="location"
@@ -44,7 +44,7 @@
                   :label="'Location'"
                 ></Dropdown>
               </div>
-              <div class="mb-3">
+              <div class="mb-4">
                 <label for="password" class="form-label custom-form-label"
                   >Password<span style="color: red">*</span></label
                 >
@@ -57,9 +57,9 @@
                   autocomplete="on"
                   placeholder="Enter password..."
                 />
-                <ErrorMessage name="password" class="text-danger" />
+                <ErrorMessage name="password" class="text-danger position-absolute" />
               </div>
-              <div class="mb-3">
+              <div class="mb-4">
                 <label for="repeatPassword" class="form-label custom-form-label"
                   >Repeat password<span style="color: red">*</span></label
                 >
@@ -72,9 +72,9 @@
                   autocomplete="on"
                   placeholder="Repeat the password..."
                 />
-                <ErrorMessage name="repeatPassword" class="text-danger" />
+                <ErrorMessage name="repeatPassword" class="text-danger position-absolute" />
               </div>
-              <div class="mb-3 text-center">
+              <div class="text-center">
                 <button
                   type="submit"
                   class="btn custom-btn"

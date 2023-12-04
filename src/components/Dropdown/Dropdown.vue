@@ -21,7 +21,7 @@
         {{ zone }}
       </li>
     </ul>
-    <span v-show="showError" class="text-danger">Please choose location!</span>
+    <span v-show="showError" class="text-danger position-absolute">Please choose location!</span>
   </div>
 </template>
 
