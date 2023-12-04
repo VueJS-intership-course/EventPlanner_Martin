@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex align-items-center justify-content-center container">
+    <div class="d-flex align-items-center justify-content-center custom-container">
             <div class="text-center row">
                 <div class=" col-md-6">
                     <img src="../utils/images/Not Found.png" alt=""
@@ -22,7 +22,7 @@
 
 <style scoped lang="scss">
 @import '@/styles/variables.scss';
-.container {
+.custom-container {
     height: calc(100vh - 91px);
 
     .btn-home {

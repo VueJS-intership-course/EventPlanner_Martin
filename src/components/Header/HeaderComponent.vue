@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg">
+  <nav class="navbar navbar-expand-lg custom-navbar">
     <div>
       <RouterLink :to="'/home'">
         <img
@@ -13,42 +13,42 @@
       id="navbarNav"
     >
       <ul class="navbar-nav ml-auto">
-        <li v-if="isAdmin" class="nav-item px-2">
-          <span class="nav-link fw-bold fs-5 text-danger"
+        <li v-if="isAdmin" class="nav-item custom-nav-item px-2">
+          <span class="nav-link custom-nav-link fw-bold fs-5 text-danger"
             ><i class="bi bi-shield-lock"></i>Admin</span
           >
         </li>
-        <li v-if="!isAdmin && isLoggedIn" class="nav-item px-2">
-          <span class="nav-link fw-bold fs-5" style="color: #f50500;"
+        <li v-if="!isAdmin && isLoggedIn" class="nav-item custom-nav-item px-2">
+          <span class="nav-link custom-nav-link fw-bold fs-5" style="color: #f50500;"
             >Hi, {{ uStore.currentUser.username }}!</span
           >
         </li>
-        <li v-if="!isLoggedIn" class="nav-item px-2">
+        <li v-if="!isLoggedIn" class="nav-item custom-nav-item px-2">
           <RouterLink
             :to="'/login'"
-            class="nav-link fw-bold fs-5 login"
+            class="nav-link custom-nav-link fw-bold fs-5 login"
             :class="{ active: isActive('/login') }"
             >Login</RouterLink
           >
         </li>
-        <li class="nav-item px-2">
+        <li class="nav-item custom-nav-item px-2">
           <RouterLink
             :to="'/events'"
-            class="nav-link fw-bold fs-5"
+            class="nav-link custom-nav-link fw-bold fs-5"
             :class="{ active: isActive('/events') }"
             >Events</RouterLink
           >
         </li>
-        <li v-if="isLoggedIn" class="nav-item px-2">
+        <li v-if="isLoggedIn" class="nav-item custom-nav-item px-2">
           <RouterLink
             :to="'/profile'"
-            class="nav-link fw-bold fs-5"
+            class="nav-link custom-nav-link fw-bold fs-5"
             :class="{ active: isActive('/profile') }"
             >Profile</RouterLink
           >
         </li>
-        <li v-if="isLoggedIn" class="nav-item px-2">
-          <button @click="handleLogout" class="btn fw-bold fs-5">Logout</button>
+        <li v-if="isLoggedIn" class="nav-item custom-nav-item px-2">
+          <button @click="handleLogout" class="btn custom-btn fw-bold fs-5">Logout</button>
         </li>
       </ul>
     </div>
@@ -81,14 +81,11 @@ const isActive = (route) => {
 <style scoped lang="scss">
 @import '@/styles/variables.scss';
 
-.navbar {
+.custom-navbar {
   background-color: $dark-gray;
 
-  .nav-link-user {
-    color: $classic-cream;
-  }
-  .nav-item {
-    .nav-link {
+  .custom-nav-item {
+    .custom-nav-link {
       color: $off-white;
 
       &:hover {
@@ -100,7 +97,7 @@ const isActive = (route) => {
       border-bottom: 3px solid $vibrant-teal;
     }
 
-    .btn {
+    .custom-btn {
       background-color: $dark-gray;
       color: $off-white;
       border: none;

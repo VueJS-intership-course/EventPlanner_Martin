@@ -2,11 +2,11 @@
   <div class="modal show" style="display: block">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content" style="border: none;">
-        <div class="modal-header">
+        <div class="modal-header custom-modal-header">
           <h5 class="modal-title">Change Location</h5>
           <button type="button" class="btn-close btn-close-white" @click="cancelModal"></button>
         </div>
-        <form @submit.prevent="handleChangeLocation" class="modal-body">
+        <form @submit.prevent="handleChangeLocation" class="modal-body custom-form">
           <div class="mb-3">
             <Dropdown
               v-model="editedUser.location"
@@ -59,17 +59,13 @@ const cancelModal = () => {
 
 <style scoped lang="scss">
 @import '@/styles/variables.scss';
-form {
+.custom-form {
   background-color: $lighter-gray;
 }
 
-.modal-header {
+.custom-modal-header {
   background-color: $dark-gray;
   color: $classic-cream;
-
-  .btn-close-modal {
-    color: $classic-cream !important;
-  }
 }
 .btn-save-location {
   background-color: $blue-cola;

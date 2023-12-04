@@ -1,6 +1,6 @@
 <template>
   <div>
-    <label for="location" class="form-label"
+    <label for="location" class="form-label label"
       >Location<span style="color: red">*</span></label
     >
     <input
@@ -73,7 +73,7 @@ watch(selectedValue, () => {
 div {
   background-color: $lighter-gray;
 }
-.form-label {
+.label {
   color: $classic-cream;
 }
 .custom-dropdown {

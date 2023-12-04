@@ -4,11 +4,7 @@ import { mount } from '@vue/test-utils';
 let wrapper;
 
 beforeEach(() => {
-  wrapper = mount(Dropdown, {
-    global: {
-      stubs: ['RouterLink'],
-    },
-  });
+  wrapper = mount(Dropdown);
 });
 
 describe('Dropdown Component', () => {

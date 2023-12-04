@@ -1,47 +1,61 @@
 <template>
-  <div class="modal show" style="display: block;">
+  <div class="modal show" style="display: block">
     <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content" style="border: none;">
-        <div class="modal-header">
+      <div class="modal-content" style="border: none">
+        <div class="modal-header custom-modal-header">
           <h5 class="modal-title">Change Password</h5>
-          <button type="button" class="btn-close btn-close-white" @click="cancelModal"></button>
+          <button
+            type="button"
+            class="btn-close btn-close-white"
+            @click="cancelModal"
+          ></button>
         </div>
-        <Form @submit="handleChangePassword" :validation-schema="schema" class="modal-body">
+        <Form
+          @submit="handleChangePassword"
+          :validation-schema="schema"
+          class="modal-body custom-form"
+        >
           <div class="mb-3">
-            <label for="password" class="col-form-label">Current Password:</label>
+            <label for="currentPassword" class="col-form-label custom-col-form-label"
+              >Current Password:</label
+            >
             <Field
-              id="password"
-              name="currPass"
+              id="currentPassword"
+              name="currentPassword"
               type="password"
               placeholder="Enter current password"
               class="form-control"
               autocomplete="current-password"
             />
-            <ErrorMessage name="currPass" class="text-danger mt-1"/>
+            <ErrorMessage name="currentPassword" class="text-danger mt-1" />
           </div>
           <div class="mb-3">
-            <label for="newPass" class="col-form-label">New Password:</label>
+            <label for="newPassword" class="col-form-label custom-col-form-label"
+              >New Password:</label
+            >
             <Field
-              id="newPass"
-              name="newPass"
+              id="newPassword"
+              name="newPassword"
               type="password"
               placeholder="Enter new password"
               class="form-control"
               autocomplete="new-password"
             />
-            <ErrorMessage name="newPass" class="text-danger mt-1"/>
+            <ErrorMessage name="newPassword" class="text-danger mt-1" />
           </div>
           <div class="mb-3">
-            <label for="rePass" class="col-form-label">Repeat New Password:</label>
+            <label for="repeatPassword" class="col-form-label custom-col-form-label"
+              >Repeat New Password:</label
+            >
             <Field
-              id="rePass"
-              name="rePass"
+              id="repeatPassword"
+              name="repeatPassword"
               type="password"
               placeholder="Repeat new password"
               class="form-control"
               autocomplete="new-password"
             />
-            <ErrorMessage name="rePass" class="text-danger mt-1"/>
+            <ErrorMessage name="repeatPassword" class="text-danger mt-1" />
           </div>
           <div class="text-center">
             <button type="submit" class="btn btn-save">Save</button>
@@ -58,48 +72,49 @@ import { useRouter } from 'vue-router';
 import { ErrorMessage, Field, Form } from 'vee-validate';
 import * as yup from 'yup';
 
-const schema =  yup.object({
-        currPass: yup
-            .string()
-            .required('This field is required!'),
-        newPass: yup
-            .string()
-            .min(8, 'Password must be at least 8 symbols!')
-            .required('This field is required!'),
-        rePass: yup
-            .string()
-            .required('This field is required!')
-            .oneOf([yup.ref('newPass')], 'Passwords does not match!'),
-    })
-
+const schema = yup.object({
+  currentPassword: yup.string().required('This field is required!'),
+  newPassword: yup
+    .string()
+    .min(8, 'Password must be at least 8 symbols!')
+    .required('This field is required!'),
+  repeatPassword: yup
+    .string()
+    .required('This field is required!')
+    .oneOf([yup.ref('newPassword')], 'Passwords does not match!'),
+});
 
 const router = useRouter();
 const uStore = userStore();
 
 const handleChangePassword = async (values) => {
-    try {
-        await uStore.changePassword(uStore.currentUser.email, values.currPass, values.newPass);
+  try {
+    await uStore.changePassword(
+      uStore.currentUser.email,
+      values.currentPassword,
+      values.newPassword
+    );
 
-        uStore.isChangingUserPassword = false;
+    uStore.isChangingUserPassword = false;
 
-        router.push({ name: 'login' })
-    } catch (error) {
-        console.log(error);
-    }
-}
+    router.push({ name: 'login' });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 const cancelModal = () => {
   uStore.isChangingUserPassword = false;
-}
+};
 </script>
 
 <style scoped lang="scss">
 @import '@/styles/variables.scss';
-form {
+.custom-form {
   background-color: $lighter-gray;
 }
 
-.modal-header {
+.custom-modal-header {
   background-color: $dark-gray;
   color: $classic-cream;
 }
@@ -112,7 +127,7 @@ form {
   }
 }
 
-.col-form-label {
+.custom-col-form-label {
   color: $classic-cream;
 }
 </style>

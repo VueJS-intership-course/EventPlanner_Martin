@@ -1,8 +1,8 @@
 <template>
   <div class="modal show" style="display: block">
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
+      <div class="modal-content custom-modal-content">
+        <div class="modal-header custom-modal-header">
           <h5 class="modal-title" id="edit">Edit Event</h5>
           <button
             type="button"
@@ -10,7 +10,7 @@
             @click="cancelButton"
           ></button>
         </div>
-        <Form @submit="saveEditedEvent" :validation-schema="validationSchema">
+        <Form @submit="saveEditedEvent" :validation-schema="validationSchema" class="custom-form">
           <div class="modal-body">
             <div class="d-flex mb-3">
               <div class="form-group w-100 mb-2 me-5">
@@ -210,14 +210,14 @@ watch(
 }
 
 @import '@/styles/variables.scss';
-.modal-content {
+.custom-modal-content {
   border: none;
 }
-form {
+.custom-form {
   background-color: $lighter-gray;
 }
 
-.modal-header {
+.custom-modal-header {
   background-color: $dark-gray;
   color: $classic-cream;
 }

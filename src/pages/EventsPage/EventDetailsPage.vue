@@ -1,5 +1,5 @@
 <template>
-  <div class="overlay" v-if="isEditing || showDescription"></div>
+  <div class="custom-overlay" v-if="isEditing || showDescription"></div>
   <div v-if="!event" class="text-center mt-5">
     <div class="spinner-border text-primary" role="status">
       <span class="visually-hidden">Loading...</span>
@@ -268,7 +268,7 @@ const showDescriptionModal = () => {
   height: 25rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-.overlay {
+.custom-overlay {
   position: fixed;
   top: 0;
   left: 0;

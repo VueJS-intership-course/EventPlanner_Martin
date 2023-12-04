@@ -2,8 +2,8 @@
   <div class="container mt-5">
     <div class="row justify-content-center">
       <div class="col-md-6">
-        <div class="card card-color">
-          <div class="card-header card-header-color">
+        <div class="card custom-card">
+          <div class="card-header custom-card-header">
             <h1>Login</h1>
           </div>
           <div class="card-body">
@@ -102,10 +102,10 @@ const onSumbit = async () => {
 
 <style scoped lang="scss">
 @import '@/styles/variables.scss';
-.card-color {
+.custom-card {
   background-color: $lighter-gray;
 
-  .card-header-color {
+  .custom-card-header {
     background-color: $dark-gray;
     color: $classic-cream;
   }

@@ -92,8 +92,6 @@ beforeEach(() => {
                 time: '2029-11-30T09:22:00.000Z',
                 timeZone: 'Europe/Sofia',
               },
-              isEditing: false,
-              showDescription: false,
             },
             userStore: {
               currentUser: userStoreMock.mockedUser,
@@ -240,9 +238,6 @@ beforeEach(() => {
                 time: '2029-11-30T09:22:00.000Z',
                 timeZone: 'Europe/Sofia',
               },
-              isEditing: false,
-              showDescription: false,
-              eventHasPassed: false,
             },
             userStore: {
               currentUser: userStoreMock.mockedUserAdmin,
@@ -341,9 +336,6 @@ beforeEach(() => {
                 time: '2023-11-30T09:22:00.000Z',
                 timeZone: 'Europe/Sofia',
               },
-              isEditing: false,
-              showDescription: false,
-              eventHasPassed: false,
             },
           },
         }),

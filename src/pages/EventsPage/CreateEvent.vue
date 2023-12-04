@@ -1,7 +1,7 @@
 <template>
   <div class="container py-4 d-flex flex-column">
-    <div class="card shadow align-self-center rounded-3 col-lg-8">
-      <div class="card-header p-3 h4">Create Event</div>
+    <div class="card custom-card shadow align-self-center rounded-3 col-lg-8">
+      <div class="card-header custom-card-header p-3 h4">Create Event</div>
       <div
         class="card-body d-flex justify-content-center align-self-center w-100"
       >
@@ -13,7 +13,7 @@
         >
           <div class="d-flex">
             <div class="form-group w-100 mb-4 me-5">
-              <label class="form-control-label" for="name"
+              <label class="form-control-label custom-form-control-label" for="name"
                 >Name<span style="color: red">*</span></label
               >
               <Field
@@ -27,7 +27,7 @@
               <ErrorMessage name="name" class="text-danger position-absolute" />
             </div>
             <div class="form-group w-100 mb-4 ms-5">
-              <label class="form-control-label" for="description"
+              <label class="form-control-label custom-form-control-label" for="description"
                 >Description<span style="color: red">*</span></label
               >
               <Field
@@ -42,7 +42,7 @@
           </div>
           <div class="d-flex">
             <div class="form-group w-100 mb-4 me-5">
-              <label class="form-control-label" for="tickets"
+              <label class="form-control-label custom-form-control-label" for="tickets"
                 >Tickets<span style="color: red">*</span></label
               >
               <Field
@@ -55,7 +55,7 @@
               <ErrorMessage name="tickets" class="text-danger position-absolute" />
             </div>
             <div class="form-group w-100 mb-4 ms-5">
-              <label class="form-control-label" for="price"
+              <label class="form-control-label custom-form-control-label" for="price"
                 >Price<span style="color: red">*</span></label
               >
               <Field
@@ -70,7 +70,7 @@
           </div>
           <div class="d-flex">
             <div class="form-group w-100 mb-4 me-5">
-              <label class="form-control-label" for="date"
+              <label class="form-control-label custom-form-control-label" for="date"
                 >Date<span style="color: red">*</span></label
               >
               <Field
@@ -83,7 +83,7 @@
               <ErrorMessage name="date" class="text-danger position-absolute" />
             </div>
             <div class="form-group w-100 mb-4 ms-5">
-              <label class="form-control-label" for="time"
+              <label class="form-control-label custom-form-control-label" for="time"
                 >Time<span style="color: red">*</span></label
               >
               <Field
@@ -98,7 +98,7 @@
           </div>
           <div class="d-flex">
             <div class="form-group w-50 mb-4 me-5">
-              <label class="form-control-label" for="budget"
+              <label class="form-control-label custom-form-control-label" for="budget"
                 >Budget<span style="color: red">*</span></label
               >
               <Field
@@ -111,7 +111,7 @@
               <ErrorMessage name="budget" class="text-danger position-absolute" />
             </div>
             <div class="form-group w-50 mb-4 ms-5">
-              <label class="form-control-label" for="imageFile">
+              <label class="form-control-label custom-form-control-label" for="imageFile">
                 Upload Image<span style="color: red">*</span>
               </label>
               <input
@@ -128,7 +128,7 @@
           </div>
           <div class="d-flex flex-column align-self-center w-100">
             <div class="d-flex justify-content-center">
-              <label class="form-control-label mb-2" for="location"
+              <label class="form-control-label custom-form-control-label mb-2" for="location"
                 >Choose location<span style="color: red">*</span></label
               >
               <p v-if="errorMsg" class="text-danger mt-3 position-absolute">{{ errorMsg }}</p>
@@ -142,7 +142,7 @@
           <div class="form-group align-self-center mt-2">
             <button
               type="submit"
-              class="btn float-end mt-2"
+              class="btn custom-btn float-end mt-2"
               for="form-group-input"
             >
               Create Event
@@ -268,37 +268,22 @@ const handleCreateEvent = async (values) => {
 
 <style scoped lang="scss">
 @import '@/styles/variables.scss';
-.back-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background-color: rgba(77, 77, 77, 0.452);
-  z-index: 3;
 
-  .add-modal {
-    position: absolute;
-    top: 20%;
-    left: 10%;
-  }
-}
-
-.card {
+.custom-card {
   background-color: $lighter-gray;
 
-  .card-header {
+  .custom-card-header {
     background-color: $dark-gray;
     color: $classic-cream;
   }
 
-  .btn {
+  .custom-btn {
     background-color: $elegant-gold;
     color: $classic-cream;
     border: none;
   }
 
-  .form-control-label {
+  .custom-form-control-label {
     color: $classic-cream;
   }
 }

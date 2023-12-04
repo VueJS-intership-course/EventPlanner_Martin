@@ -9,7 +9,7 @@
       :validateOnInput="false"
     >
       <div class="col-sm">
-        <label for="searchQuery" class="form-label">Search Event:</label>
+        <label for="searchQuery" class="form-label custom-form-label">Search Event:</label>
         <Field
           type="text"
           name="search"
@@ -20,7 +20,7 @@
         />
       </div>
       <div class="col-sm">
-        <label for="fromDate" class="form-label">From Date:</label>
+        <label for="fromDate" class="form-label custom-form-label">From Date:</label>
         <Field
           type="date"
           name="fromDate"
@@ -31,7 +31,7 @@
         <ErrorMessage name="fromDate" class="text-danger" />
       </div>
       <div class="col-sm">
-        <label for="toDate" class="form-label">To Date:</label>
+        <label for="toDate" class="form-label custom-form-label">To Date:</label>
         <Field
           type="date"
           name="toDate"
@@ -42,7 +42,7 @@
         <ErrorMessage name="toDate" class="text-danger" />
       </div>
       <div class="col-sm">
-        <label for="minPrice" class="form-label">Min Price:</label>
+        <label for="minPrice" class="form-label custom-form-label">Min Price:</label>
         <Field
           type="number"
           name="minPrice"
@@ -53,7 +53,7 @@
         <ErrorMessage name="minPrice" class="text-danger" />
       </div>
       <div class="col-sm">
-        <label for="maxPrice" class="form-label">Max Price:</label>
+        <label for="maxPrice" class="form-label custom-form-label">Max Price:</label>
         <Field
           type="number"
           name="maxPrice"
@@ -160,7 +160,7 @@ const cancel = () => {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
-  .form-label {
+  .custom-form-label {
     font-weight: bold;
     color: #333;
   }

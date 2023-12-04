@@ -8,20 +8,20 @@ jest.mock('@/utils/images/Not Found.png', () => {
 });
 
 jest.mock('vue-router', () => ({
-    useRouter: () => ({
-      push: jest.fn(),
-    }),
-  }));
+  useRouter: () => ({
+    push: jest.fn(),
+  }),
+}));
 
 let wrapper;
 let mockRouterPush;
 
 beforeEach(() => {
-    mockRouterPush = jest.fn();
+  mockRouterPush = jest.fn();
 
   wrapper = mount(NotFound, {
     global: {
-    stubs: ['RouterLink']
+      stubs: ['RouterLink'],
     },
   });
 });
@@ -32,10 +32,12 @@ describe('Not Found', () => {
   });
 
   it('Should render the text', async () => {
-    expect(wrapper.find('.lead').text()).toBe("The page you're looking for doesn't exist.")
+    expect(wrapper.find('.lead').text()).toBe(
+      "The page you're looking for doesn't exist."
+    );
   });
 
   it('Should render the image', () => {
-    expect(wrapper.find('.img-fluid').exists()).toBe(true)
+    expect(wrapper.find('.img-fluid').exists()).toBe(true);
   });
 });

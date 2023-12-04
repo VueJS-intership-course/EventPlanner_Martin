@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <FullCalendar
-      class="container-calendar"
+      class="container-calendar custom-container"
       :options="calendarOptions"
       :key="props.userEvents"
     >
@@ -78,7 +78,7 @@ watch(
 
 <style scoped lang="scss">
 @import '@/styles/variables.scss';
-.container-calendar {
+.custom-container {
   background-color: $dark-gray;
   color: $vibrant-teal;
 }

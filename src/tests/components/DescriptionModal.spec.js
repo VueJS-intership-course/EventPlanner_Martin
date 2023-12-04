@@ -19,24 +19,6 @@ beforeEach(() => {
         createTestingPinia({
           initialState: {
             events: {
-              events: [
-                {
-                  address: 'madrid',
-                  budget: 123123123,
-                  clients: ['patrick@abv.bg', 'lilly@abv.bg'],
-                  description: 'adsasdasddas',
-                  expenses: 123123,
-                  id: 'sjvnkjnviandvijndkjvndkjvnkj',
-                  imageUrl: 'hthtadsmdamdad',
-                  location: [24.3242342, 42.42145345],
-                  name: 'Event1',
-                  profit: 412432423,
-                  price: 120,
-                  ticket: 12313,
-                  time: '2023-11-30T09:22:00.000Z',
-                  timeZone: 'Europe/Sofia',
-                },
-              ],
               choosedEvent: {
                 address: 'madrid',
                 budget: 123123123,
@@ -53,13 +35,11 @@ beforeEach(() => {
                 time: '2029-11-30T09:22:00.000Z',
                 timeZone: 'Europe/Sofia',
               },
-              isEditing: false,
               showDescription: true,
             },
           },
         }),
       ],
-      stubs: ['RouterLink'],
     },
   });
 });

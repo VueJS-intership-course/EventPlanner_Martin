@@ -1,5 +1,5 @@
 <template>
-  <div class="overlay" v-if="uStore.isChangingUserLocation || uStore.isChangingUserPassword"></div>
+  <div class="custom-overlay" v-if="uStore.isChangingUserLocation || uStore.isChangingUserPassword"></div>
   <div class="container-fluid">
     <div class="row align-items-start justify-content-around mt-5 ms-3 me-3">
       <div class="col-lg-4">
@@ -82,7 +82,7 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-.overlay {
+.custom-overlay {
   position: absolute;
   top: 0;
   left: 0;

@@ -44,10 +44,10 @@
           <div class="position-relative image-container">
             <img
             :src="event.imageUrl"
-            class="card-img-top"
+            class="card-img-top custom-image"
             alt="Event Image"
             />
-            <h5 class="card-title-overlay text-white position-absolute p-2">
+            <h5 class="card-title-overlay custom-card-title-overlay text-white position-absolute p-2">
               {{ event.name }}
             </h5>
           </div>
@@ -159,6 +159,7 @@ const eventDetails = (eventId) => {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
   overflow: hidden;
+  border: none;
 }
 
 .larger-card:hover {
@@ -166,13 +167,13 @@ const eventDetails = (eventId) => {
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }
 
-.card-img-top {
+.custom-image {
   width: 100%;
   height: 180px;
   object-fit: cover;
 }
 
-.card-title-overlay {
+.custom-card-title-overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -183,10 +184,6 @@ const eventDetails = (eventId) => {
   color: white;
   text-shadow: 1px 1px 2px black;
   padding: 0.5rem;
-}
-
-.card {
-  border: none;
 }
 
 .expired-badge {

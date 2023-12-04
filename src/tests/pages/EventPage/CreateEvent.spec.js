@@ -3,23 +3,25 @@ import { createTestingPinia } from '@pinia/testing';
 import CreateEvent from '@/pages/EventsPage/CreateEvent.vue';
 
 jest.mock('@/services/firebaseConfig.js', () => {
-    const mockStorageRef = {
-      put: jest.fn(() => Promise.resolve({
+  const mockStorageRef = {
+    put: jest.fn(() =>
+      Promise.resolve({
         ref: {
-          getDownloadURL: jest.fn(() => Promise.resolve('mock-url'))
-        }
-      })),
-      child: jest.fn(() => mockStorageRef)
-    };
-  
-    return {
-      fireStore: jest.fn(),
-      fireAuth: jest.fn(),
-      fireStorage: {
-        ref: jest.fn(() => mockStorageRef)
-      },
-    };
-  });
+          getDownloadURL: jest.fn(() => Promise.resolve('mock-url')),
+        },
+      })
+    ),
+    child: jest.fn(() => mockStorageRef),
+  };
+
+  return {
+    fireStore: jest.fn(),
+    fireAuth: jest.fn(),
+    fireStorage: {
+      ref: jest.fn(() => mockStorageRef),
+    },
+  };
+});
 
 jest.mock('vue-router', () => ({
   useRouter: () => ({
@@ -28,20 +30,17 @@ jest.mock('vue-router', () => ({
 }));
 
 jest.mock('@/components/Map/MapComponent.vue', () => {
-    return {
-      template: '<div>Mocked Map Component</div>',
-    };
-  });
+  return {
+    template: '<div>Mocked Map Component</div>',
+  };
+});
 
 let wrapper;
 
 beforeEach(() => {
   wrapper = mount(CreateEvent, {
     global: {
-        plugins: [
-            createTestingPinia({}),
-          ],
-      stubs: ['RouterLink'],
+      plugins: [createTestingPinia({})],
     },
   });
 });
@@ -76,7 +75,7 @@ describe('Create event', () => {
     expect(timeField.element.value).toBe('20:01');
     expect(budgetField.element.value).toBe('20000');
   });
-  
+
   it('Should render the label', () => {
     const labels = wrapper.findAll('label');
 
@@ -97,6 +96,5 @@ describe('Create event', () => {
     expect(timeLabel).toBe('Time*');
     expect(budgetLabel).toBe('Budget*');
     expect(imageLabel).toBe('Upload Image*');
-
-  })
+  });
 });

@@ -1,6 +1,6 @@
 import RegisterPage from '@/pages/Authentication/RegisterPage.vue';
 import { mount } from '@vue/test-utils';
-import Dropdown from '../../components/Dropdown/Dropdown.vue'
+import Dropdown from '@/components/Dropdown/Dropdown.vue'
 
 jest.mock('vue-router', () => ({
   useRouter: () => ({

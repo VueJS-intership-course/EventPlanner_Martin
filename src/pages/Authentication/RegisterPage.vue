@@ -43,7 +43,6 @@
                   :name="'location'"
                   :label="'Location'"
                 ></Dropdown>
-                <!-- <ErrorMessage name="location" /> -->
               </div>
               <div class="mb-3">
                 <label for="password" class="form-label custom-form-label"
