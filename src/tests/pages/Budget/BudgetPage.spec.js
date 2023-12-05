@@ -94,8 +94,8 @@ describe('Budget page', () => {
     const profit = wrapper.find('.badge-profit');
     const expenses = wrapper.find('.badge-expenses');
 
-    expect(profit.text()).toBe(`${wrapper.vm.eStore.choosedEvent.profit}$`);
-    expect(expenses.text()).toBe(`${wrapper.vm.eStore.choosedEvent.expenses}$`);
+    expect(profit.text()).toBe(`$${wrapper.vm.eStore.choosedEvent.profit}`);
+    expect(expenses.text()).toBe(`$${wrapper.vm.eStore.choosedEvent.expenses}`);
   });
 
   it('has buttons to add expenses for food, rent, and staff', async () => {

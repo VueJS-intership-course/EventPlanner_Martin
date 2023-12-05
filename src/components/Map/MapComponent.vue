@@ -103,7 +103,6 @@ const showLocationOnMap = () => {
     map.value.getView().setCenter(coordinates);
     map.value.getView().setZoom(5);
 
-    console.log(longitudeAndLatitude);
     handleMapClick(longitudeAndLatitude, vectorSource.value);
   }
 };

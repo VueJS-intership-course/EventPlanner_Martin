@@ -134,7 +134,6 @@ const handleTimeZone = (selectedZone) => {
 };
 
 const onSubmit = async () => {
-  console.log('here');
   try {
     if (formData.password !== formData.repeatPassword) {
       throw new Error('Passwords do not match!');
@@ -148,7 +147,6 @@ const onSubmit = async () => {
       },
       formData.password
     );
-    console.log('User registered successfully');
 
     router.push({ name: 'events' });
   } catch (error) {

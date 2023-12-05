@@ -29,7 +29,6 @@ export default {
           imageUrl,
           clients
         };
-        console.log(event);
         data.push(event);
       });
       return data;
@@ -40,7 +39,6 @@ export default {
 
   async addEvent(eventData) {
     try {
-      console.log(eventData);
       await firebaseData.fireStore.collection('events').add({
         id: crypto.randomUUID(),
         name: eventData.name,
@@ -57,7 +55,6 @@ export default {
         profit: eventData.profit,
         expenses: eventData.expenses
       });
-      console.log('service', eventData.timeZone);
     } catch (error) {
       throw error;
     }

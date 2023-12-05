@@ -196,7 +196,6 @@ watch(
   (newLocation, oldLocation) => {
     if (newLocation !== oldLocation) {
       emit('update-location', newLocation);
-      console.warn(newLocation);
       handleCoordinates(newLocation);
     }
   },

@@ -27,7 +27,7 @@
       </button>
       <EventFilter v-if="isToggleFilters"></EventFilter>
     </div>
-    <div class="container mt-3">
+    <div class="container mt-3 mb-5">
       <div class="row row-cols-md-4 g-5">
         <div
           v-for="(event, index) in filteredEvents"
@@ -35,26 +35,31 @@
           class="col d-flex align-items-stretch"
           @click="eventDetails(event.id)"
         >
-        <div class="position-relative card larger-card shadow bg-white rounded">
-          <span
-            v-if="hasEnded(event.time)"
-            class="expired-badge"
-            >Expired</span
+          <div
+            class="position-relative card larger-card shadow bg-white rounded"
           >
-          <div class="position-relative image-container">
-            <img
-            :src="event.imageUrl"
-            class="card-img-top custom-image"
-            alt="Event Image"
-            />
-            <h5 class="card-title-overlay custom-card-title-overlay text-white position-absolute p-2">
-              {{ event.name }}
-            </h5>
-          </div>
-          <div class="card-body">
-            <p v-if="event.ticket <= 0 " class="card-text text-center">
-              <span class="fw-bold text-danger custom-sold-out">SOLD OUT!</span>
-            </p>
+            <!-- <span class="hover-text">Click for Details</span> -->
+            <span v-if="hasEnded(event.time)" class="expired-badge"
+              >Expired</span
+            >
+            <div class="position-relative image-container">
+              <img
+                :src="event.imageUrl"
+                class="card-img-top custom-image"
+                alt="Event Image"
+              />
+              <h5
+                class="card-title-overlay custom-card-title-overlay text-white position-absolute p-2"
+              >
+                {{ event.name }}
+              </h5>
+            </div>
+            <div class="card-body">
+              <p v-if="event.ticket <= 0" class="card-text text-center">
+                <span class="fw-bold text-danger custom-sold-out"
+                  >SOLD OUT!</span
+                >
+              </p>
               <p v-if="event.ticket > 0" class="card-text">
                 <i
                   class="bi bi-ticket-detailed align-middle"
@@ -113,8 +118,8 @@ const filteredEvents = computed(() => {
 });
 
 const hasEnded = (time) => {
-  return new Date(time) < new Date()
-}
+  return new Date(time) < new Date();
+};
 
 const toggleFilters = () => {
   eStore.isToggleFilters = !eStore.isToggleFilters;
@@ -127,7 +132,7 @@ const eventDetails = (eventId) => {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .btn-create-event {
   background-color: $medium-spring-green;
   color: $dark-gray;
@@ -149,6 +154,7 @@ const eventDetails = (eventId) => {
     color: $classic-cream;
   }
 }
+
 .bi-ticket-detailed {
   font-size: 1.5rem;
 }
@@ -159,11 +165,15 @@ const eventDetails = (eventId) => {
   cursor: pointer;
   overflow: hidden;
   border: none;
-}
 
-.larger-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+
+    .hover-text {
+      display: block;
+    }
+  }
 }
 
 .custom-image {
@@ -186,22 +196,22 @@ const eventDetails = (eventId) => {
 }
 
 .expired-badge {
-    position: absolute;
-    top: 80px;
-    right: -20px;
-    z-index: 10;
-    overflow: hidden;
-    background-color: $candy-apple-red;
-    color: white;
-    font-weight: bold;
-    font-size: 0.9rem;
-    transform: translateY(-50%) rotate(45deg);
-    transform-origin: top right;
-    width: 120px;
-    text-align: center;
-  }
+  position: absolute;
+  top: 80px;
+  right: -20px;
+  z-index: 10;
+  overflow: hidden;
+  background-color: $candy-apple-red;
+  color: white;
+  font-weight: bold;
+  font-size: 0.9rem;
+  transform: translateY(-50%) rotate(45deg);
+  transform-origin: top right;
+  width: 120px;
+  text-align: center;
+}
 
-  .custom-sold-out {
-    font-size: 24px;
-  }
+.custom-sold-out {
+  font-size: 24px;
+}
 </style>

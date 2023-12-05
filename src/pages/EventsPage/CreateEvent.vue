@@ -217,7 +217,6 @@ const handleFileUpload = async (event) => {
   try {
     const snapshot = await storageRef.put(imageFile);
     imageUrl.value = await snapshot.ref.getDownloadURL();
-    console.log('Successfully upload!');
   } catch (error) {
     console.log(error);
   }
@@ -238,8 +237,6 @@ const handleCreateEvent = async (values) => {
   timeZone.value = getTimeZone(selectedCoordinates.value);
   const eventDateAndTime = `${values.date}T${values.time}`;
   time.value = moment.tz(eventDateAndTime, timeZone.value).utc().toISOString();
-
-  console.log(time.value);
 
   try {
     const newEvent = {

@@ -15,7 +15,7 @@
           :validation-schema="schema"
           class="modal-body custom-form"
         >
-          <div class="mb-3">
+          <div class="mb-4">
             <label for="currentPassword" class="col-form-label custom-col-form-label"
               >Current Password:</label
             >
@@ -27,9 +27,9 @@
               class="form-control"
               autocomplete="current-password"
             />
-            <ErrorMessage name="currentPassword" class="text-danger mt-1" />
+            <ErrorMessage name="currentPassword" class="text-danger position-absolute" />
           </div>
-          <div class="mb-3">
+          <div class="mb-4">
             <label for="newPassword" class="col-form-label custom-col-form-label"
               >New Password:</label
             >
@@ -41,9 +41,9 @@
               class="form-control"
               autocomplete="new-password"
             />
-            <ErrorMessage name="newPassword" class="text-danger mt-1" />
+            <ErrorMessage name="newPassword" class="text-danger position-absolute" />
           </div>
-          <div class="mb-3">
+          <div class="mb-4">
             <label for="repeatPassword" class="col-form-label custom-col-form-label"
               >Repeat New Password:</label
             >
@@ -55,7 +55,7 @@
               class="form-control"
               autocomplete="new-password"
             />
-            <ErrorMessage name="repeatPassword" class="text-danger mt-1" />
+            <ErrorMessage name="repeatPassword" class="text-danger position-absolute" />
           </div>
           <div class="text-center">
             <button type="submit" class="btn btn-save">Save</button>

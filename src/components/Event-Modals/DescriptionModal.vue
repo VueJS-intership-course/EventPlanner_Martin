@@ -20,7 +20,7 @@
 
 <script setup>
 import { computed } from 'vue';
-import { eventStore } from '../../store/eventStore';
+import { eventStore } from '@/store/eventStore';
 
 const eStore = eventStore();
 

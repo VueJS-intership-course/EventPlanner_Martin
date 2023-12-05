@@ -10,13 +10,13 @@
             <div class="d-flex justify-content-between align-items-center mb-3">
               <h5 class="mb-0">Profit:</h5>
               <span class="badge rounded-pill badge-profit"
-                >{{ event.profit }}$</span
+                >${{ event.profit }}</span
               >
             </div>
             <div class="d-flex justify-content-between align-items-center">
               <h5 class="mb-0">Expenses:</h5>
               <span class="badge rounded-pill badge-expenses"
-                >{{ event.expenses }}$</span
+                >${{ event.expenses }}</span
               >
             </div>
           </div>
@@ -92,7 +92,7 @@ const addExpense = (type) => {
   }
 
   eStore.addExpenses(price.value);
-
+  updateFinancials();
   showNotification(`You add an expense for ${type}!`);
 };
 

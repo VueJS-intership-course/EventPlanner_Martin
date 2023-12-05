@@ -33,8 +33,6 @@ export default {
   async signIn(email, password) {
     try {
       await firebaseData.fireAuth.signInWithEmailAndPassword(email, password);
-
-      console.log('It works');
     } catch (error) {
       throw new Error('Invalid email or password');
     }
