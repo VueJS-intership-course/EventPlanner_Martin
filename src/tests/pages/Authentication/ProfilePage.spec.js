@@ -64,14 +64,10 @@ beforeEach(() => {
 
 describe('ProfilePage Component with user', () => {
   it('Should render the page', async () => {
-    await wrapper.vm.$nextTick();
-
     expect(wrapper.exists()).toBe(true)
   });
 
   it('Should show the change password modal', async () => {
-    await wrapper.vm.$nextTick();
-
     expect(wrapper.findComponent(ChangeUserPasswordModal).exists()).toBe(false)
 
     wrapper.findAll('.btn')[0].trigger('click');
@@ -81,8 +77,6 @@ describe('ProfilePage Component with user', () => {
   });
 
   it('Should show the change location modal', async () => {
-    await wrapper.vm.$nextTick();
-
     expect(wrapper.findComponent(EditLocationModal).exists()).toBe(false)
 
     wrapper.findAll('.btn')[1].trigger('click');
