@@ -22,6 +22,7 @@ export default {
             email: user.email,
             username: user.username,
             location: user.location,
+            imageUrl: null
           });
       }
     } catch (error) {
@@ -64,6 +65,46 @@ export default {
   },
   async editUserLocation(userLocation, user) {
     if (!user || !user.email) {
+      console.error('User or user email is undefined');
+      return;
+    }
+
+    try {
+      const querySnapshot = await firebaseData.fireStore
+        .collection('users')
+        .where('email', '==', user.email)
+        .get();
+
+      const doc = querySnapshot.docs[0];
+
+      if (doc) {
+        await doc.ref.update({
+          location: userLocation,
+        });
+      } else {
+        console.log('No matching user found.');
+      }
+    } catch (error) {
+      console.error('Error editing event: ', error);
+    }
+  },
+  async getUserData(email) {
+    try {
+      const userDoc = await firebaseData.fireStore
+        .collection('users')
+        .where('email', '==', email)
+        .get();
+
+      const [doc] = userDoc.docs;
+
+      return doc.data();
+    } catch (error) {
+      console.error('Error retrieving user data:', error);
+      throw error;
+    }
+  },
+  async setProfileImage(imageUrl, user) {
+    if (!user || !user.email) {
       console.error("User or user email is undefined");
       return;
     }
@@ -73,32 +114,18 @@ export default {
         .collection('users')
         .where('email', '==', user.email)
         .get();
-  
+
       const doc = querySnapshot.docs[0];
   
       if (doc) {
         await doc.ref.update({
-          location: userLocation,
+          imageUrl: imageUrl,
         });
       } else {
         console.log('No matching user found.');
       }
     } catch (error) {
-      console.error("Error editing event: ", error);
+      console.error("Error changing image: ", error);
     }
   },
-  async getUserData(email) {
-    try {
-        const userDoc = await firebaseData.fireStore.collection('users').where('email', '==', email).get();
-
-        const [doc] = userDoc.docs;
-
-        return doc.data();
-
-    } catch (error) {
-        console.error('Error retrieving user data:', error);
-        throw error;
-    }
-},
-  
 };

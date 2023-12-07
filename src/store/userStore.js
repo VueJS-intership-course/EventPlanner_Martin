@@ -6,6 +6,7 @@ export const userStore = defineStore('userStore', {
     currentUser: null,
     isChangingUserPassword: false,
     isChangingUserLocation: false,
+    isChangingUserImage: false,
     editedUser: {
       location: ''
     },
@@ -43,5 +44,14 @@ export const userStore = defineStore('userStore', {
         console.error(error);
       }
     },
+    async setProfileImage(imageUrl, user) {
+      try {
+        console.log(imageUrl);
+        await userServices.setProfileImage(imageUrl, user);
+        this.currentUser.imageUrl = imageUrl;
+      } catch (error) {
+        console.error(error);
+      }
+    }
   },
 });
