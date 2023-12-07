@@ -9,8 +9,11 @@
           <div class="card-body">
             <Form @submit="onSumbit" :validationSchema="schema">
               <div class="mb-3 ms-1">
+                <!-- create common component for input fields that holds input and error message components -->
                 <label for="email" class="form-label custom-form-label"
-                  >Email<span style="color: red">*</span></label
+                  >Email
+                  <!-- separate colored text in class name -->
+                  <span style="color: red">*</span></label
                 >
                 <Field
                   type="email"
@@ -22,6 +25,7 @@
                   required
                 />
                 <ErrorMessage name="email" class="text-danger" />
+                <!-- -->
               </div>
               <div class="mb-3 ms-1">
                 <label for="password" class="form-label custom-form-label"
@@ -79,12 +83,15 @@ const schema = yup.object({
     .string()
     .email('Enter a valid email!')
     .required('This field is required!'),
+
+    // make check for length the same as register page, otherwise user will never log in
   password: yup
     .string()
-    .min(8, 'Password must be at least 8 symbols!')
+    .min(6, 'Password must be at least 8 symbols!')
     .required('This field is required!'),
 });
 
+// define with reactive prop
 const loginData = {
   email: '',
   password: '',
@@ -95,6 +102,7 @@ const onSumbit = async () => {
     await userServices.signIn(loginData.email, loginData.password);
     router.push({ name: 'events' });
   } catch (error) {
+    // show popup error message for wrong credentials
     console.log(error);
   }
 };

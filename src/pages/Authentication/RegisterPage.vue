@@ -97,7 +97,7 @@ import { Field, Form, ErrorMessage } from 'vee-validate';
 import Dropdown from '@/components/Dropdown/Dropdown.vue';
 import { useRouter } from 'vue-router';
 import * as yup from 'yup';
-import { ref } from 'vue';
+import { ref, reactive } from 'vue';
 
 const validation = yup.object({
   username: yup
@@ -120,12 +120,13 @@ const validation = yup.object({
 
 const router = useRouter();
 
-const formData = {
+// use "reactive" to define it
+const formData = reactive({
   username: '',
   email: '',
   password: '',
   repeatPassword: '',
-};
+})
 
 const location = ref('');
 

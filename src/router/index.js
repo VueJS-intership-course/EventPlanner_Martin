@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
+
+// remove unused imports
 import EventCatalog from '@/pages/EventsPage/EventCatalog.vue';
 import EventDetailsPage from '@/pages/EventsPage/EventDetailsPage.vue';
 import LoginPage from '@/pages/Authentication/LoginPage.vue';
@@ -31,10 +33,17 @@ const routes = [
     name: 'event-budget',
     component: () => import('@/pages/Budget/BudgetPage.vue')
   },
+  // move this route definition above parameterized routes
   {
     path: '/events/createEvent',
     name: 'createEvent',
-    component: () => import('@/pages/EventsPage/CreateEvent.vue')
+    component: () => import('@/pages/EventsPage/CreateEvent.vue'),
+    meta: {
+      auth: {
+        isLogged: true,
+        
+      }
+    }
   },
   {
     path: '/login',
@@ -49,7 +58,13 @@ const routes = [
   {
     path: '/profile',
     name: 'profile',
-    component: () => import('@/pages/Authentication/ProfilePage.vue')
+    component: () => import('@/pages/Authentication/ProfilePage.vue'),
+    meta: {
+      auth: {
+        isLogged: true,
+
+      }
+    }
   },
   {
     path: '/',
@@ -71,6 +86,7 @@ router.beforeResolve(async (to, from, next) => {
   const isLoggedIn = uStore.isLoggedIn;
   const isAdmin = uStore.isAdmin;
 
+  // rework routes roles check in meta fields
   const publicPages = ['login', 'register'];
   const adminOnlyPages = ['createEvent', 'event-budget'];
   const loggedInOnlyPages = ['profile'];
@@ -80,14 +96,15 @@ router.beforeResolve(async (to, from, next) => {
   const isloggedInOnlyPage = loggedInOnlyPages.includes(to.name);
 
   if (isLoggedIn && isPublicPage) {
-    next({ name: 'home' });
+    return next({ name: 'home' });
   } else if (!isLoggedIn && isloggedInOnlyPage) {
-    next({ name: 'login' });
+    return next({ name: 'login' });
   } else if (!isAdmin && isAdminOnlyPage) {
-    next({ name: 'home' });
-  } else {
-    next();
-  }
+    return next({ name: 'home' });
+  } 
+  
+   return next();
+  
 });
 
 

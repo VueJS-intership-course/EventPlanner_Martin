@@ -33,6 +33,7 @@ export default {
 
   async signIn(email, password) {
     try {
+      // save user credentials in local/session storage to be possible user to stay logged in different tabs 
       await firebaseData.fireAuth.signInWithEmailAndPassword(email, password);
     } catch (error) {
       throw new Error('Invalid email or password');
