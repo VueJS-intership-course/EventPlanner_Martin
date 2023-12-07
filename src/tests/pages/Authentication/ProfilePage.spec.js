@@ -92,16 +92,13 @@ describe('ProfilePage Component with user', () => {
   });
 
   it("Should render the user's name and email correctly", async () => {
-    await wrapper.vm.$nextTick();
     const user = wrapper.vm.uStore.currentUser;
-    expect(wrapper.find('.media-body h4').text()).toBe(user.username);
+    expect(wrapper.find('.media-body h4').text()).toBe(`@${user.username}`);
 
     expect(wrapper.find('.media-body p').text()).toBe(user.email);
   });
 
   it('Should render the Calendar Component', async () => {
-    await wrapper.vm.$nextTick();
-
     expect(wrapper.findComponent(Calendar).exists()).toBe(true)
   })
 });
