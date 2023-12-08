@@ -16,7 +16,7 @@
               class="form-control-label custom-form-control-label"
               for="imageFile"
             >
-              Choose Image<span style="color: red">*</span>
+              Choose Image<span class="text-danger">*</span>
             </label>
             <input
               type="file"
@@ -42,7 +42,7 @@
 import { userStore } from '@/store/userStore.js';
 import { computed, ref } from 'vue';
 import firebaseData from '@/services/firebaseConfig.js';
-import { Form, Field, ErrorMessage } from 'vee-validate';
+import { Form } from 'vee-validate';
 
 const uStore = userStore();
 

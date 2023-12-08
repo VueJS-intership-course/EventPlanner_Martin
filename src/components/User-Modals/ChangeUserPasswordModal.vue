@@ -71,12 +71,13 @@ import { userStore } from '@/store/userStore.js';
 import { useRouter } from 'vue-router';
 import { ErrorMessage, Field, Form } from 'vee-validate';
 import * as yup from 'yup';
+import {minPasswordLength} from '@/utils/constants.js';
 
 const schema = yup.object({
   currentPassword: yup.string().required('This field is required!'),
   newPassword: yup
     .string()
-    .min(8, 'Password must be at least 8 symbols!')
+    .min(minPasswordLength, `Password must be at least ${minPasswordLength} characters!`)
     .required('This field is required!'),
   repeatPassword: yup
     .string()

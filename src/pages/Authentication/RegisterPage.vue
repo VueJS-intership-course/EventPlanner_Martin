@@ -10,7 +10,7 @@
             <Form @submit="onSubmit" :validationSchema="validation">
               <div class="mb-4">
                 <label for="username" class="form-label custom-form-label"
-                  >Username<span style="color: red">*</span></label
+                  >Username<span class="text-danger">*</span></label
                 >
                 <Field
                   v-model="formData.username"
@@ -24,7 +24,7 @@
               </div>
               <div class="mb-4">
                 <label for="email" class="form-label custom-form-label"
-                  >Email<span style="color: red">*</span></label
+                  >Email<span class="text-danger">*</span></label
                 >
                 <Field
                   v-model="formData.email"
@@ -46,7 +46,7 @@
               </div>
               <div class="mb-4">
                 <label for="password" class="form-label custom-form-label"
-                  >Password<span style="color: red">*</span></label
+                  >Password<span class="text-danger">*</span></label
                 >
                 <Field
                   v-model="formData.password"
@@ -61,7 +61,7 @@
               </div>
               <div class="mb-4">
                 <label for="repeatPassword" class="form-label custom-form-label"
-                  >Repeat password<span style="color: red">*</span></label
+                  >Repeat password<span class="text-danger">*</span></label
                 >
                 <Field
                   v-model="formData.repeatPassword"
@@ -97,13 +97,15 @@ import { Field, Form, ErrorMessage } from 'vee-validate';
 import Dropdown from '@/components/Dropdown/Dropdown.vue';
 import { useRouter } from 'vue-router';
 import * as yup from 'yup';
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
+import {minPasswordLength} from '@/utils/constants.js';
+import {minUsernameLength} from '@/utils/constants.js';
 
 const validation = yup.object({
   username: yup
     .string()
     .required('Username is required!')
-    .min(3, 'Username must be at least 3 characters!'),
+    .min(minUsernameLength, `Username must be at least ${minUsernameLength} characters!`),
   email: yup
     .string()
     .required('Email is required!')
@@ -111,7 +113,7 @@ const validation = yup.object({
   password: yup
     .string()
     .required('Password is required!')
-    .min(6, 'Password must be at least 6 characters!'),
+    .min(minPasswordLength, `Password must be at least ${minPasswordLength} characters!`),
   repeatPassword: yup
     .string()
     .required('Repeat password is required!')
@@ -120,12 +122,12 @@ const validation = yup.object({
 
 const router = useRouter();
 
-const formData = {
+const formData = reactive({
   username: '',
   email: '',
   password: '',
   repeatPassword: '',
-};
+});
 
 const location = ref('');
 

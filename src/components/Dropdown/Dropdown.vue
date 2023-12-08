@@ -1,7 +1,7 @@
 <template>
   <div>
     <label for="location" class="form-label label"
-      >Location<span style="color: red">*</span></label
+      >Location<span class="text-danger">*</span></label
     >
     <input
       v-model="selectedValue"

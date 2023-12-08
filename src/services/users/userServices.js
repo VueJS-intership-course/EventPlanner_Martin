@@ -4,7 +4,6 @@ import {
   EmailAuthProvider,
   updatePassword,
 } from 'firebase/auth';
-import { userStore } from '@/store/userStore';
 
 export default {
   async signUp(user, password) {
@@ -22,7 +21,7 @@ export default {
             email: user.email,
             username: user.username,
             location: user.location,
-            imageUrl: null
+            imageUrl: null,
           });
       }
     } catch (error) {
@@ -33,7 +32,10 @@ export default {
 
   async signIn(email, password) {
     try {
-      await firebaseData.fireAuth.signInWithEmailAndPassword(email, password);
+      const userCredential =
+        await firebaseData.fireAuth.signInWithEmailAndPassword(email, password);
+      const userId = await userCredential.user.getIdToken();
+      sessionStorage.setItem('userToken', userId);
     } catch (error) {
       throw new Error('Invalid email or password');
     }
@@ -42,6 +44,7 @@ export default {
   async logout() {
     try {
       await firebaseData.fireAuth.signOut();
+      sessionStorage.removeItem('userToken');
     } catch (error) {
       console.log(error);
     }
@@ -105,10 +108,10 @@ export default {
   },
   async setProfileImage(imageUrl, user) {
     if (!user || !user.email) {
-      console.error("User or user email is undefined");
+      console.error('User or user email is undefined');
       return;
     }
-  
+
     try {
       const querySnapshot = await firebaseData.fireStore
         .collection('users')
@@ -116,7 +119,7 @@ export default {
         .get();
 
       const doc = querySnapshot.docs[0];
-  
+
       if (doc) {
         await doc.ref.update({
           imageUrl: imageUrl,
@@ -125,7 +128,7 @@ export default {
         console.log('No matching user found.');
       }
     } catch (error) {
-      console.error("Error changing image: ", error);
+      console.error('Error changing image: ', error);
     }
   },
 };

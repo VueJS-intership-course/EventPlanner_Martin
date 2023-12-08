@@ -7,10 +7,13 @@
             <h1>Login</h1>
           </div>
           <div class="card-body">
+            <div v-if="loginError" class="alert alert-danger">
+              {{ loginError }}
+            </div>
             <Form @submit="onSumbit" :validationSchema="schema">
               <div class="mb-3 ms-1">
                 <label for="email" class="form-label custom-form-label"
-                  >Email<span style="color: red">*</span></label
+                  >Email<span class="text-danger">*</span></label
                 >
                 <Field
                   type="email"
@@ -25,7 +28,7 @@
               </div>
               <div class="mb-3 ms-1">
                 <label for="password" class="form-label custom-form-label"
-                  >Password<span style="color: red">*</span></label
+                  >Password<span class="text-danger">*</span></label
                 >
                 <Field
                   type="password"
@@ -71,6 +74,8 @@ import { Form, Field, ErrorMessage } from 'vee-validate';
 import * as yup from 'yup';
 import userServices from '@/services/users/userServices';
 import { useRouter } from 'vue-router';
+import { minPasswordLength } from '@/utils/constants.js';
+import { ref, reactive } from 'vue';
 
 const router = useRouter();
 
@@ -81,14 +86,19 @@ const schema = yup.object({
     .required('This field is required!'),
   password: yup
     .string()
-    .min(8, 'Password must be at least 8 symbols!')
+    .min(
+      minPasswordLength,
+      `Password must be at least ${minPasswordLength} characters!`
+    )
     .required('This field is required!'),
 });
 
-const loginData = {
+const loginError = ref('');
+
+const loginData = reactive({
   email: '',
   password: '',
-};
+});
 
 const onSumbit = async () => {
   try {
@@ -96,6 +106,7 @@ const onSumbit = async () => {
     router.push({ name: 'events' });
   } catch (error) {
     console.log(error);
+    loginError.value = error;
   }
 };
 </script>

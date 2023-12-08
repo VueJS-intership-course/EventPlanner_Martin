@@ -1,55 +1,61 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import EventCatalog from '@/pages/EventsPage/EventCatalog.vue';
-import EventDetailsPage from '@/pages/EventsPage/EventDetailsPage.vue';
-import LoginPage from '@/pages/Authentication/LoginPage.vue';
-import RegisterPage from '@/pages/Authentication/RegisterPage.vue';
-import ProfilePage from '@/pages/Authentication/ProfilePage.vue';
-import CreateEvent from '@/pages/EventsPage/CreateEvent.vue';
-import NotFound from '@/pages/NotFound.vue';
-import HomePage from '@/pages/HomePage.vue';
-import { userStore } from '../store/userStore.js';
-import BudgetPage from '../pages/budget/BudgetPage.vue';
+import { userStore } from '@/store/userStore.js';
 
 const routes = [
   {
     path: '/home',
     name: 'home',
-    component: () => import('@/pages/HomePage.vue')
+    component: () => import('@/pages/HomePage.vue'),
   },
   {
     path: '/events',
     name: 'events',
-    component: () => import('@/pages/EventsPage/EventCatalog.vue')
-  },
-  {
-    path: '/events/:id',
-    name: 'event',
-    component: () => import('@/pages/EventsPage/EventDetailsPage.vue')
-  },
-  {
-    path: '/events/:id/budget',
-    name: 'event-budget',
-    component: () => import('@/pages/Budget/BudgetPage.vue')
+    component: () => import('@/pages/EventsPage/EventCatalog.vue'),
   },
   {
     path: '/events/createEvent',
     name: 'createEvent',
-    component: () => import('@/pages/EventsPage/CreateEvent.vue')
+    component: () => import('@/pages/EventsPage/CreateEvent.vue'),
+    meta: {
+      isAdmin: true,
+    },
+  },
+  {
+    path: '/events/:id',
+    name: 'event',
+    component: () => import('@/pages/EventsPage/EventDetailsPage.vue'),
+  },
+  {
+    path: '/events/:id/budget',
+    name: 'event-budget',
+    component: () => import('@/pages/Budget/BudgetPage.vue'),
+    meta: {
+      isAdmin: true,
+    },
   },
   {
     path: '/login',
     name: 'login',
-    component: () => import('@/pages/Authentication/LoginPage.vue')
+    component: () => import('@/pages/Authentication/LoginPage.vue'),
+    meta: {
+      isLoggedIn: false,
+    },
   },
   {
     path: '/register',
     name: 'register',
-    component: () => import('@/pages/Authentication/RegisterPage.vue')
+    component: () => import('@/pages/Authentication/RegisterPage.vue'),
+    meta: {
+      isLoggedIn: false,
+    },
   },
   {
     path: '/profile',
     name: 'profile',
-    component: () => import('@/pages/Authentication/ProfilePage.vue')
+    component: () => import('@/pages/Authentication/ProfilePage.vue'),
+    meta: {
+      isLoggedIn: true,
+    },
   },
   {
     path: '/',
@@ -57,7 +63,7 @@ const routes = [
   },
   {
     path: '/:catchAll(.*)',
-    component: () => import('@/pages/NotFound.vue')
+    component: () => import('@/pages/NotFound.vue'),
   },
 ];
 
@@ -71,24 +77,18 @@ router.beforeResolve(async (to, from, next) => {
   const isLoggedIn = uStore.isLoggedIn;
   const isAdmin = uStore.isAdmin;
 
-  const publicPages = ['login', 'register'];
-  const adminOnlyPages = ['createEvent', 'event-budget'];
-  const loggedInOnlyPages = ['profile'];
+  const requiresAuth = to.meta.isLoggedIn;
+  const requiresAdmin = to.meta.isAdmin;
+  const forbiddenWhenLoggedIn = ['login', 'register'].includes(to.name);
 
-  const isPublicPage = publicPages.includes(to.name);
-  const isAdminOnlyPage = adminOnlyPages.includes(to.name);
-  const isloggedInOnlyPage = loggedInOnlyPages.includes(to.name);
-
-  if (isLoggedIn && isPublicPage) {
-    next({ name: 'home' });
-  } else if (!isLoggedIn && isloggedInOnlyPage) {
-    next({ name: 'login' });
-  } else if (!isAdmin && isAdminOnlyPage) {
-    next({ name: 'home' });
-  } else {
-    next();
+  if (requiresAuth && !isLoggedIn) {
+    return next({ name: 'login' });
+  } else if (requiresAdmin && !isAdmin) {
+    return next({ name: 'home' });
+  } else if (forbiddenWhenLoggedIn && isLoggedIn) {
+    return next({ name: 'home' });
   }
+  return next();
 });
-
 
 export default router;

@@ -14,21 +14,20 @@
           <div class="d-flex">
             <div class="form-group w-100 mb-4 me-5">
               <label class="form-control-label custom-form-control-label" for="name"
-                >Name<span style="color: red">*</span></label
+                >Name<span class="text-danger">*</span></label
               >
               <Field
                 type="text"
                 class="form-control"
                 id="name"
                 name="name"
-                ref="eventName"
                 placeholder="Type name..."
               />
               <ErrorMessage name="name" class="text-danger position-absolute" />
             </div>
             <div class="form-group w-100 mb-4 ms-5">
               <label class="form-control-label custom-form-control-label" for="description"
-                >Description<span style="color: red">*</span></label
+                >Description<span class="text-danger">*</span></label
               >
               <Field
                 type="text"
@@ -43,7 +42,7 @@
           <div class="d-flex">
             <div class="form-group w-100 mb-4 me-5">
               <label class="form-control-label custom-form-control-label" for="tickets"
-                >Tickets<span style="color: red">*</span></label
+                >Tickets<span class="text-danger">*</span></label
               >
               <Field
                 type="number"
@@ -56,7 +55,7 @@
             </div>
             <div class="form-group w-100 mb-4 ms-5">
               <label class="form-control-label custom-form-control-label" for="price"
-                >Price<span style="color: red">*</span></label
+                >Price<span class="text-danger">*</span></label
               >
               <Field
                 type="number"
@@ -71,7 +70,7 @@
           <div class="d-flex">
             <div class="form-group w-100 mb-4 me-5">
               <label class="form-control-label custom-form-control-label" for="date"
-                >Date<span style="color: red">*</span></label
+                >Date<span class="text-danger">*</span></label
               >
               <Field
                 type="date"
@@ -84,7 +83,7 @@
             </div>
             <div class="form-group w-100 mb-4 ms-5">
               <label class="form-control-label custom-form-control-label" for="time"
-                >Time<span style="color: red">*</span></label
+                >Time<span class="text-danger">*</span></label
               >
               <Field
                 type="time"
@@ -99,7 +98,7 @@
           <div class="d-flex">
             <div class="form-group w-50 mb-4 me-5">
               <label class="form-control-label custom-form-control-label" for="budget"
-                >Budget<span style="color: red">*</span></label
+                >Budget<span class="text-danger">*</span></label
               >
               <Field
                 type="number"
@@ -112,7 +111,7 @@
             </div>
             <div class="form-group w-50 mb-4 ms-5">
               <label class="form-control-label custom-form-control-label" for="imageFile">
-                Upload Image<span style="color: red">*</span>
+                Upload Image<span class="text-danger">*</span>
               </label>
               <input
                 type="file"
@@ -129,7 +128,7 @@
           <div class="d-flex flex-column align-self-center w-100">
             <div class="d-flex justify-content-center">
               <label class="form-control-label custom-form-control-label mb-2" for="location"
-                >Choose location<span style="color: red">*</span></label
+                >Choose location<span class="text-danger">*</span></label
               >
               <p v-if="errorMsg" class="text-danger mt-3 position-absolute">{{ errorMsg }}</p>
             </div>
@@ -158,7 +157,7 @@
 import { eventStore } from '@/store/eventStore.js';
 import { Form, Field, ErrorMessage } from 'vee-validate';
 import * as yup from 'yup';
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import MapComponent from '@/components/Map/MapComponent.vue';
 import { getAddressFromCoordinates } from '@/utils/getAddressFromCoordinates';
@@ -200,15 +199,16 @@ const store = eventStore();
 const errorMsg = ref('');
 const errorMsgImage = ref('');
 
-const selectedCoordinates = ref(null);
-const address = ref(null);
-const timeZone = ref(null);
-const time = ref(null);
-const imageUrl = ref(null);
-const eventName = ref('');
+const eventData = reactive({
+  selectedCoordinates: null,
+  address: null,
+  timeZone: null,
+  time: null,
+  imageUrl: null,
+})
 
 const handleCoordinates = async (coordinates) => {
-  selectedCoordinates.value = coordinates;
+  eventData.selectedCoordinates = coordinates;
 };
 
 const handleFileUpload = async (event) => {
@@ -216,27 +216,27 @@ const handleFileUpload = async (event) => {
   const storageRef = firebaseStorage.child(`images/${imageFile.name}`);
   try {
     const snapshot = await storageRef.put(imageFile);
-    imageUrl.value = await snapshot.ref.getDownloadURL();
+    eventData.imageUrl = await snapshot.ref.getDownloadURL();
   } catch (error) {
     console.log(error);
   }
 };
 
 const handleCreateEvent = async (values) => {
-  if (!selectedCoordinates.value) {
+  if (!eventData.selectedCoordinates) {
     errorMsg.value = 'Please select a location on the map!';
     return;
   }
 
-  if (!imageUrl.value) {
+  if (!eventData.imageUrl) {
     errorMsgImage.value = 'Please select a image!';
     return;
   }
 
-  address.value = await getAddressFromCoordinates(selectedCoordinates.value);
-  timeZone.value = getTimeZone(selectedCoordinates.value);
+  eventData.address = await getAddressFromCoordinates(eventData.selectedCoordinates);
+  eventData.timeZone = getTimeZone(eventData.selectedCoordinates);
   const eventDateAndTime = `${values.date}T${values.time}`;
-  time.value = moment.tz(eventDateAndTime, timeZone.value).utc().toISOString();
+  eventData.time = moment.tz(eventDateAndTime, eventData.timeZone).utc().toISOString();
 
   try {
     const newEvent = {
@@ -245,11 +245,11 @@ const handleCreateEvent = async (values) => {
       ticket: values.tickets,
       price: values.price,
       budget: values.budget,
-      time: time.value,
-      location: selectedCoordinates.value,
-      address: address.value,
-      timeZone: timeZone.value,
-      imageUrl: imageUrl.value,
+      time: eventData.time,
+      location: eventData.selectedCoordinates,
+      address: eventData.address,
+      timeZone: eventData.timeZone,
+      imageUrl: eventData.imageUrl,
       clients: [],
       profit: 0,
       expenses: 0,
