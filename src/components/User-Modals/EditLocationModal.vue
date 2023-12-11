@@ -30,6 +30,10 @@ import { useRouter } from 'vue-router';
 import Dropdown from '@/components/Dropdown/Dropdown.vue';
 import { computed } from 'vue';
 
+/**
+ * separate modal logic in stand alone component and reuse it
+ */
+
 const router = useRouter();
 const uStore = userStore();
 
@@ -37,6 +41,7 @@ const editedUser = computed(() => uStore.editedUser);
 const currentUser = computed(() => uStore.currentUser);
 
 const handleChangeLocation = async () => {
+  // if dropdown / custom select has changed this will be unused 
   if (editedUser.value.location === '') {
     uStore.isChangingUserLocation = false;
     return;

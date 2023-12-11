@@ -1,9 +1,9 @@
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 
-const showNotification = (message) => {
+const showNotification = (message, timeout = 3500) => {
   toast(message, {
-    autoClose: 1000,
+    autoClose: timeout,
     pauseOnHover: true,
     position: "top-center",
   });

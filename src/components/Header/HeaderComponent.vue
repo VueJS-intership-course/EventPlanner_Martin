@@ -2,10 +2,7 @@
   <nav class="navbar navbar-expand-lg custom-navbar">
     <div>
       <RouterLink :to="'/home'">
-        <img
-          src="@/utils/logo/Logo.png"
-          style="width: 100px; height: 75px;"
-        />
+        <img src="@/utils/logo/Logo.png" style="width: 100px; height: 75px" />
       </RouterLink>
     </div>
     <div
@@ -19,7 +16,9 @@
           >
         </li>
         <li v-if="!isAdmin && isLoggedIn" class="nav-item custom-nav-item px-2">
-          <span class="nav-link custom-nav-link fw-bold fs-5" style="color: #f50500;"
+          <span
+            class="nav-link custom-nav-link fw-bold fs-5"
+            style="color: #f50500"
             >Hi, {{ uStore.currentUser.username }}!</span
           >
         </li>
@@ -48,7 +47,9 @@
           >
         </li>
         <li v-if="isLoggedIn" class="nav-item custom-nav-item px-2">
-          <button @click="handleLogout" class="btn custom-btn fw-bold fs-5">Logout</button>
+          <button @click="handleLogout" class="btn custom-btn fw-bold fs-5">
+            Logout
+          </button>
         </li>
       </ul>
     </div>
@@ -56,9 +57,9 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router';
-import { computed } from 'vue';
-import { userStore } from '@/store/userStore.js';
+import { useRouter } from "vue-router";
+import { computed } from "vue";
+import { userStore } from "@/store/userStore.js";
 
 const uStore = userStore();
 
@@ -70,7 +71,7 @@ const router = useRouter();
 const handleLogout = async () => {
   await uStore.logout();
 
-  router.push({ name: 'login' });
+  router.push({ name: "login" });
 };
 
 const isActive = (route) => {

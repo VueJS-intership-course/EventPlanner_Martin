@@ -12,6 +12,7 @@
         </div>
         <Form @submit="handleSetImage" class="modal-body custom-form">
           <div class="mb-4">
+            <!-- use custom input with type file--->
             <label
               class="form-control-label custom-form-control-label"
               for="imageFile"
@@ -63,6 +64,8 @@ const handleFileUpload = async (event) => {
 };
 
 const handleSetImage = async () => {
+
+  // use jup validation
   if (!imageUrl.value) {
     errorMsgImage.value = 'Please select a image!';
     return;
@@ -72,6 +75,7 @@ const handleSetImage = async () => {
     await uStore.setProfileImage(imageUrl.value, currentUser.value);
     uStore.isChangingUserImage = false;
   } catch (error) {
+    // show user friendly error message
     console.log(error);
   }
 };

@@ -26,8 +26,18 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, defineProps } from 'vue';
 import moment from 'moment-timezone';
+
+/**
+ * mark selected value in dropdown list
+ * show preselected if any
+ * add hover effect on all options
+ * rework modelValue update
+ * hide drop down menu on click outside of the control and after selecting value
+ * remove please choose location logic, outside of this component probably use schema validator for the field
+ */
+
 
 const zones = moment.tz.names();
 const selectedValue = ref('');

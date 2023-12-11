@@ -4,6 +4,7 @@
       >{{ label }}<span v-if="isRequired" class="text-danger">*</span></label
     >
     <Field
+      v-bind="props.fieldComponentOptions"
       :id="fieldType"
       :type="type"
       :name="name"
@@ -20,7 +21,13 @@
 <script setup>
 import { Field, ErrorMessage } from 'vee-validate';
 
+/**
+ * define custom prop for <Field /> Component options and pass it to vee component
+ * 
+*/
+
 const props = defineProps({
+  fieldComponentOptions: Object,
   label: String,
   type: String,
   fieldType: String,

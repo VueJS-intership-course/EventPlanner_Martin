@@ -171,6 +171,7 @@
 
 <script setup>
 import userServices from '@/services/users/userServices.js';
+// remove unused deps
 import { Field, Form, ErrorMessage } from 'vee-validate';
 import Dropdown from '@/components/Dropdown/Dropdown.vue';
 import { useRouter } from 'vue-router';
@@ -237,6 +238,7 @@ const onSubmit = async () => {
 
     router.push({ name: 'events' });
   } catch (error) {
+    // show user friendly error message in case of duplicate user or some common error when register not passed successfully
     console.log(error);
   }
 };
