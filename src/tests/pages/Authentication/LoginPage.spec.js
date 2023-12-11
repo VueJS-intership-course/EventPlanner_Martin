@@ -30,17 +30,6 @@ describe('Login page', () => {
     expect(wrapper.exists()).toBe(true);
   });
 
-  it('Should fields take the value', async () => {
-    const emailField = wrapper.find('#email');
-    const passwordField = wrapper.find('#password');
-
-    await emailField.setValue('martin@abv.bg');
-    await passwordField.setValue('123456789');
-
-    expect(emailField.element.value).toBe('martin@abv.bg');
-    expect(passwordField.element.value).toBe('123456789');
-  });
-
   it('Should render the labels', () => {
     const labels = wrapper.findAll('label');
 

@@ -9,63 +9,54 @@
       :validateOnInput="false"
     >
       <div class="col-sm">
-        <label for="searchQuery" class="form-label custom-form-label">Search Event:</label>
-        <Field
+        <CustomInput
+          label="Search Event:"
+          name="searchQuery"
           type="text"
-          name="search"
-          class="form-control"
-          id="searchQuery"
-          placeholder="Enter event name"
+          field-type="searchQuery"
+          placeholder-value="Search..."
           v-model="tempFilterOptions.search"
         />
       </div>
       <div class="col-sm">
-        <label for="fromDate" class="form-label custom-form-label">From Date:</label>
-        <Field
-          type="date"
+        <CustomInput
+          label="From Date:"
           name="fromDate"
-          class="form-control"
-          id="fromDate"
+          type="date"
+          field-type="fromDate"
           v-model="tempFilterOptions.fromDate"
         />
-        <ErrorMessage name="fromDate" class="text-danger" />
       </div>
       <div class="col-sm">
-        <label for="toDate" class="form-label custom-form-label">To Date:</label>
-        <Field
-          type="date"
+        <CustomInput
+          label="To Date:"
           name="toDate"
-          class="form-control"
-          id="toDate"
+          type="date"
+          field-type="toDate"
           v-model="tempFilterOptions.toDate"
         />
-        <ErrorMessage name="toDate" class="text-danger" />
       </div>
       <div class="col-sm">
-        <label for="minPrice" class="form-label custom-form-label">Min Price:</label>
-        <Field
-          type="number"
+        <CustomInput
+          label="Min Price:"
           name="minPrice"
-          class="form-control"
-          id="minPrice"
+          type="number"
+          field-type="minPrice"
+          placeholder-value="Min price..."
           v-model="tempFilterOptions.minPrice"
         />
-        <ErrorMessage name="minPrice" class="text-danger" />
       </div>
       <div class="col-sm">
-        <label for="maxPrice" class="form-label custom-form-label">Max Price:</label>
-        <Field
-          type="number"
+        <CustomInput
+          label="Max Price:"
           name="maxPrice"
-          class="form-control"
-          id="maxPrice"
+          type="number"
+          field-type="maxPrice"
+          placeholder-value="Max price..."
           v-model="tempFilterOptions.maxPrice"
         />
-        <ErrorMessage name="maxPrice" class="text-danger" />
       </div>
-      <div
-        class="col-lg-4 mt-5"
-      >
+      <div class="col-lg-4 mt-5">
         <button type="submit" class="btn btn-apply me-3">Apply Filters</button>
         <button @click="resetFilters" class="btn btn-reset">
           <i class="bi bi-arrow-counterclockwise"></i>Reset Filters
@@ -81,8 +72,9 @@
 <script setup>
 import { eventStore } from '@/store/eventStore';
 import { ref } from 'vue';
-import { Form, Field, ErrorMessage } from 'vee-validate';
+import { Form } from 'vee-validate';
 import * as yup from 'yup';
+import CustomInput from '@/components/Custom-Input/CustomInput.vue';
 
 const schema = yup.object({
   fromDate: yup
@@ -152,17 +144,12 @@ const cancel = () => {
 </script>
 
 <style scoped lang="scss">
-
 .container {
-  background-color: #f8f9fa;
+  // background-color: #f8f9fa;
+  background-color: $lighter-gray;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-
-  .custom-form-label {
-    font-weight: bold;
-    color: #333;
-  }
 
   .btn-apply {
     background-color: $blue-cola;
@@ -187,8 +174,8 @@ const cancel = () => {
   }
 
   .btn-reset {
-    background-color: $lighter-gray;
-    color: $classic-cream;
+    background-color: $classic-cream;
+    color: $lighter-gray;
     font-weight: bold;
 
     &:hover {

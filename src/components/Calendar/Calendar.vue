@@ -16,9 +16,9 @@
             cursor: pointer;
           "
         >
-          <b style="color: white; font-size: 10px">{{ arg.timeText }}</b
+          <b>{{ arg.timeText }}</b
           >&nbsp;
-          <i style="color: black">{{ arg.event.title }}</i>
+          <i>{{ arg.event.title }}</i>
         </div>
       </template>
     </FullCalendar>
@@ -83,5 +83,13 @@ watch(
 }
 .event {
   overflow: hidden;
+
+  b {
+    color: white; font-size: 10px
+  }
+
+  i {
+    color: black;
+  }
 }
 </style>

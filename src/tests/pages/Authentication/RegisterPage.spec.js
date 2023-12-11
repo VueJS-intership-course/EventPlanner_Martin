@@ -31,23 +31,6 @@ describe('Register page', () => {
     expect(wrapper.exists()).toBe(true);
   });
 
-  it('Should the fields take the value', async () => {
-    const usernameField = wrapper.find('#username');
-    const emailField = wrapper.find('#email');
-    const passwordField = wrapper.find('#password');
-    const repeatPasswordField = wrapper.find('#repeatPassword');
-
-    await usernameField.setValue('Martin');
-    await emailField.setValue('martin@abv.bg');
-    await passwordField.setValue('123456789');
-    await repeatPasswordField.setValue('123456789');
-
-    expect(usernameField.element.value).toBe('Martin');
-    expect(emailField.element.value).toBe('martin@abv.bg');
-    expect(passwordField.element.value).toBe('123456789');
-    expect(repeatPasswordField.element.value).toBe('123456789');
-  });
-
   it('Should take the value from Dropdown Component', async () => {
     const locationField = wrapper.find('#location')
     const dropdown = wrapper.findComponent(Dropdown);

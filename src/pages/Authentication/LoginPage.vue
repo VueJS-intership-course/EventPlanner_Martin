@@ -12,35 +12,14 @@
             </div>
             <Form @submit="onSumbit" :validationSchema="schema">
               <div class="mb-3 ms-1">
-                <label for="email" class="form-label custom-form-label"
-                  >Email<span class="text-danger">*</span></label
-                >
-                <Field
-                  type="email"
-                  v-model="loginData.email"
-                  name="email"
-                  id="email"
-                  class="form-control"
-                  placeholder="Enter your email"
-                  required
-                />
-                <ErrorMessage name="email" class="text-danger" />
+                <CustomInput label="Email" name="email" type="text"
+                  field-type="username" placeholderValue="Enter your email..." is-required
+                  v-model="loginData.email"/>
               </div>
               <div class="mb-3 ms-1">
-                <label for="password" class="form-label custom-form-label"
-                  >Password<span class="text-danger">*</span></label
-                >
-                <Field
-                  type="password"
-                  v-model="loginData.password"
-                  name="password"
-                  id="password"
-                  class="form-control"
-                  placeholder="Enter your password"
-                  required
-                  autocomplete="on"
-                />
-                <ErrorMessage name="password" class="text-danger" />
+                <CustomInput label="Password" name="password" type="password"
+                  field-type="password" placeholderValue="Enter your password..." is-required
+                  v-model="loginData.password"/>
               </div>
               <div class="mb-3 ms-1">
                 <div>
@@ -76,6 +55,7 @@ import userServices from '@/services/users/userServices';
 import { useRouter } from 'vue-router';
 import { minPasswordLength } from '@/utils/constants.js';
 import { ref, reactive } from 'vue';
+import CustomInput from '@/components/Custom-Input/CustomInput.vue';
 
 const router = useRouter();
 

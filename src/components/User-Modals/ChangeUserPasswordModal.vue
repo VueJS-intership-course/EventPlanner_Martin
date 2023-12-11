@@ -16,46 +16,16 @@
           class="modal-body custom-form"
         >
           <div class="mb-4">
-            <label for="currentPassword" class="col-form-label custom-col-form-label"
-              >Current Password:</label
-            >
-            <Field
-              id="currentPassword"
-              name="currentPassword"
-              type="password"
-              placeholder="Enter current password"
-              class="form-control"
-              autocomplete="current-password"
-            />
-            <ErrorMessage name="currentPassword" class="text-danger position-absolute" />
+            <CustomInput label="Current Password" name="currentPassword" type="password"
+                  field-type="currentPassword" placeholder-value="Type current password..." is-required/>
           </div>
           <div class="mb-4">
-            <label for="newPassword" class="col-form-label custom-col-form-label"
-              >New Password:</label
-            >
-            <Field
-              id="newPassword"
-              name="newPassword"
-              type="password"
-              placeholder="Enter new password"
-              class="form-control"
-              autocomplete="new-password"
-            />
-            <ErrorMessage name="newPassword" class="text-danger position-absolute" />
+            <CustomInput label="New Password" name="newPassword" type="password"
+                  field-type="newPassword" placeholder-value="Type new password..." is-required/>
           </div>
           <div class="mb-4">
-            <label for="repeatPassword" class="col-form-label custom-col-form-label"
-              >Repeat New Password:</label
-            >
-            <Field
-              id="repeatPassword"
-              name="repeatPassword"
-              type="password"
-              placeholder="Repeat new password"
-              class="form-control"
-              autocomplete="new-password"
-            />
-            <ErrorMessage name="repeatPassword" class="text-danger position-absolute" />
+            <CustomInput label="Repeat New Password" name="repeatPassword" type="password"
+                  field-type="repeatPassword" placeholder-value="Repeat new password..." is-required/>
           </div>
           <div class="text-center">
             <button type="submit" class="btn btn-save">Save</button>
@@ -72,6 +42,7 @@ import { useRouter } from 'vue-router';
 import { ErrorMessage, Field, Form } from 'vee-validate';
 import * as yup from 'yup';
 import {minPasswordLength} from '@/utils/constants.js';
+import CustomInput from '@/components/Custom-Input/CustomInput.vue';
 
 const schema = yup.object({
   currentPassword: yup.string().required('This field is required!'),

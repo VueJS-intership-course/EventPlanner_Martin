@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="container mt-4">
     <div class="row justify-content-center">
       <div class="col-md-6">
@@ -89,6 +89,84 @@
       </div>
     </div>
   </div>
+</template> -->
+<template>
+  <div class="container mt-4">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card custom-card">
+          <div class="card-header custom-card-header">
+            <h3>Register</h3>
+          </div>
+          <div class="card-body">
+            <Form @submit="onSubmit" :validationSchema="validation">
+              <div class="mb-4">
+                <CustomInput
+                  label="Username"
+                  name="username"
+                  type="text"
+                  input-type="username"
+                  placeholder-value="Enter username..."
+                  is-required
+                  v-model="formData.username"
+                />
+              </div>
+              <div class="mb-4">
+                <CustomInput
+                  label="Email"
+                  name="email"
+                  type="text"
+                  input-type="email"
+                  placeholder-value="Enter email..."
+                  is-required
+                  v-model="formData.email"
+                />
+              </div>
+              <div class="mb-4">
+                <Dropdown
+                  @selectZone="handleTimeZone"
+                  id="location"
+                  :name="'location'"
+                  :label="'Location'"
+                ></Dropdown>
+              </div>
+              <div class="mb-4">
+                <CustomInput
+                  label="Password"
+                  name="password"
+                  type="password"
+                  input-type="password"
+                  placeholder-value="Enter password..."
+                  is-required
+                  v-model="formData.password"
+                />
+              </div>
+              <div class="mb-4">
+                <CustomInput
+                  label="Repeat password"
+                  name="repeatPassword"
+                  type="password"
+                  input-type="repeatPassword"
+                  placeholder-value="Repeat the password..."
+                  is-required
+                  v-model="formData.repeatPassword"
+                />
+              </div>
+              <div class="text-center">
+                <button
+                  type="submit"
+                  class="btn custom-btn"
+                  btn-style="default-button-small"
+                >
+                  Register
+                </button>
+              </div>
+            </Form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -98,14 +176,18 @@ import Dropdown from '@/components/Dropdown/Dropdown.vue';
 import { useRouter } from 'vue-router';
 import * as yup from 'yup';
 import { reactive, ref } from 'vue';
-import {minPasswordLength} from '@/utils/constants.js';
-import {minUsernameLength} from '@/utils/constants.js';
+import { minPasswordLength } from '@/utils/constants.js';
+import { minUsernameLength } from '@/utils/constants.js';
+import CustomInput from '../../components/Custom-Input/CustomInput.vue';
 
 const validation = yup.object({
   username: yup
     .string()
     .required('Username is required!')
-    .min(minUsernameLength, `Username must be at least ${minUsernameLength} characters!`),
+    .min(
+      minUsernameLength,
+      `Username must be at least ${minUsernameLength} characters!`
+    ),
   email: yup
     .string()
     .required('Email is required!')
@@ -113,7 +195,10 @@ const validation = yup.object({
   password: yup
     .string()
     .required('Password is required!')
-    .min(minPasswordLength, `Password must be at least ${minPasswordLength} characters!`),
+    .min(
+      minPasswordLength,
+      `Password must be at least ${minPasswordLength} characters!`
+    ),
   repeatPassword: yup
     .string()
     .required('Repeat password is required!')
@@ -158,7 +243,6 @@ const onSubmit = async () => {
 </script>
 
 <style scoped lang="scss">
-
 .custom-card {
   background-color: $lighter-gray;
 
@@ -172,8 +256,8 @@ const onSubmit = async () => {
     border: none;
   }
 
-  .custom-form-label {
-    color: $classic-cream;
-  }
+  // .custom-form-label {
+  //   color: $classic-cream;
+  // }
 }
 </style>

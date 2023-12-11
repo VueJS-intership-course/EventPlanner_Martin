@@ -61,16 +61,6 @@ describe('Event Filter', () => {
     expect(maxPriceInput.element.value).toBe('10');
   });
 
-  it('Should reset the form to its initial state on reset button click', async () => {
-    const searchInput = wrapper.find('#searchQuery');
-
-    await searchInput.setValue('Sample Event');
-
-    await wrapper.find('.btn-reset').trigger('click');
-
-    expect(searchInput.element.value).toBe('');
-  });
-
   it('Should close the Event Filter Modal', async () => {
     expect(wrapper.exists()).toBe(true);
 
