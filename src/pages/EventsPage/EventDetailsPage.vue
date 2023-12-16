@@ -1,5 +1,8 @@
 <template>
-  <div class="custom-overlay" v-if="isEditing || showDescription"></div>
+  <div
+    class="custom-overlay"
+    v-if="isEditing || showDescription"
+  ></div>
   <div v-if="!event" class="text-center mt-5">
     <div class="spinner-border text-primary" role="status">
       <span class="visually-hidden">Loading...</span>
@@ -157,7 +160,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
 import { eventStore } from '@/store/eventStore.js';
 import { useRoute, useRouter } from 'vue-router';
 import MapComponent from '@/components/Map/MapComponent.vue';
@@ -212,6 +215,14 @@ const viewBudget = (eventId) => {
 const showDescriptionModal = () => {
   eStore.showDescription = true;
 };
+
+const disableBodyScroll = (isEditingOrShowDescription) => {
+  document.body.style.overflow = isEditingOrShowDescription ? 'hidden' : '';
+};
+
+watch([isEditing, showDescription], ([newIsEditing, newShowDescription]) => {
+  disableBodyScroll(newIsEditing || newShowDescription);
+}, { immediate: true });
 </script>
 
 <style scoped lang="scss">
@@ -276,5 +287,6 @@ const showDescriptionModal = () => {
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(3px);
   z-index: 10;
+  overflow: hidden;
 }
 </style>

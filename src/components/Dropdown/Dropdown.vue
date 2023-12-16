@@ -16,24 +16,27 @@
         v-for="zone in filteredZones"
         :key="zone"
         @click="selectZone(zone)"
+        :class="{ active: zone === selectedValue }"
         class="dropdown-item"
       >
         {{ zone }}
       </li>
     </ul>
-    <span v-show="showError" class="text-danger position-absolute">Please choose location!</span>
+    <span v-show="showError" class="text-danger position-absolute"
+      >Please choose location!</span
+    >
   </div>
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue';
+import { ref, computed } from 'vue';
 import moment from 'moment-timezone';
 
+const showError = ref(false);
 const zones = moment.tz.names();
 const selectedValue = ref('');
 const filteredZones = ref(zones);
 const showDropdown = ref(false);
-const showError = ref(false);
 
 const filterZones = computed(() => {
   if (!selectedValue.value) {
@@ -52,19 +55,13 @@ const emit = defineEmits();
 const selectZone = (zone) => {
   selectedValue.value = zone;
   showDropdown.value = false;
-  showError.value = false;
   emit('update:modelValue', zone);
   emit('selectZone', zone);
 };
 
 const toggleDropdown = () => {
   showDropdown.value = !showDropdown.value;
-  showError.value = !selectedValue.value;
 };
-
-watch(selectedValue, () => {
-  showError.value = !selectedValue.value;
-});
 </script>
 
 <style scoped lang="scss">
@@ -81,14 +78,21 @@ div {
   overflow-y: auto;
   z-index: 1000;
   background-color: white;
-  width: 95%;
+  width: 94%;
+  padding: 0;
+  border-radius: 10px;
 
   .dropdown-item {
     padding: 8px;
     cursor: pointer;
-    :hover {
+    &:hover {
       background-color: #f0f0f0;
     }
+
+  }
+  .active {
+    background-color: #f0f0f0; 
+    color: #333;
   }
 }
 </style>

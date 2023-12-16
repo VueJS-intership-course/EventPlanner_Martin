@@ -121,14 +121,8 @@ export const eventStore = defineStore('events', {
 
       await this.getEvents();
     },
-    applyFilters() {
-      this.filteredEvent = {
-        search: this.filteredEvent.search,
-        fromDate: this.filteredEvent.fromDate,
-        toDate: this.filteredEvent.toDate,
-        minPrice: this.filteredEvent.minPrice,
-        maxPrice: this.filteredEvent.maxPrice,
-      };
+    applyFilters() { 
+      return this.filteredEvent;
     },
     resetFilters() {
       this.filteredEvent = {

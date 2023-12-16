@@ -1,48 +1,37 @@
 <template>
-  <div class="modal show" style="display: block">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content" style="border: none">
-        <div class="modal-header custom-modal-header">
-          <h5 class="modal-title">Change Password</h5>
-          <button
-            type="button"
-            class="btn-close btn-close-white"
-            @click="cancelModal"
-          ></button>
-        </div>
-        <Form
-          @submit="handleChangePassword"
-          :validation-schema="schema"
-          class="modal-body custom-form"
-        >
-          <div class="mb-4">
-            <CustomInput label="Current Password" name="currentPassword" type="password"
-                  field-type="currentPassword" placeholder-value="Type current password..." is-required/>
-          </div>
-          <div class="mb-4">
-            <CustomInput label="New Password" name="newPassword" type="password"
-                  field-type="newPassword" placeholder-value="Type new password..." is-required/>
-          </div>
-          <div class="mb-4">
-            <CustomInput label="Repeat New Password" name="repeatPassword" type="password"
-                  field-type="repeatPassword" placeholder-value="Repeat new password..." is-required/>
-          </div>
-          <div class="text-center">
-            <button type="submit" class="btn btn-save">Save</button>
-          </div>
-        </Form>
+  <CustomModal modal-title="Change Password" @closeModal="cancelModal">
+    <Form
+      @submit="handleChangePassword"
+      :validation-schema="schema"
+      class="modal-body custom-form"
+    >
+      <div class="mb-4">
+        <CustomInput label="Current Password" name="currentPassword" type="password"
+              field-id="currentPassword" placeholder-value="Type current password..." is-required/>
       </div>
-    </div>
-  </div>
+      <div class="mb-4">
+        <CustomInput label="New Password" name="newPassword" type="password"
+              field-id="newPassword" placeholder-value="Type new password..." is-required/>
+      </div>
+      <div class="mb-4">
+        <CustomInput label="Repeat New Password" name="repeatPassword" type="password"
+              field-id="repeatPassword" placeholder-value="Repeat new password..." is-required/>
+      </div>
+      <div class="text-center">
+        <button type="submit" class="btn btn-save">Save</button>
+      </div>
+    </Form>
+  </CustomModal>
 </template>
 
 <script setup>
 import { userStore } from '@/store/userStore.js';
 import { useRouter } from 'vue-router';
-import { ErrorMessage, Field, Form } from 'vee-validate';
+import { Form } from 'vee-validate';
 import * as yup from 'yup';
 import {minPasswordLength} from '@/utils/constants.js';
 import CustomInput from '@/components/Custom-Input/CustomInput.vue';
+import CustomModal from '@/components/Custom-Modal/CustomModal.vue';
 
 const schema = yup.object({
   currentPassword: yup.string().required('This field is required!'),

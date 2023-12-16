@@ -99,13 +99,16 @@
             <h3>Register</h3>
           </div>
           <div class="card-body">
+            <div v-if="registerError" class="alert alert-danger">
+              {{ registerError }}
+            </div>
             <Form @submit="onSubmit" :validationSchema="validation">
               <div class="mb-4">
                 <CustomInput
                   label="Username"
                   name="username"
                   type="text"
-                  input-type="username"
+                  field-id="username"
                   placeholder-value="Enter username..."
                   is-required
                   v-model="formData.username"
@@ -116,7 +119,7 @@
                   label="Email"
                   name="email"
                   type="text"
-                  input-type="email"
+                  field-id="email"
                   placeholder-value="Enter email..."
                   is-required
                   v-model="formData.email"
@@ -135,7 +138,7 @@
                   label="Password"
                   name="password"
                   type="password"
-                  input-type="password"
+                  field-id="password"
                   placeholder-value="Enter password..."
                   is-required
                   v-model="formData.password"
@@ -146,7 +149,7 @@
                   label="Repeat password"
                   name="repeatPassword"
                   type="password"
-                  input-type="repeatPassword"
+                  field-id="repeatPassword"
                   placeholder-value="Repeat the password..."
                   is-required
                   v-model="formData.repeatPassword"
@@ -171,14 +174,15 @@
 
 <script setup>
 import userServices from '@/services/users/userServices.js';
-import { Field, Form, ErrorMessage } from 'vee-validate';
+import { Form } from 'vee-validate';
 import Dropdown from '@/components/Dropdown/Dropdown.vue';
 import { useRouter } from 'vue-router';
 import * as yup from 'yup';
 import { reactive, ref } from 'vue';
 import { minPasswordLength } from '@/utils/constants.js';
 import { minUsernameLength } from '@/utils/constants.js';
-import CustomInput from '../../components/Custom-Input/CustomInput.vue';
+import CustomInput from '@/components/Custom-Input/CustomInput.vue';
+import showNotification from '@/utils/notifications/showNotification.js'
 
 const validation = yup.object({
   username: yup
@@ -206,6 +210,7 @@ const validation = yup.object({
 });
 
 const router = useRouter();
+const registerError = ref('');
 
 const formData = reactive({
   username: '',
@@ -237,7 +242,8 @@ const onSubmit = async () => {
 
     router.push({ name: 'events' });
   } catch (error) {
-    console.log(error);
+    registerError.value = error;
+    showNotification(error.message, 5000)
   }
 };
 </script>

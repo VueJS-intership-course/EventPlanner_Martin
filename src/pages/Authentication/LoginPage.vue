@@ -13,12 +13,12 @@
             <Form @submit="onSumbit" :validationSchema="schema">
               <div class="mb-3 ms-1">
                 <CustomInput label="Email" name="email" type="text"
-                  field-type="username" placeholderValue="Enter your email..." is-required
+                  field-id="username" placeholderValue="Enter your email..." is-required
                   v-model="loginData.email"/>
               </div>
               <div class="mb-3 ms-1">
                 <CustomInput label="Password" name="password" type="password"
-                  field-type="password" placeholderValue="Enter your password..." is-required
+                  field-id="password" placeholderValue="Enter your password..." is-required
                   v-model="loginData.password"/>
               </div>
               <div class="mb-3 ms-1">
@@ -49,13 +49,14 @@
 </template>
 
 <script setup>
-import { Form, Field, ErrorMessage } from 'vee-validate';
+import { Form } from 'vee-validate';
 import * as yup from 'yup';
 import userServices from '@/services/users/userServices';
 import { useRouter } from 'vue-router';
 import { minPasswordLength } from '@/utils/constants.js';
 import { ref, reactive } from 'vue';
 import CustomInput from '@/components/Custom-Input/CustomInput.vue';
+import showNotification from '@/utils/notifications/showNotification';
 
 const router = useRouter();
 
@@ -85,8 +86,8 @@ const onSumbit = async () => {
     await userServices.signIn(loginData.email, loginData.password);
     router.push({ name: 'events' });
   } catch (error) {
-    console.log(error);
     loginError.value = error;
+    showNotification(error.message, 5000)
   }
 };
 </script>

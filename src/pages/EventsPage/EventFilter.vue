@@ -13,7 +13,7 @@
           label="Search Event:"
           name="searchQuery"
           type="text"
-          field-type="searchQuery"
+          field-id="searchQuery"
           placeholder-value="Search..."
           v-model="tempFilterOptions.search"
         />
@@ -23,7 +23,7 @@
           label="From Date:"
           name="fromDate"
           type="date"
-          field-type="fromDate"
+          field-id="fromDate"
           v-model="tempFilterOptions.fromDate"
         />
       </div>
@@ -32,7 +32,7 @@
           label="To Date:"
           name="toDate"
           type="date"
-          field-type="toDate"
+          field-id="toDate"
           v-model="tempFilterOptions.toDate"
         />
       </div>
@@ -41,7 +41,7 @@
           label="Min Price:"
           name="minPrice"
           type="number"
-          field-type="minPrice"
+          field-id="minPrice"
           placeholder-value="Min price..."
           v-model="tempFilterOptions.minPrice"
         />
@@ -51,7 +51,7 @@
           label="Max Price:"
           name="maxPrice"
           type="number"
-          field-type="maxPrice"
+          field-id="maxPrice"
           placeholder-value="Max price..."
           v-model="tempFilterOptions.maxPrice"
         />
@@ -75,7 +75,9 @@ import { ref } from 'vue';
 import { Form } from 'vee-validate';
 import * as yup from 'yup';
 import CustomInput from '@/components/Custom-Input/CustomInput.vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter()
 const schema = yup.object({
   fromDate: yup
     .date()
@@ -124,6 +126,10 @@ const setFilters = () => {
   eStore.filteredEvent = { ...tempFilterOptions.value };
   eStore.applyFilters();
   eStore.isToggleFilters = false;
+
+  router.replace({
+    query: { ...tempFilterOptions.value },
+  });
 };
 
 const resetFilters = () => {
@@ -134,6 +140,8 @@ const resetFilters = () => {
     minPrice: '',
     maxPrice: '',
   };
+
+  router.replace({ query: {} });
 
   eStore.resetFilters();
 };

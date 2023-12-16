@@ -15,6 +15,12 @@ jest.mock('@/services/firebaseConfig.js', () => {
   };
 });
 
+jest.mock('vue3-toastify', () => {
+  return {
+    toast: jest.fn(),
+  };
+});
+
 let wrapper;
 
 beforeEach(() => {

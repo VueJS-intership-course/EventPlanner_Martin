@@ -1,10 +1,10 @@
 <template>
   <div class="mb-4">
-    <label :for="fieldType" class="form-label"
+    <label :for="fieldId" class="form-label"
       >{{ label }}<span v-if="isRequired" class="text-danger">*</span></label
     >
     <Field
-      :id="fieldType"
+      :id="fieldId"
       :type="type"
       :name="name"
       :value="modelValue"
@@ -23,7 +23,7 @@ import { Field, ErrorMessage } from 'vee-validate';
 const props = defineProps({
   label: String,
   type: String,
-  fieldType: String,
+  fieldId: String,
   placeholderValue: String,
   isRequired: Boolean,
   modelValue: [String, Number, Date],

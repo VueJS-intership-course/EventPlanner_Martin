@@ -1,108 +1,96 @@
 <template>
-  <div class="modal show" style="display: block">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content custom-modal-content">
-        <div class="modal-header custom-modal-header">
-          <h5 class="modal-title" id="edit">Edit Event</h5>
-          <button
-            type="button"
-            class="btn-close btn-close-white"
-            @click="cancelButton"
-          ></button>
+  <CustomModal modal-title="Edit Event" @closeModal="cancelButton">
+    <Form
+      @submit="saveEditedEvent"
+      :validation-schema="validationSchema"
+      class="custom-form"
+    >
+      <div class="modal-body">
+        <div class="d-flex">
+          <div class="form-group w-100 me-5">
+            <CustomInput
+              label="Name"
+              name="name"
+              type="text"
+              field-id="name"
+              placeholder-value="Type name..."
+              is-required
+              v-model="editedEvent.name"
+            />
+          </div>
+          <div class="form-group w-100 ms-5">
+            <CustomInput
+              label="Description"
+              name="description"
+              type="text"
+              field-id="description"
+              placeholder-value="Type description..."
+              is-required
+              v-model="editedEvent.description"
+            />
+          </div>
         </div>
-        <Form
-          @submit="saveEditedEvent"
-          :validation-schema="validationSchema"
-          class="custom-form"
-        >
-          <div class="modal-body">
-            <div class="d-flex">
-              <div class="form-group w-100 me-5">
-                <CustomInput
-                  label="Name"
-                  name="name"
-                  type="text"
-                  field-type="name"
-                  placeholder-value="Type name..."
-                  is-required
-                  v-model="editedEvent.name"
-                />
-              </div>
-              <div class="form-group w-100 ms-5">
-                <CustomInput
-                  label="Description"
-                  name="description"
-                  type="text"
-                  field-type="description"
-                  placeholder-value="Type description..."
-                  is-required
-                  v-model="editedEvent.description"
-                />
-              </div>
-            </div>
-            <div class="d-flex">
-              <div class="form-group w-100 me-5">
-                <CustomInput
-                  label="Tickets"
-                  name="tickets"
-                  type="number"
-                  field-type="tickets"
-                  placeholder-value="Type count of tickets..."
-                  is-required
-                  v-model="editedEvent.ticket"
-                />
-              </div>
-              <div class="form-group w-100 ms-5">
-                <CustomInput
-                  label="Price"
-                  name="price"
-                  type="number"
-                  field-type="price"
-                  placeholder-value="Type price..."
-                  is-required
-                  v-model="editedEvent.price"
-                />
-              </div>
-            </div>
-            <div class="d-flex mb-2">
-              <div class="form-group w-100 me-5">
-                <CustomInput
-                  label="Date"
-                  name="date"
-                  type="date"
-                  field-type="date"
-                  is-required
-                  v-model="editedEvent.date"
-                />
-              </div>
+        <div class="d-flex">
+          <div class="form-group w-100 me-5">
+            <CustomInput
+              label="Tickets"
+              name="tickets"
+              type="number"
+              field-id="tickets"
+              placeholder-value="Type count of tickets..."
+              is-required
+              v-model="editedEvent.ticket"
+            />
+          </div>
+          <div class="form-group w-100 ms-5">
+            <CustomInput
+              label="Price"
+              name="price"
+              type="number"
+              field-id="price"
+              placeholder-value="Type price..."
+              is-required
+              v-model="editedEvent.price"
+            />
+          </div>
+        </div>
+        <div class="d-flex">
+          <div class="form-group w-100 me-5">
+            <CustomInput
+              label="Date"
+              name="date"
+              type="date"
+              field-id="date"
+              is-required
+              v-model="editedEvent.date"
+            />
+          </div>
 
-              <div class="form-group w-100 ms-5">
-                <CustomInput
-                  label="Time"
-                  name="time"
-                  type="time"
-                  field-type="time"
-                  is-required
-                  v-model="editedEvent.time"
-                />
-              </div>
-            </div>
-            <MapComponent
-              class="map-container"
-              @selectedLocation="handleCoordinates"
-              :location="editedEvent.location"
-            ></MapComponent>
+          <div class="form-group w-100 ms-5">
+            <CustomInput
+              label="Time"
+              name="time"
+              type="time"
+              field-id="time"
+              is-required
+              v-model="editedEvent.time"
+            />
           </div>
-          <div class="text-center">
-            <button type="submit" class="btn btn-save mb-3">
-              <i class="bi bi-floppy"></i>
-              Save
-            </button>
-          </div>
-        </Form>
+        </div>
+        <MapComponent
+          class="map-container"
+          @selectedLocation="handleCoordinates"
+          :location="editedEvent.location"
+        ></MapComponent>
       </div>
-    </div>
-  </div>
+      <div class="text-center">
+        <button type="submit" class="btn btn-save mb-5">
+          <i class="bi bi-floppy"></i>
+          Save
+        </button>
+      </div>
+    </Form>
+  </CustomModal>
 </template>
 
 <script setup>
@@ -116,9 +104,10 @@ import { Form } from 'vee-validate';
 import * as yup from 'yup';
 import MapComponent from '@/components/Map/MapComponent.vue';
 import CustomInput from '@/components/Custom-Input/CustomInput.vue';
+import CustomModal from '@/components/Custom-Modal/CustomModal.vue';
 
 const yesterday = new Date();
-yesterday.setDate(yesterday.getDate() - 1);
+yesterday.setDate(yesterday.getDate() - 1); // see moment js way
 
 const validationSchema = yup.object({
   name: yup.string().required('This field is required!'),
@@ -163,21 +152,19 @@ editedEvent.value.time = eventDateTime.value.time;
 
 const handleCoordinates = async (coordinates) => {
   editedEvent.value.location = coordinates;
-
-  // editedEvent.value.address = await getAddressFromCoordinates(coordinates);
-  // console.log(editedEvent.value.address);
 };
 
 const saveEditedEvent = async () => {
-  editedEvent.value.address = await getAddressFromCoordinates(editedEvent.value.location);
+  editedEvent.value.address = await getAddressFromCoordinates(
+    editedEvent.value.location
+  );
   editedEvent.value.timeZone = getTimeZone(editedEvent.value.location);
   const eventDateAndTime = `${editedEvent.value.date}T${editedEvent.value.time}`;
   editedEvent.value.time = moment
-  .tz(eventDateAndTime, editedEvent.value.timeZone)
-  .utc()
-  .toISOString();
-  
-  
+    .tz(eventDateAndTime, editedEvent.value.timeZone)
+    .utc()
+    .toISOString();
+
   eStore.editEvent(editedEvent.value);
   eStore.isEditing = false;
   router.push('/events');
@@ -187,7 +174,7 @@ const cancelButton = () => {
   eStore.isEditing = false;
 };
 
-watch( 
+watch(
   () => editedEvent.value.location,
   (newLocation, oldLocation) => {
     if (newLocation !== oldLocation) {
@@ -197,23 +184,14 @@ watch(
   },
   { deep: true }
 );
-
 </script>
 
 <style scoped lang="scss">
 .map-container {
   height: 300px;
 }
-.custom-modal-content {
-  border: none;
-}
 .custom-form {
   background-color: $lighter-gray;
-}
-
-.custom-modal-header {
-  background-color: $dark-gray;
-  color: $classic-cream;
 }
 .btn-save {
   background-color: $blue-cola;
@@ -222,9 +200,5 @@ watch(
   &:hover {
     background-color: #00537c;
   }
-}
-
-.label {
-  color: $classic-cream;
 }
 </style>

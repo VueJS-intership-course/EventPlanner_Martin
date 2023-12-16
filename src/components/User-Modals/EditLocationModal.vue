@@ -1,27 +1,19 @@
 <template>
-  <div class="modal show" style="display: block">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content" style="border: none;">
-        <div class="modal-header custom-modal-header">
-          <h5 class="modal-title">Change Location</h5>
-          <button type="button" class="btn-close btn-close-white" @click="cancelModal"></button>
-        </div>
-        <form @submit.prevent="handleChangeLocation" class="modal-body custom-form">
-          <div class="mb-3">
-            <Dropdown
-              v-model="editedUser.location"
-              id="location"
-              :name="'location'"
-              :label="'Location'"
-            ></Dropdown>
-          </div>
-          <div class="text-center">
-            <button type="submit" class="btn btn-save-location">Save</button>
-          </div>
-        </form>
+  <CustomModal modal-title="Change Location" @closeModal="cancelModal">
+    <form @submit.prevent="handleChangeLocation" class="modal-body custom-form">
+      <div class="mb-3">
+        <Dropdown
+          v-model="editedUser.location"
+          id="location"
+          :name="'location'"
+          :label="'Location'"
+        ></Dropdown>
       </div>
-    </div>
-  </div>
+      <div class="text-center">
+        <button type="submit" class="btn btn-save-location">Save</button>
+      </div>
+    </form>
+  </CustomModal>
 </template>
 
 <script setup>
@@ -29,6 +21,7 @@ import { userStore } from '@/store/userStore.js';
 import { useRouter } from 'vue-router';
 import Dropdown from '@/components/Dropdown/Dropdown.vue';
 import { computed } from 'vue';
+import CustomModal from '@/components/Custom-Modal/custommodal.vue'
 
 const router = useRouter();
 const uStore = userStore();

@@ -55,12 +55,12 @@ const calendarOptions = reactive({
   firstDay: 1,
   events: props.userEvents,
   contentHeight: 'auto',
-  dayCellDidMount: function (info) {
-    const dayNumberElement = info.el.querySelector('.fc-daygrid-day-number');
-    if (dayNumberElement) {
-      dayNumberElement.style.color = '#00ADB5';
-    }
-  },
+  // dayCellDidMount: function (info) {
+  //   const dayNumberElement = info.el.querySelector('.fc-daygrid-day-number');
+  //   if (dayNumberElement) {
+  //     dayNumberElement.style.color = '#00ADB5';
+  //   }
+  // },
   dayHeaderContent: (args) => {
     return {
       html: `<div class='custom-weekday-header' style='color: #00ADB5;'>${args.text}</div>`
@@ -91,5 +91,9 @@ watch(
   i {
     color: black;
   }
+}
+
+::v-deep .fc-daygrid-day-number { 
+  color: '#00ADB5'
 }
 </style>

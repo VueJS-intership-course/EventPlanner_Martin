@@ -1,26 +1,15 @@
 <template>
-  <div class="modal show" style="display: block">
-    <div class="modal-dialog custom-modal-dialog" role="document">
-      <div class="modal-content custom-modal-content">
-        <div class="modal-header custom-modal-header">
-          <h5 class="modal-title" id="edit">Description</h5>
-          <button
-            type="button"
-            class="btn-close btn-close-white"
-            @click="hideDescriptionModal"
-          ></button>
-        </div>
-        <div class="modal-body custom-modal-body p-4">
-            <p class="mb-0 text-wrap">{{ event.description }}</p>
-        </div>
-      </div>
+  <CustomModal modal-title="Edit Event" @closeModal="hideDescriptionModal">
+    <div class="modal-body custom-modal-body p-4">
+      <p class="mb-0 text-wrap">{{ event.description }}</p>
     </div>
-  </div>
+  </CustomModal>
 </template>
 
 <script setup>
 import { computed } from 'vue';
 import { eventStore } from '@/store/eventStore';
+import CustomModal from '@/components/Custom-Modal/CustomModal.vue';
 
 const eStore = eventStore();
 
@@ -32,29 +21,11 @@ const hideDescriptionModal = () => {
 </script>
 
 <style scoped lang="scss">
-.custom-modal-dialog {
-  display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-}
-.custom-modal-content {
-    border: none;
-    .custom-modal-header {
-        background-color: $dark-gray;
-        color: $classic-cream;
-    }
-    .custom-modal-body {
-        overflow-wrap: break-word;
-        max-height: 400px;
-        overflow-y: auto; 
-        background-color: $lighter-gray;
-        color: $classic-cream;
-    }
-}
-
-.btn-close {
-  text-decoration: none;
-  color: red;
-}
+  .custom-modal-body {
+    overflow-wrap: break-word;
+    max-height: 400px;
+    overflow-y: auto;
+    background-color: $lighter-gray;
+    color: $classic-cream;
+  }
 </style>
