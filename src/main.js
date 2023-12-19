@@ -6,8 +6,10 @@ import firebaseData from '@/services/firebaseConfig.js';
 import { userStore } from '@/store/userStore.js';
 import router from '@/router/index.js';
 import highCharts from '@/plugins/highChart.js';
+import vClickOutside from 'v-click-outside'
 
 const app = createApp(App);
+app.directive('click-outside', vClickOutside.directive)
 const pinia = createPinia();
 
 app.use(pinia);

@@ -4,6 +4,7 @@
       <div class="mb-3">
         <Dropdown
           v-model="editedUser.location"
+          :initial-location="currentUser.location"
           id="location"
           :name="'location'"
           :label="'Location'"
@@ -53,11 +54,6 @@ const cancelModal = () => {
 <style scoped lang="scss">
 .custom-form {
   background-color: $lighter-gray;
-}
-
-.custom-modal-header {
-  background-color: $dark-gray;
-  color: $classic-cream;
 }
 .btn-save-location {
   background-color: $blue-cola;

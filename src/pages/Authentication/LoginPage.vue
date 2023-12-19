@@ -12,14 +12,30 @@
             </div>
             <Form @submit="onSumbit" :validationSchema="schema">
               <div class="mb-3 ms-1">
-                <CustomInput label="Email" name="email" type="text"
-                  field-id="username" placeholderValue="Enter your email..." is-required
-                  v-model="loginData.email"/>
+                <CustomInput
+                  label="Email"
+                  name="email"
+                  :fieldAttrs="{
+                    type: 'text',
+                    id: 'email',
+                    placeholder: 'Enter your email...',
+                  }"
+                  is-required
+                  v-model="loginData.email"
+                />
               </div>
               <div class="mb-3 ms-1">
-                <CustomInput label="Password" name="password" type="password"
-                  field-id="password" placeholderValue="Enter your password..." is-required
-                  v-model="loginData.password"/>
+                <CustomInput
+                  :fieldAttrs="{
+                    type: 'password',
+                    id: 'password',
+                    placeholder: 'Enter your password...',
+                  }"
+                  label="Password"
+                  name="password"
+                  is-required
+                  v-model="loginData.password"
+                />
               </div>
               <div class="mb-3 ms-1">
                 <div>
@@ -87,7 +103,7 @@ const onSumbit = async () => {
     router.push({ name: 'events' });
   } catch (error) {
     loginError.value = error;
-    showNotification(error.message, 5000)
+    showNotification(error.message, 5000);
   }
 };
 </script>

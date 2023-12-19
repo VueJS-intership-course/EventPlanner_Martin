@@ -17,21 +17,25 @@
           <div class="d-flex mb-1">
             <div class="form-group w-100 me-5">
               <CustomInput
+                :fieldAttrs="{
+                  type: 'text',
+                  id: 'name',
+                  placeholder: 'Type name...',
+                }"
                 label="Name"
                 name="name"
-                type="text"
-                field-id="name"
-                placeholder-value="Type name..."
                 isRequired
               />
             </div>
             <div class="form-group w-100 ms-5">
               <CustomInput
+                :fieldAttrs="{
+                  type: 'text',
+                  id: 'description',
+                  placeholder: 'Type description...',
+                }"
                 label="Description"
                 name="description"
-                type="text"
-                field-id="description"
-                placeholder-value="Type description..."
                 isRequired
               />
             </div>
@@ -39,21 +43,25 @@
           <div class="d-flex mb-1">
             <div class="form-group w-100 me-5">
               <CustomInput
+                :fieldAttrs="{
+                  type: 'number',
+                  id: 'tickets',
+                  placeholder: 'Type count of tickets...',
+                }"
                 label="Tickets"
                 name="tickets"
-                type="number"
-                field-id="tickets"
-                placeholder-value="Type count of tickets..."
                 isRequired
               />
             </div>
             <div class="form-group w-100 ms-5">
               <CustomInput
+                :fieldAttrs="{
+                  type: 'number',
+                  id: 'price',
+                  placeholder: 'Type price...',
+                }"
                 label="Price"
                 name="price"
-                type="number"
-                field-id="price"
-                placeholder-value="Type price..."
                 isRequired
               />
             </div>
@@ -61,6 +69,10 @@
           <div class="d-flex mb-1">
             <div class="form-group w-100 me-5">
               <CustomInput
+                :fieldAttrs="{
+                  type: 'date',
+                  id: 'date',
+                }"
                 label="Date"
                 name="date"
                 type="date"
@@ -70,6 +82,10 @@
             </div>
             <div class="form-group w-100 ms-5">
               <CustomInput
+                :fieldAttrs="{
+                  type: 'time',
+                  id: 'time',
+                }"
                 label="Time"
                 name="time"
                 type="time"
@@ -81,20 +97,24 @@
           <div class="d-flex mb-1">
             <div class="form-group w-50 me-5">
               <CustomInput
+                :fieldAttrs="{
+                  type: 'number',
+                  id: 'budget',
+                  placeholder: 'Type budget...',
+                }"
                 label="Budget"
                 name="budget"
-                type="number"
-                field-id="budget"
-                placeholder-value="Type budget..."
                 isRequired
               />
             </div>
             <div class="form-group w-50 mb-4 ms-5">
               <CustomInput
+                :fieldAttrs="{
+                  type: 'file',
+                  id: 'imageFile',
+                }"
                 label="Upload Image"
                 name="imageFile"
-                type="file"
-                field-id="imageFile"
                 @change="handleFileUpload"
                 isRequired
               />

@@ -6,16 +6,14 @@
       class="modal-body custom-form"
     >
       <div class="mb-4">
-        <CustomInput label="Current Password" name="currentPassword" type="password"
-              field-id="currentPassword" placeholder-value="Type current password..." is-required/>
+        <CustomInput label="Current Password" name="currentPassword" :fieldAttrs="{type: 'password', id:'currentPassword', placeholder: 'Type current password...'}" is-required/>
       </div>
       <div class="mb-4">
-        <CustomInput label="New Password" name="newPassword" type="password"
-              field-id="newPassword" placeholder-value="Type new password..." is-required/>
+        <CustomInput label="New Password" name="newPassword" :fieldAttrs="{type: 'password', id:'newPassword', placeholder: 'Type new password...'}" is-required/>
       </div>
       <div class="mb-4">
         <CustomInput label="Repeat New Password" name="repeatPassword" type="password"
-              field-id="repeatPassword" placeholder-value="Repeat new password..." is-required/>
+        :fieldAttrs="{type:'password', id:'repeatPassword', placeholder: 'Repeat new password...'}" is-required/>
       </div>
       <div class="text-center">
         <button type="submit" class="btn btn-save">Save</button>

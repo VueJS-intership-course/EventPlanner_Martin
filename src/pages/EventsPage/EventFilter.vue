@@ -10,49 +10,60 @@
     >
       <div class="col-sm">
         <CustomInput
+          :fieldAttrs="{
+            type: 'text',
+            id: 'searchQuery',
+            placeholder: 'Search...',
+          }"
           label="Search Event:"
           name="searchQuery"
-          type="text"
-          field-id="searchQuery"
-          placeholder-value="Search..."
           v-model="tempFilterOptions.search"
         />
       </div>
       <div class="col-sm">
         <CustomInput
+        :fieldAttrs="{
+            type: 'date',
+            id: 'fromDate',
+          }"
           label="From Date:"
           name="fromDate"
-          type="date"
-          field-id="fromDate"
           v-model="tempFilterOptions.fromDate"
         />
       </div>
       <div class="col-sm">
         <CustomInput
+        :fieldAttrs="{
+            type: 'date',
+            id: 'toDate',
+            placeholder: 'Search...',
+          }"
           label="To Date:"
           name="toDate"
-          type="date"
-          field-id="toDate"
           v-model="tempFilterOptions.toDate"
         />
       </div>
       <div class="col-sm">
         <CustomInput
+        :fieldAttrs="{
+            type: 'number',
+            id: 'minPrice',
+            placeholder: 'Min price...',
+          }"
           label="Min Price:"
           name="minPrice"
-          type="number"
-          field-id="minPrice"
-          placeholder-value="Min price..."
           v-model="tempFilterOptions.minPrice"
         />
       </div>
       <div class="col-sm">
         <CustomInput
+        :fieldAttrs="{
+            type: 'number',
+            id: 'maxPrice',
+            placeholder: 'Max price...',
+          }"
           label="Max Price:"
           name="maxPrice"
-          type="number"
-          field-id="maxPrice"
-          placeholder-value="Max price..."
           v-model="tempFilterOptions.maxPrice"
         />
       </div>
@@ -77,7 +88,7 @@ import * as yup from 'yup';
 import CustomInput from '@/components/Custom-Input/CustomInput.vue';
 import { useRouter } from 'vue-router';
 
-const router = useRouter()
+const router = useRouter();
 const schema = yup.object({
   fromDate: yup
     .date()

@@ -9,22 +9,26 @@
         <div class="d-flex">
           <div class="form-group w-100 me-5">
             <CustomInput
+              :fieldAttrs="{
+                type: 'text',
+                id: 'name',
+                placeholder: 'Type name...',
+              }"
               label="Name"
               name="name"
-              type="text"
-              field-id="name"
-              placeholder-value="Type name..."
               is-required
               v-model="editedEvent.name"
             />
           </div>
           <div class="form-group w-100 ms-5">
             <CustomInput
+              :fieldAttrs="{
+                type: 'text',
+                id: 'description',
+                placeholder: 'Type description...',
+              }"
               label="Description"
               name="description"
-              type="text"
-              field-id="description"
-              placeholder-value="Type description..."
               is-required
               v-model="editedEvent.description"
             />
@@ -33,22 +37,26 @@
         <div class="d-flex">
           <div class="form-group w-100 me-5">
             <CustomInput
+              :fieldAttrs="{
+                type: 'number',
+                id: 'tickets',
+                placeholder: 'Type count of tickets...',
+              }"
               label="Tickets"
               name="tickets"
-              type="number"
-              field-id="tickets"
-              placeholder-value="Type count of tickets..."
               is-required
               v-model="editedEvent.ticket"
             />
           </div>
           <div class="form-group w-100 ms-5">
             <CustomInput
+              :fieldAttrs="{
+                type: 'number',
+                id: 'price',
+                placeholder: 'Type price...',
+              }"
               label="Price"
               name="price"
-              type="number"
-              field-id="price"
-              placeholder-value="Type price..."
               is-required
               v-model="editedEvent.price"
             />
@@ -57,10 +65,12 @@
         <div class="d-flex">
           <div class="form-group w-100 me-5">
             <CustomInput
+            :fieldAttrs="{
+                type: 'date',
+                id: 'date',
+              }"
               label="Date"
               name="date"
-              type="date"
-              field-id="date"
               is-required
               v-model="editedEvent.date"
             />
@@ -68,10 +78,12 @@
 
           <div class="form-group w-100 ms-5">
             <CustomInput
+            :fieldAttrs="{
+                type: 'time',
+                id: 'time',
+              }"
               label="Time"
               name="time"
-              type="time"
-              field-id="time"
               is-required
               v-model="editedEvent.time"
             />

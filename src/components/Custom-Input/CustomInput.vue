@@ -3,12 +3,20 @@
     <label :for="fieldId" class="form-label"
       >{{ label }}<span v-if="isRequired" class="text-danger">*</span></label
     >
-    <Field
+    <!-- <Field
       :id="fieldId"
       :type="type"
       :name="name"
       :value="modelValue"
       :placeholder="placeholderValue"
+      @input="updateFieldValue"
+      class="form-control"
+      autocomplete="on"
+    /> -->
+    <Field
+      v-bind="fieldAttrs"
+      :name="name"
+      :value="modelValue"
       @input="updateFieldValue"
       class="form-control"
       autocomplete="on"
@@ -21,8 +29,12 @@
 import { Field, ErrorMessage } from 'vee-validate';
 
 const props = defineProps({
+  fieldAttrs: {
+    type: Object,
+    default: {}
+  },
   label: String,
-  type: String,
+  type: String, 
   fieldId: String,
   placeholderValue: String,
   isRequired: Boolean,

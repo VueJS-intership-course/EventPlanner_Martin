@@ -105,22 +105,26 @@
             <Form @submit="onSubmit" :validationSchema="validation">
               <div class="mb-4">
                 <CustomInput
+                  :fieldAttrs="{
+                    type: 'text',
+                    id: 'username',
+                    placeholder: 'Enter username...',
+                  }"
                   label="Username"
                   name="username"
-                  type="text"
-                  field-id="username"
-                  placeholder-value="Enter username..."
                   is-required
                   v-model="formData.username"
                 />
               </div>
               <div class="mb-4">
                 <CustomInput
+                  :fieldAttrs="{
+                    type: 'text',
+                    id: 'email',
+                    placeholder: 'Enter email...',
+                  }"
                   label="Email"
                   name="email"
-                  type="text"
-                  field-id="email"
-                  placeholder-value="Enter email..."
                   is-required
                   v-model="formData.email"
                 />
@@ -135,22 +139,26 @@
               </div>
               <div class="mb-4">
                 <CustomInput
+                  :fieldAttrs="{
+                    type: 'password',
+                    id: 'password',
+                    placeholder: 'Enter password...',
+                  }"
                   label="Password"
                   name="password"
-                  type="password"
-                  field-id="password"
-                  placeholder-value="Enter password..."
                   is-required
                   v-model="formData.password"
                 />
               </div>
               <div class="mb-4">
                 <CustomInput
+                  :fieldAttrs="{
+                    type: 'password',
+                    id: 'repeatPassword',
+                    placeholder: 'Repeat the password...',
+                  }"
                   label="Repeat password"
                   name="repeatPassword"
-                  type="password"
-                  field-id="repeatPassword"
-                  placeholder-value="Repeat the password..."
                   is-required
                   v-model="formData.repeatPassword"
                 />
@@ -182,7 +190,7 @@ import { reactive, ref } from 'vue';
 import { minPasswordLength } from '@/utils/constants.js';
 import { minUsernameLength } from '@/utils/constants.js';
 import CustomInput from '@/components/Custom-Input/CustomInput.vue';
-import showNotification from '@/utils/notifications/showNotification.js'
+import showNotification from '@/utils/notifications/showNotification.js';
 
 const validation = yup.object({
   username: yup
@@ -243,7 +251,7 @@ const onSubmit = async () => {
     router.push({ name: 'events' });
   } catch (error) {
     registerError.value = error;
-    showNotification(error.message, 5000)
+    showNotification(error.message, 5000);
   }
 };
 </script>

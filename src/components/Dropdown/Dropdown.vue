@@ -29,8 +29,12 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, defineProps, watch, onMounted } from 'vue';
 import moment from 'moment-timezone';
+
+const props = defineProps({
+  initialLocation: String,
+});
 
 const showError = ref(false);
 const zones = moment.tz.names();
@@ -62,6 +66,25 @@ const selectZone = (zone) => {
 const toggleDropdown = () => {
   showDropdown.value = !showDropdown.value;
 };
+
+const handleClickOutside = (event) => {
+  const dropdownElement = document.querySelector('.custom-dropdown');
+  if (dropdownElement && !dropdownElement.contains(event.target)) {
+    showDropdown.value = false;
+  }
+};
+
+watch(
+  () => props.initialLocation,
+  (newLocation) => {
+    selectedValue.value = newLocation;
+  },
+  { immediate: true }
+);
+
+onMounted(() => {
+  document.addEventListener('click', handleClickOutside);
+});
 </script>
 
 <style scoped lang="scss">
