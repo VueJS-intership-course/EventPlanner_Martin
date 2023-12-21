@@ -46,7 +46,6 @@ export const userStore = defineStore('userStore', {
     },
     async setProfileImage(imageUrl, user) {
       try {
-        console.log(imageUrl);
         await userServices.setProfileImage(imageUrl, user);
         this.currentUser.imageUrl = imageUrl;
       } catch (error) {

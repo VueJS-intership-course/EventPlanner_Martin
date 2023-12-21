@@ -16,14 +16,18 @@ jest.mock('vue-router', () => ({
   }),
 }));
 
+jest.mock('../../components/Custom-Modal/CustomModal.vue', () => {
+  return {
+    template: '<div>Mocked Modal</div>'
+  }
+})
+
 let wrapper;
 
 beforeEach(() => {
   wrapper = mount(EditLocationModal, {
     global: {
-      plugins: [
-        createTestingPinia({}),
-      ],
+      plugins: [createTestingPinia({})],
     },
   });
 });
@@ -31,6 +35,7 @@ beforeEach(() => {
 describe('Edit location modal', () => {
   it('Should render', () => {
     expect(wrapper.exists()).toBe(true);
+    console.log(wrapper.html());
   });
 
   it('Should field take value', async () => {
@@ -44,9 +49,9 @@ describe('Edit location modal', () => {
 
   it('Should close the modal, when close button is clicked', async () => {
     const closeBtn = wrapper.find('.btn-close');
-    
+
     await closeBtn.trigger('click');
 
-    expect(wrapper.vm.uStore.isChangingUserLocation).toBe(false)
+    expect(wrapper.vm.uStore.isChangingUserLocation).toBe(false);
   });
 });

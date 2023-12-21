@@ -10,7 +10,10 @@
             @click="cancelModal"
           ></button>
         </div>
-        <Form @submit="handleSetImage" class="modal-body custom-form">
+        <div v-if="imageError" class="alert alert-danger">
+              {{ imageError }}
+            </div>
+        <Form @submit="handleSetImage" :validation-schema="schema" class="modal-body custom-form">
           <div class="mb-4">
             <label
               class="form-control-label custom-form-control-label"
@@ -18,16 +21,15 @@
             >
               Choose Image<span class="text-danger">*</span>
             </label>
-            <input
+            <Field
               type="file"
               class="form-control"
               id="imageFile"
+              name="imageFile"
               ref="imageFile"
               @change="handleFileUpload"
             />
-            <p v-if="errorMsgImage" class="text-danger position-absolute">
-              {{ errorMsgImage }}
-            </p>
+            <ErrorMessage name="imageFile" class="text-danger position-absolute"/>
           </div>
           <div class="text-center">
             <button type="submit" class="btn btn-save">Save</button>
@@ -42,11 +44,17 @@
 import { userStore } from '@/store/userStore.js';
 import { computed, ref } from 'vue';
 import firebaseData from '@/services/firebaseConfig.js';
-import { Form } from 'vee-validate';
+import * as yup from 'yup';
+import { Form, Field, ErrorMessage } from 'vee-validate';
+
+const schema = yup.object({
+  imageFile: yup.mixed().required('This field is required!'),
+})
 
 const uStore = userStore();
 
 const imageUrl = ref('');
+const imageError = ref('')
 const errorMsgImage = ref('');
 const firebaseStorage = firebaseData.fireStorage.ref();
 const currentUser = computed(() => uStore.currentUser);
@@ -58,7 +66,7 @@ const handleFileUpload = async (event) => {
     const snapshot = await storageRef.put(imageFile);
     imageUrl.value = await snapshot.ref.getDownloadURL();
   } catch (error) {
-    console.log(error);
+    imageError.value = error;
   }
 };
 
@@ -72,7 +80,7 @@ const handleSetImage = async () => {
     await uStore.setProfileImage(imageUrl.value, currentUser.value);
     uStore.isChangingUserImage = false;
   } catch (error) {
-    console.log(error);
+    imageError.value = error;
   }
 };
 

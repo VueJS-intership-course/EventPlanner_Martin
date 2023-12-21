@@ -4,7 +4,6 @@
       <RouterLink :to="'/home'">
         <img
           src="@/utils/logo/Logo.png"
-          style="width: 100px; height: 75px;"
         />
       </RouterLink>
     </div>
@@ -19,7 +18,7 @@
           >
         </li>
         <li v-if="!isAdmin && isLoggedIn" class="nav-item custom-nav-item px-2">
-          <span class="nav-link custom-nav-link fw-bold fs-5" style="color: #f50500;"
+          <span class="nav-link custom-nav-link fw-bold fs-5"
             >Hi, {{ uStore.currentUser.username }}!</span
           >
         </li>
@@ -106,6 +105,10 @@ const isActive = (route) => {
       }
     }
   }
+}
+
+img {
+  width: 100px; height: 75px;
 }
 
 button {

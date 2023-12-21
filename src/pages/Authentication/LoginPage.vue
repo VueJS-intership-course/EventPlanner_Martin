@@ -121,10 +121,6 @@ const onSumbit = async () => {
     color: $classic-cream;
   }
 
-  .custom-form-label {
-    color: $classic-cream;
-  }
-
   .custom-btn {
     background-color: $elegant-gold;
     border: none;
