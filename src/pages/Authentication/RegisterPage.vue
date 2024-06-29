@@ -1,26 +1,31 @@
-<template>
-  <div class="container mt-5">
+<!-- <template>
+  <div class="container mt-4">
     <div class="row justify-content-center">
       <div class="col-md-6">
-        <div class="card">
-          <div class="card-header">
+        <div class="card custom-card">
+          <div class="card-header custom-card-header">
             <h3>Register</h3>
           </div>
           <div class="card-body">
-            <form @submit.prevent="onSubmit">
-              <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
+            <Form @submit="onSubmit" :validationSchema="validation">
+              <div class="mb-4">
+                <label for="username" class="form-label custom-form-label"
+                  >Username<span class="text-danger">*</span></label
+                >
                 <Field
                   v-model="formData.username"
+                  type="username"
                   name="username"
                   class="form-control"
                   id="username"
                   placeholder="Enter username..."
                 />
-                <ErrorMessage name="Username" class="text-danger" />
+                <ErrorMessage name="username" class="text-danger position-absolute" />
               </div>
-              <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
+              <div class="mb-4">
+                <label for="email" class="form-label custom-form-label"
+                  >Email<span class="text-danger">*</span></label
+                >
                 <Field
                   v-model="formData.email"
                   name="email"
@@ -29,15 +34,20 @@
                   id="email"
                   placeholder="Enter email..."
                 />
-                <ErrorMessage name="Email" class="text-danger" />
+                <ErrorMessage name="email" class="text-danger position-absolute" />
               </div>
-              <div class="mb-3">
-                <label for="location" class="form-label">Location</label>
-                <Dropdown v-model="formData.location" id="location"></Dropdown>
-                <ErrorMessage name="Location" class="text-danger" />
+              <div class="mb-4">
+                <Dropdown
+                  @selectZone="handleTimeZone"
+                  id="location"
+                  :name="'location'"
+                  :label="'Location'"
+                ></Dropdown>
               </div>
-              <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
+              <div class="mb-4">
+                <label for="password" class="form-label custom-form-label"
+                  >Password<span class="text-danger">*</span></label
+                >
                 <Field
                   v-model="formData.password"
                   name="password"
@@ -47,11 +57,11 @@
                   autocomplete="on"
                   placeholder="Enter password..."
                 />
-                <ErrorMessage name="Password" class="text-danger" />
+                <ErrorMessage name="password" class="text-danger position-absolute" />
               </div>
-              <div class="mb-3">
-                <label for="repeatPassword" class="form-label"
-                  >Repeat password</label
+              <div class="mb-4">
+                <label for="repeatPassword" class="form-label custom-form-label"
+                  >Repeat password<span class="text-danger">*</span></label
                 >
                 <Field
                   v-model="formData.repeatPassword"
@@ -62,17 +72,107 @@
                   autocomplete="on"
                   placeholder="Repeat the password..."
                 />
+                <ErrorMessage name="repeatPassword" class="text-danger position-absolute" />
               </div>
-              <div class="mb-3">
+              <div class="text-center">
                 <button
                   type="submit"
-                  class="btn btn-primary"
+                  class="btn custom-btn"
                   btn-style="default-button-small"
                 >
                   Register
                 </button>
               </div>
-            </form>
+            </Form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template> -->
+<template>
+  <div class="container mt-4">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card custom-card">
+          <div class="card-header custom-card-header">
+            <h3>Register</h3>
+          </div>
+          <div class="card-body">
+            <div v-if="registerError" class="alert alert-danger">
+              {{ registerError }}
+            </div>
+            <Form @submit="onSubmit" :validationSchema="validation">
+              <div class="mb-4">
+                <CustomInput
+                  :fieldAttrs="{
+                    type: 'text',
+                    id: 'username',
+                    placeholder: 'Enter username...',
+                  }"
+                  label="Username"
+                  name="username"
+                  is-required
+                  v-model="formData.username"
+                />
+              </div>
+              <div class="mb-4">
+                <CustomInput
+                  :fieldAttrs="{
+                    type: 'text',
+                    id: 'email',
+                    placeholder: 'Enter email...',
+                  }"
+                  label="Email"
+                  name="email"
+                  is-required
+                  v-model="formData.email"
+                />
+              </div>
+              <div class="mb-4">
+                <Dropdown
+                  @selectZone="handleTimeZone"
+                  id="location"
+                  :name="'location'"
+                  :label="'Location'"
+                ></Dropdown>
+              </div>
+              <div class="mb-4">
+                <CustomInput
+                  :fieldAttrs="{
+                    type: 'password',
+                    id: 'password',
+                    placeholder: 'Enter password...',
+                  }"
+                  label="Password"
+                  name="password"
+                  is-required
+                  v-model="formData.password"
+                />
+              </div>
+              <div class="mb-4">
+                <CustomInput
+                  :fieldAttrs="{
+                    type: 'password',
+                    id: 'repeatPassword',
+                    placeholder: 'Repeat the password...',
+                  }"
+                  label="Repeat password"
+                  name="repeatPassword"
+                  is-required
+                  v-model="formData.repeatPassword"
+                />
+              </div>
+              <div class="text-center">
+                <button
+                  type="submit"
+                  class="btn custom-btn"
+                  btn-style="default-button-small"
+                >
+                  Register
+                </button>
+              </div>
+            </Form>
           </div>
         </div>
       </div>
@@ -81,44 +181,97 @@
 </template>
 
 <script setup>
-import userServices from '../../services/users/userServices.js';
-import { Field, Form, ErrorMessage } from 'vee-validate';
-import Dropdown from '../../common-templates/Dropdown.vue';
-// import * as yup from "yup";
+import userServices from '@/services/users/userServices.js';
+import { Form } from 'vee-validate';
+import Dropdown from '@/components/Dropdown/Dropdown.vue';
+import { useRouter } from 'vue-router';
+import * as yup from 'yup';
+import { reactive, ref } from 'vue';
+import { minPasswordLength } from '@/utils/constants.js';
+import { minUsernameLength } from '@/utils/constants.js';
+import CustomInput from '@/components/Custom-Input/CustomInput.vue';
+import showNotification from '@/utils/notifications/showNotification.js';
 
-let formData = {
+const validation = yup.object({
+  username: yup
+    .string()
+    .required('Username is required!')
+    .min(
+      minUsernameLength,
+      `Username must be at least ${minUsernameLength} characters!`
+    ),
+  email: yup
+    .string()
+    .required('Email is required!')
+    .email('Invalid email format!'),
+  password: yup
+    .string()
+    .required('Password is required!')
+    .min(
+      minPasswordLength,
+      `Password must be at least ${minPasswordLength} characters!`
+    ),
+  repeatPassword: yup
+    .string()
+    .required('Repeat password is required!')
+    .oneOf([yup.ref('password')], 'Passwords must match!'),
+});
+
+const router = useRouter();
+const registerError = ref('');
+
+const formData = reactive({
   username: '',
   email: '',
-  location: '',
   password: '',
   repeatPassword: '',
+});
+
+const location = ref('');
+
+const handleTimeZone = (selectedZone) => {
+  location.value = selectedZone;
 };
 
 const onSubmit = async () => {
   try {
-    if (password.value !== repeatPassword.value) {
+    if (formData.password !== formData.repeatPassword) {
       throw new Error('Passwords do not match!');
     }
-    // console.log(formData);
+
     await userServices.signUp(
       {
         email: formData.email,
         username: formData.username,
-        location: formData.location,
+        location: location.value,
       },
       formData.password
     );
-    console.log('User registered successfully');
 
-    formData = {
-      username: '',
-      email: '',
-      location: '',
-      password: '',
-      repeatPassword: '',
-    };
+    router.push({ name: 'events' });
   } catch (error) {
-    alert(error);
+    registerError.value = error;
+    showNotification(error.message, 5000);
   }
 };
 </script>
+
+<style scoped lang="scss">
+.custom-card {
+  background-color: $lighter-gray;
+
+  .custom-card-header {
+    background-color: $dark-gray;
+    color: $classic-cream;
+  }
+
+  .custom-btn {
+    background-color: $elegant-gold;
+    border: none;
+  }
+
+  // .custom-form-label {
+  //   color: $classic-cream;
+  // }
+}
+</style>

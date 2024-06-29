@@ -4,5 +4,8 @@
 </template>
 
 <script setup>
-import HeaderComponent from './common-templates/HeaderComponent.vue';
+import HeaderComponent from '@/components/Header/HeaderComponent.vue';
 </script>
+
+<style scoped lang="scss">
+</style>
