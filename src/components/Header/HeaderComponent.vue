@@ -1,55 +1,69 @@
 <template>
   <nav class="navbar navbar-expand-lg custom-navbar">
-    <div>
-      <RouterLink :to="'/home'">
-        <img
-          src="@/utils/logo/Logo.png"
-        />
-      </RouterLink>
-    </div>
-    <div
-      class="collapse navbar-collapse d-flex justify-content-end"
-      id="navbarNav"
-    >
-      <ul class="navbar-nav ml-auto">
-        <li v-if="isAdmin" class="nav-item custom-nav-item px-2">
-          <span class="nav-link custom-nav-link fw-bold fs-5 text-danger"
-            ><i class="bi bi-shield-lock"></i>Admin</span
+    <div class="container-fluid">
+        <RouterLink :to="'/home'">
+          <img src="@/utils/logo/Logo.png" />
+        </RouterLink>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div
+        class="collapse navbar-collapse justify-content-end"
+        id="navbarNav"
+      >
+        <ul class="navbar-nav ml-auto text-center">
+          <li v-if="isAdmin" class="nav-item custom-nav-item px-2">
+            <span class="nav-link custom-nav-link fw-bold fs-5 text-danger"
+              ><i class="bi bi-shield-lock"></i>Admin</span
+            >
+          </li>
+          <li
+            v-if="!isAdmin && isLoggedIn"
+            class="nav-item custom-nav-item px-2"
           >
-        </li>
-        <li v-if="!isAdmin && isLoggedIn" class="nav-item custom-nav-item px-2">
-          <span class="nav-link custom-nav-link fw-bold fs-5"
-            >Hi, {{ uStore.currentUser.username }}!</span
-          >
-        </li>
-        <li v-if="!isLoggedIn" class="nav-item custom-nav-item px-2">
-          <RouterLink
-            :to="'/login'"
-            class="nav-link custom-nav-link fw-bold fs-5 login"
-            :class="{ active: isActive('/login') }"
-            >Login</RouterLink
-          >
-        </li>
-        <li class="nav-item custom-nav-item px-2">
-          <RouterLink
-            :to="'/events'"
-            class="nav-link custom-nav-link fw-bold fs-5"
-            :class="{ active: isActive('/events') }"
-            >Events</RouterLink
-          >
-        </li>
-        <li v-if="isLoggedIn" class="nav-item custom-nav-item px-2">
-          <RouterLink
-            :to="'/profile'"
-            class="nav-link custom-nav-link fw-bold fs-5"
-            :class="{ active: isActive('/profile') }"
-            >Profile</RouterLink
-          >
-        </li>
-        <li v-if="isLoggedIn" class="nav-item custom-nav-item px-2">
-          <button @click="handleLogout" class="btn custom-btn fw-bold fs-5">Logout</button>
-        </li>
-      </ul>
+            <span class="nav-link custom-nav-link-username fw-bold fs-5"
+              >Hi, {{ uStore.currentUser.username }}!</span
+            >
+          </li>
+          <li v-if="!isLoggedIn" class="nav-item custom-nav-item px-2">
+            <RouterLink
+              :to="'/login'"
+              class="nav-link custom-nav-link fw-bold fs-5 login"
+              :class="{ active: isActive('/login') }"
+              >Login</RouterLink
+            >
+          </li>
+          <li class="nav-item custom-nav-item px-2">
+            <RouterLink
+              :to="'/events'"
+              class="nav-link custom-nav-link fw-bold fs-5"
+              :class="{ active: isActive('/events') }"
+              >Events</RouterLink
+            >
+          </li>
+          <li v-if="isLoggedIn" class="nav-item custom-nav-item px-2">
+            <RouterLink
+              :to="'/profile'"
+              class="nav-link custom-nav-link fw-bold fs-5"
+              :class="{ active: isActive('/profile') }"
+              >Profile</RouterLink
+            >
+          </li>
+          <li v-if="isLoggedIn" class="nav-item custom-nav-item px-2">
+            <button @click="handleLogout" class="btn custom-btn fw-bold fs-5">
+              Logout
+            </button>
+          </li>
+        </ul>
+      </div>
     </div>
   </nav>
 </template>
@@ -82,6 +96,10 @@ const isActive = (route) => {
   background-color: $dark-gray;
 
   .custom-nav-item {
+
+    .custom-nav-link-username {
+      color: $candy-apple-red;
+    }
     .custom-nav-link {
       color: $off-white;
 
@@ -108,7 +126,8 @@ const isActive = (route) => {
 }
 
 img {
-  width: 100px; height: 75px;
+  width: 100px;
+  height: 75px;
 }
 
 button {

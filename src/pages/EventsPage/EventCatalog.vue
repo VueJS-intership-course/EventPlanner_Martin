@@ -28,7 +28,7 @@
       <EventFilter v-if="isToggleFilters"></EventFilter>
     </div>
     <div class="container mt-3 mb-5">
-      <div class="row row-cols-md-4 g-5">
+      <div class="row row-cols-4 g-5">
         <div
           v-for="(event, index) in filteredEvents"
           :key="index"
@@ -38,7 +38,6 @@
           <div
             class="position-relative card larger-card shadow bg-white rounded"
           >
-            <!-- <span class="hover-text">Click for Details</span> -->
             <span v-if="hasEnded(event.time)" class="expired-badge"
               >Expired</span
             >
@@ -49,7 +48,7 @@
                 alt="Event Image"
               />
               <h5
-                class="card-title-overlay custom-card-title-overlay text-white position-absolute p-2"
+                class="card-title-overlay custom-card-title-overlay text-white p-2"
               >
                 {{ event.name }}
               </h5>
@@ -187,12 +186,8 @@ const eventDetails = (eventId) => {
   top: 0;
   left: 0;
   width: 100%;
-  font-size: 1.2rem;
-  margin-top: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  color: white;
   text-shadow: 1px 1px 2px black;
-  padding: 0.5rem;
 }
 
 .expired-badge {

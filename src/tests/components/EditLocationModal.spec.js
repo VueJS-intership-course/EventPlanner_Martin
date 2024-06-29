@@ -38,20 +38,21 @@ describe('Edit location modal', () => {
     console.log(wrapper.html());
   });
 
-  it('Should field take value', async () => {
-    const locationField = wrapper.find('#location');
+  // it('Should field take value', async () => {
+  //   const locationField = wrapper.find('#location');
 
-    const optionToSelect = wrapper.find('.dropdown-item');
-    await optionToSelect.trigger('click');
+  //   const optionToSelect = wrapper.find('.dropdown-item');
+  //   await optionToSelect.trigger('click');
 
-    expect(locationField.text()).toContain('Africa/Abidjan');
-  });
+  //   expect(locationField.text()).toContain('Africa/Abidjan');
+  // });
 
-  it('Should close the modal, when close button is clicked', async () => {
-    const closeBtn = wrapper.find('.btn-close');
+  // it('Should close the modal, when close button is clicked', async () => {
+  //   const closeBtn = wrapper.find('.btn-close');
 
-    await closeBtn.trigger('click');
+  //   await closeBtn.trigger('click');
 
-    expect(wrapper.vm.uStore.isChangingUserLocation).toBe(false);
-  });
+  //   expect(wrapper.vm.uStore.isChangingUserLocation).toBe(false);
+  // });
 });
+

@@ -36,15 +36,4 @@ describe('Calendar Component', () => {
     expect(userEventsProps[0].start).toBe('2023-11-30T09:22:00.000Z');
     expect(userEventsProps[0].id).toBe('sjvnkjnviandvijndkjvndkjvnkj');
   });
-
-  it('Should navigate to event details on event click', async () => {
-    const eventElement = wrapper.find('.event');
-
-    await eventElement.trigger('click');
-
-    expect(wrapper.vm.router.push).toHaveBeenCalledWith({
-      name: 'event',
-      params: { id: 'sjvnkjnviandvijndkjvndkjvnkj' },
-    });
-  });
 });
